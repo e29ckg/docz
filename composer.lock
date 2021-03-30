@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9cd87f007dcd9d8cf647fb718b0384f8",
+    "content-hash": "1586898cacdb98b2411a313c44669e21",
     "packages": [
         {
             "name": "bower-asset/bootstrap",
@@ -367,6 +367,64 @@
                 "source": "https://github.com/ezyang/htmlpurifier/tree/master"
             },
             "time": "2020-06-29T00:56:53+00:00"
+        },
+        {
+            "name": "ramosisw/yii2-material-dashboard",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ramosisw/yii2-material-dashboard.git",
+                "reference": "2d6458803f4b51f48f55e5e44e4705fed57e82ee"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ramosisw/yii2-material-dashboard/zipball/2d6458803f4b51f48f55e5e44e4705fed57e82ee",
+                "reference": "2d6458803f4b51f48f55e5e44e4705fed57e82ee",
+                "shasum": ""
+            },
+            "require": {
+                "yiisoft/yii2": "2.*",
+                "yiisoft/yii2-bootstrap": "2.*"
+            },
+            "default-branch": true,
+            "type": "yii2-extension",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "ramosisw\\CImaterial\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Julio C. Ramos",
+                    "email": "ramosisw@gmail.com"
+                }
+            ],
+            "description": "Material dashboard backend theme asset bundle for Yii 2.0 Framework",
+            "keywords": [
+                "admin",
+                "asset",
+                "backend",
+                "css",
+                "dashboard",
+                "extension",
+                "less",
+                "material",
+                "theme",
+                "yii2"
+            ],
+            "support": {
+                "source": "https://github.com/ramosisw/yii2-material-dashboard/tree/master"
+            },
+            "time": "2018-12-13T18:35:07+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -1852,16 +1910,16 @@
         },
         {
             "name": "fakerphp/faker",
-            "version": "v1.14.0",
+            "version": "v1.14.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FakerPHP/Faker.git",
-                "reference": "cd46398f42c2ab191ffb0b57c07e911c7c28eb25"
+                "reference": "ed22aee8d17c7b396f74a58b1e7fefa4f90d5ef1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FakerPHP/Faker/zipball/cd46398f42c2ab191ffb0b57c07e911c7c28eb25",
-                "reference": "cd46398f42c2ab191ffb0b57c07e911c7c28eb25",
+                "url": "https://api.github.com/repos/FakerPHP/Faker/zipball/ed22aee8d17c7b396f74a58b1e7fefa4f90d5ef1",
+                "reference": "ed22aee8d17c7b396f74a58b1e7fefa4f90d5ef1",
                 "shasum": ""
             },
             "require": {
@@ -1884,6 +1942,11 @@
                 "ext-mbstring": "Required for multibyte Unicode string functionality."
             },
             "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-main": "v1.15-dev"
+                }
+            },
             "autoload": {
                 "psr-4": {
                     "Faker\\": "src/Faker/"
@@ -1906,9 +1969,9 @@
             ],
             "support": {
                 "issues": "https://github.com/FakerPHP/Faker/issues",
-                "source": "https://github.com/FakerPHP/Faker/tree/v1.14.0"
+                "source": "https://github.com/FakerPHP/Faker/tree/v.1.14.1"
             },
-            "time": "2021-03-29T08:56:34+00:00"
+            "time": "2021-03-30T06:27:33+00:00"
         },
         {
             "name": "guzzlehttp/psr7",
@@ -5290,7 +5353,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "ramosisw/yii2-material-dashboard": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

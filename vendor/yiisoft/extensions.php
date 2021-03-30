@@ -48,4 +48,13 @@ return array (
       '@yii/swiftmailer' => $vendorDir . '/yiisoft/yii2-swiftmailer/src',
     ),
   ),
+  'ramosisw/yii2-material-dashboard' => 
+  array (
+    'name' => 'ramosisw/yii2-material-dashboard',
+    'version' => 'dev-master',
+    'alias' => 
+    array (
+      '@ramosisw/CImaterial' => $vendorDir . '/ramosisw/yii2-material-dashboard',
+    ),
+  ),
 );

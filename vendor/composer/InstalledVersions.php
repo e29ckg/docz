@@ -25,12 +25,12 @@ class InstalledVersions
 private static $installed = array (
   'root' => 
   array (
-    'pretty_version' => '1.0.0+no-version-set',
-    'version' => '1.0.0.0',
+    'pretty_version' => 'dev-main',
+    'version' => 'dev-main',
     'aliases' => 
     array (
     ),
-    'reference' => NULL,
+    'reference' => '5f2c8f62ecc4dac9714d099aca5768196a376df8',
     'name' => 'yiisoft/yii2-app-basic',
   ),
   'versions' => 
@@ -226,12 +226,12 @@ private static $installed = array (
     ),
     'fakerphp/faker' => 
     array (
-      'pretty_version' => 'v1.14.0',
-      'version' => '1.14.0.0',
+      'pretty_version' => 'v1.14.1',
+      'version' => '1.14.1.0',
       'aliases' => 
       array (
       ),
-      'reference' => 'cd46398f42c2ab191ffb0b57c07e911c7c28eb25',
+      'reference' => 'ed22aee8d17c7b396f74a58b1e7fefa4f90d5ef1',
     ),
     'guzzlehttp/psr7' => 
     array (
@@ -437,6 +437,16 @@ private static $installed = array (
       array (
       ),
       'reference' => '120b605dfeb996808c31b6477290a714d356e822',
+    ),
+    'ramosisw/yii2-material-dashboard' => 
+    array (
+      'pretty_version' => 'dev-master',
+      'version' => 'dev-master',
+      'aliases' => 
+      array (
+        0 => '1.0.x-dev',
+      ),
+      'reference' => '2d6458803f4b51f48f55e5e44e4705fed57e82ee',
     ),
     'sebastian/code-unit-reverse-lookup' => 
     array (
@@ -771,12 +781,12 @@ private static $installed = array (
     ),
     'yiisoft/yii2-app-basic' => 
     array (
-      'pretty_version' => '1.0.0+no-version-set',
-      'version' => '1.0.0.0',
+      'pretty_version' => 'dev-main',
+      'version' => 'dev-main',
       'aliases' => 
       array (
       ),
-      'reference' => NULL,
+      'reference' => '5f2c8f62ecc4dac9714d099aca5768196a376df8',
     ),
     'yiisoft/yii2-bootstrap' => 
     array (
