@@ -2,13 +2,14 @@
 
 /* @var $this \yii\web\View */
 /* @var $content string */
-
+// use Yii;
 use yii\helpers\Html;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
 use app\widgets\Alert;
+use yii\helpers\Url;
 
 AppAsset::register($this);
 ?>
@@ -22,6 +23,7 @@ AppAsset::register($this);
     <?php $this->registerCsrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
+    <script src="<?= Url::to('@web') ?>/js/sweetalert.min.js"></script>
 </head>
 <body>
 <?php $this->beginBody() ?>

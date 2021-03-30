@@ -3,7 +3,9 @@
 /* @var $this yii\web\View */
 
 $this->title = 'My Yii Application';
+
 ?>
+
 <div class="site-index">
 
     <div class="jumbotron">
@@ -26,6 +28,7 @@ $this->title = 'My Yii Application';
                     fugiat nulla pariatur.</p>
 
                 <p><a class="btn btn-default" href="http://www.yiiframework.com/doc/">Yii Documentation &raquo;</a></p>
+                <p><button class="preview">Preview</button></p>
             </div>
             <div class="col-lg-4">
                 <h2>Heading</h2>
