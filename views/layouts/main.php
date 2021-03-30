@@ -234,8 +234,19 @@ echo Menu::widget([
           'url' => ['site/contact'],
           'template' => '<a href="{url}" class="nav-link">
           <i class="nav-icon fas fa-th"></i> <p>{label}</p></a>',
-          
-          // 'options' => ['class' => 'nav-link']
+          'items' => [
+            [
+              'label' => 'About',
+              'url' => ['site/about'],
+              'template' => '<a href="{url}" class="nav-link">
+              <i class="nav-icon fas fa-th"></i> <p>{label}</p></a>',
+            ],
+            'options' => [
+              // 'class' => 'nav nav-pills nav-sidebar flex-column',
+              'class'=> 'nav nav-treeview', 
+              'style'=>'display: block; height: 129.562px; padding-top: 0px; margin-top: 0px; padding-bottom: 0px; margin-bottom: 0px;"',
+            ],
+          ]
         ],
         
     ],
