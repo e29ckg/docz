@@ -48,15 +48,6 @@ return array (
       '@yii/swiftmailer' => $vendorDir . '/yiisoft/yii2-swiftmailer/src',
     ),
   ),
-  'ramosisw/yii2-material-dashboard' => 
-  array (
-    'name' => 'ramosisw/yii2-material-dashboard',
-    'version' => 'dev-master',
-    'alias' => 
-    array (
-      '@ramosisw/CImaterial' => $vendorDir . '/ramosisw/yii2-material-dashboard',
-    ),
-  ),
   'rmrevin/yii2-fontawesome' => 
   array (
     'name' => 'rmrevin/yii2-fontawesome',
@@ -78,7 +69,7 @@ return array (
   'dmstr/yii2-adminlte-asset' => 
   array (
     'name' => 'dmstr/yii2-adminlte-asset',
-    'version' => '2.1.0.0',
+    'version' => '2.6.2.0',
     'alias' => 
     array (
       '@dmstr' => $vendorDir . '/dmstr/yii2-adminlte-asset',

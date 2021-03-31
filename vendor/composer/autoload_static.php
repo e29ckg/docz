@@ -41,7 +41,6 @@ class ComposerStaticInit72663c86a7785e570c9980dad6de67fd
         'r' => 
         array (
             'rmrevin\\yii\\fontawesome\\' => 24,
-            'ramosisw\\CImaterial\\' => 20,
         ),
         'p' => 
         array (
@@ -150,10 +149,6 @@ class ComposerStaticInit72663c86a7785e570c9980dad6de67fd
         'rmrevin\\yii\\fontawesome\\' => 
         array (
             0 => __DIR__ . '/..' . '/rmrevin/yii2-fontawesome',
-        ),
-        'ramosisw\\CImaterial\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/ramosisw/yii2-material-dashboard',
         ),
         'phpDocumentor\\Reflection\\' => 
         array (

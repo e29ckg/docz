@@ -2,24 +2,25 @@
 namespace dmstr\web;
 
 use yii\base\Exception;
-use yii\web\AssetBundle;
+use yii\web\AssetBundle as BaseAdminLteAsset;
 
 /**
  * AdminLte AssetBundle
  * @since 0.1
  */
-class AdminLteAsset extends AssetBundle
+class AdminLteAsset extends BaseAdminLteAsset
 {
     public $sourcePath = '@vendor/almasaeed2010/adminlte/dist';
     public $css = [
         'css/AdminLTE.min.css',
     ];
     public $js = [
-        'js/app.min.js'
+        'js/adminlte.min.js'
     ];
     public $depends = [
         'rmrevin\yii\fontawesome\AssetBundle',
         'yii\web\YiiAsset',
+        'yii\bootstrap\BootstrapAsset',
         'yii\bootstrap\BootstrapPluginAsset',
     ];
 

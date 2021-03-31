@@ -6,7 +6,7 @@
     'aliases' => 
     array (
     ),
-    'reference' => '9e2c90cc92af60480213ef6eda2ab7f0b26b60be',
+    'reference' => '4b69f7fda1c3943474f915de9cd4202fdf8fdb46',
     'name' => 'yiisoft/yii2-app-basic',
   ),
   'versions' => 
@@ -184,12 +184,12 @@
     ),
     'dmstr/yii2-adminlte-asset' => 
     array (
-      'pretty_version' => '2.1.0',
-      'version' => '2.1.0.0',
+      'pretty_version' => '2.6.2',
+      'version' => '2.6.2.0',
       'aliases' => 
       array (
       ),
-      'reference' => '84928c5b3a886bd3a6cdde88bb8327bf1c088e7c',
+      'reference' => 'c96336e1960ebc6c1e72487a7c6ca1a1589519fe',
     ),
     'doctrine/instantiator' => 
     array (
@@ -449,16 +449,6 @@
       array (
       ),
       'reference' => '120b605dfeb996808c31b6477290a714d356e822',
-    ),
-    'ramosisw/yii2-material-dashboard' => 
-    array (
-      'pretty_version' => 'dev-master',
-      'version' => 'dev-master',
-      'aliases' => 
-      array (
-        0 => '1.0.x-dev',
-      ),
-      'reference' => '2d6458803f4b51f48f55e5e44e4705fed57e82ee',
     ),
     'rmrevin/yii2-fontawesome' => 
     array (
@@ -807,7 +797,7 @@
       'aliases' => 
       array (
       ),
-      'reference' => '9e2c90cc92af60480213ef6eda2ab7f0b26b60be',
+      'reference' => '4b69f7fda1c3943474f915de9cd4202fdf8fdb46',
     ),
     'yiisoft/yii2-bootstrap' => 
     array (

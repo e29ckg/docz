@@ -919,27 +919,27 @@
         },
         {
             "name": "dmstr/yii2-adminlte-asset",
-            "version": "2.1.0",
-            "version_normalized": "2.1.0.0",
+            "version": "2.6.2",
+            "version_normalized": "2.6.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dmstr/yii2-adminlte-asset.git",
-                "reference": "84928c5b3a886bd3a6cdde88bb8327bf1c088e7c"
+                "reference": "c96336e1960ebc6c1e72487a7c6ca1a1589519fe"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dmstr/yii2-adminlte-asset/zipball/84928c5b3a886bd3a6cdde88bb8327bf1c088e7c",
-                "reference": "84928c5b3a886bd3a6cdde88bb8327bf1c088e7c",
+                "url": "https://api.github.com/repos/dmstr/yii2-adminlte-asset/zipball/c96336e1960ebc6c1e72487a7c6ca1a1589519fe",
+                "reference": "c96336e1960ebc6c1e72487a7c6ca1a1589519fe",
                 "shasum": ""
             },
             "require": {
-                "almasaeed2010/adminlte": "~2.0",
+                "almasaeed2010/adminlte": "^2.4.0",
                 "cebe/yii2-gravatar": "1.*",
                 "rmrevin/yii2-fontawesome": "~2.9",
                 "yiisoft/yii2": "2.*",
-                "yiisoft/yii2-bootstrap": "2.*"
+                "yiisoft/yii2-bootstrap": "~2.0.0"
             },
-            "time": "2015-06-01T20:35:02+00:00",
+            "time": "2018-07-24T14:47:13+00:00",
             "type": "yii2-extension",
             "extra": {
                 "branch-alias": {
@@ -966,15 +966,21 @@
                     "email": "et.coder@gmail.com"
                 }
             ],
-            "description": "Backend theme for Yii2 Framework",
+            "description": "AdminLTE backend theme asset bundle for Yii 2.0 Framework",
             "keywords": [
                 "AdminLTE",
+                "admin",
+                "asset",
+                "backend",
+                "css",
                 "extension",
+                "less",
+                "theme",
                 "yii2"
             ],
             "support": {
                 "issues": "https://github.com/dmstr/yii2-adminlte-asset/issues",
-                "source": "https://github.com/dmstr/yii2-adminlte-asset/tree/2.1.0"
+                "source": "https://github.com/dmstr/yii2-adminlte-asset/tree/master"
             },
             "install-path": "../dmstr/yii2-adminlte-asset"
         },
@@ -2607,67 +2613,6 @@
                 "source": "https://github.com/ralouphie/getallheaders/tree/develop"
             },
             "install-path": "../ralouphie/getallheaders"
-        },
-        {
-            "name": "ramosisw/yii2-material-dashboard",
-            "version": "dev-master",
-            "version_normalized": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/ramosisw/yii2-material-dashboard.git",
-                "reference": "2d6458803f4b51f48f55e5e44e4705fed57e82ee"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/ramosisw/yii2-material-dashboard/zipball/2d6458803f4b51f48f55e5e44e4705fed57e82ee",
-                "reference": "2d6458803f4b51f48f55e5e44e4705fed57e82ee",
-                "shasum": ""
-            },
-            "require": {
-                "yiisoft/yii2": "2.*",
-                "yiisoft/yii2-bootstrap": "2.*"
-            },
-            "time": "2018-12-13T18:35:07+00:00",
-            "default-branch": true,
-            "type": "yii2-extension",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0.x-dev"
-                }
-            },
-            "installation-source": "source",
-            "autoload": {
-                "psr-4": {
-                    "ramosisw\\CImaterial\\": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Julio C. Ramos",
-                    "email": "ramosisw@gmail.com"
-                }
-            ],
-            "description": "Material dashboard backend theme asset bundle for Yii 2.0 Framework",
-            "keywords": [
-                "admin",
-                "asset",
-                "backend",
-                "css",
-                "dashboard",
-                "extension",
-                "less",
-                "material",
-                "theme",
-                "yii2"
-            ],
-            "support": {
-                "source": "https://github.com/ramosisw/yii2-material-dashboard/tree/master"
-            },
-            "install-path": "../ramosisw/yii2-material-dashboard"
         },
         {
             "name": "rmrevin/yii2-fontawesome",

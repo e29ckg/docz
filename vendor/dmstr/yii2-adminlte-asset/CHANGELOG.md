@@ -1,6 +1,59 @@
 CHANGELOG
 ---------
 
+## 2.6.0
+ * added default options for menu (CSS classes)
+ * updated test environment
+
+## 2.5.0
+ * updated AdminLTE constraint to `^2.4.0`
+ * fixed menu toggle
+
+## 2.4.4
+ * fixed JavaScript dependency
+ * restricted AdminLTE constraint
+
+## 2.4.3
+ * added CRUD template
+
+## 2.4.2
+ * updated menu rendering
+
+## 2.4.0
+ * updated menu icons
+ * fixed isItemActive()
+
+## 2.3.4
+ * added isAjaxRemoveFlash parameter
+
+## 2.3.2
+ * updated label & link template
+ 
+## 2.3.1
+ * use aliased AssetBundle
+ 
+## 2.3.0
+ * updated menu widget (label-template)
+
+## 2.2.4
+ * [FIX]	fixed active menu with modules (Vasiliy Baranov)
+ * [ENH] added .hold-transition
+
+## 2.2.3
+ * [ENH] : updated Gravatar widget E-Mail usage (@Quexer69)
+
+## 2.2.2
+ * fixed Menu widget selection
+ * updated example views
+
+## 2.2.1
+ * removed the restriction to use only FA
+ * added testing setup
+
+## 2.2.0
+ * updated Menu widget
+ * updated composer dependencies
+
 ## 2.1.0
  * updated black ("white") default skin for phundament
  * updated default skins to be backward-compatible
