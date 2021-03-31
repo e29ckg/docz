@@ -40,11 +40,16 @@ class ComposerStaticInit72663c86a7785e570c9980dad6de67fd
         ),
         'r' => 
         array (
+            'rmrevin\\yii\\fontawesome\\' => 24,
             'ramosisw\\CImaterial\\' => 20,
         ),
         'p' => 
         array (
             'phpDocumentor\\Reflection\\' => 25,
+        ),
+        'd' => 
+        array (
+            'dmstr\\' => 6,
         ),
         'c' => 
         array (
@@ -142,6 +147,10 @@ class ComposerStaticInit72663c86a7785e570c9980dad6de67fd
         array (
             0 => __DIR__ . '/..' . '/yiisoft/yii2',
         ),
+        'rmrevin\\yii\\fontawesome\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/rmrevin/yii2-fontawesome',
+        ),
         'ramosisw\\CImaterial\\' => 
         array (
             0 => __DIR__ . '/..' . '/ramosisw/yii2-material-dashboard',
@@ -151,6 +160,10 @@ class ComposerStaticInit72663c86a7785e570c9980dad6de67fd
             0 => __DIR__ . '/..' . '/phpdocumentor/reflection-common/src',
             1 => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src',
             2 => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src',
+        ),
+        'dmstr\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/dmstr/yii2-adminlte-asset',
         ),
         'cebe\\markdown\\' => 
         array (
@@ -297,6 +310,13 @@ class ComposerStaticInit72663c86a7785e570c9980dad6de67fd
     );
 
     public static $prefixesPsr0 = array (
+        'c' => 
+        array (
+            'cebe\\gravatar\\' => 
+            array (
+                0 => __DIR__ . '/..' . '/cebe/yii2-gravatar',
+            ),
+        ),
         'H' => 
         array (
             'HTMLPurifier' => 

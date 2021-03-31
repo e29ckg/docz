@@ -6,11 +6,20 @@
     'aliases' => 
     array (
     ),
-    'reference' => '5f2c8f62ecc4dac9714d099aca5768196a376df8',
+    'reference' => '9e2c90cc92af60480213ef6eda2ab7f0b26b60be',
     'name' => 'yiisoft/yii2-app-basic',
   ),
   'versions' => 
   array (
+    'almasaeed2010/adminlte' => 
+    array (
+      'pretty_version' => 'v2.4.18',
+      'version' => '2.4.18.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => 'e7ffa67a4649dc08d2018708a38604a6c0a02ab6',
+    ),
     'behat/gherkin' => 
     array (
       'pretty_version' => 'v4.8.0',
@@ -73,6 +82,15 @@
       array (
       ),
       'reference' => '9bac5e971dd391e2802dca5400bbeacbaea9eb86',
+    ),
+    'cebe/yii2-gravatar' => 
+    array (
+      'pretty_version' => '1.1',
+      'version' => '1.1.0.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => 'c9c01bd14c9bdee9e5ae1ef1aad23f80c182c057',
     ),
     'codeception/codeception' => 
     array (
@@ -164,6 +182,15 @@
       ),
       'reference' => 'fa0bb946b6d61279f461bcc5a677ac0ed5eab9b3',
     ),
+    'dmstr/yii2-adminlte-asset' => 
+    array (
+      'pretty_version' => '2.1.0',
+      'version' => '2.1.0.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '84928c5b3a886bd3a6cdde88bb8327bf1c088e7c',
+    ),
     'doctrine/instantiator' => 
     array (
       'pretty_version' => '1.4.0',
@@ -208,6 +235,15 @@
       array (
       ),
       'reference' => 'ed22aee8d17c7b396f74a58b1e7fefa4f90d5ef1',
+    ),
+    'fortawesome/font-awesome' => 
+    array (
+      'pretty_version' => 'v4.7.0',
+      'version' => '4.7.0.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => 'a8386aae19e200ddb0f6845b5feeee5eb7013687',
     ),
     'guzzlehttp/psr7' => 
     array (
@@ -423,6 +459,15 @@
         0 => '1.0.x-dev',
       ),
       'reference' => '2d6458803f4b51f48f55e5e44e4705fed57e82ee',
+    ),
+    'rmrevin/yii2-fontawesome' => 
+    array (
+      'pretty_version' => '2.17.1',
+      'version' => '2.17.1.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '65ce306da864f4d558348aeba040ed7876878090',
     ),
     'sebastian/code-unit-reverse-lookup' => 
     array (
@@ -762,7 +807,7 @@
       'aliases' => 
       array (
       ),
-      'reference' => '5f2c8f62ecc4dac9714d099aca5768196a376df8',
+      'reference' => '9e2c90cc92af60480213ef6eda2ab7f0b26b60be',
     ),
     'yiisoft/yii2-bootstrap' => 
     array (
