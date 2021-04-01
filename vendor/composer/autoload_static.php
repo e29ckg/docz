@@ -46,6 +46,10 @@ class ComposerStaticInit72663c86a7785e570c9980dad6de67fd
         array (
             'phpDocumentor\\Reflection\\' => 25,
         ),
+        'l' => 
+        array (
+            'lavrentiev\\widgets\\toastr\\' => 26,
+        ),
         'd' => 
         array (
             'dmstr\\' => 6,
@@ -155,6 +159,10 @@ class ComposerStaticInit72663c86a7785e570c9980dad6de67fd
             0 => __DIR__ . '/..' . '/phpdocumentor/reflection-common/src',
             1 => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src',
             2 => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src',
+        ),
+        'lavrentiev\\widgets\\toastr\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/lavrentiev/yii2-toastr/src',
         ),
         'dmstr\\' => 
         array (

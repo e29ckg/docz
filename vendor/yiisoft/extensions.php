@@ -75,4 +75,13 @@ return array (
       '@dmstr' => $vendorDir . '/dmstr/yii2-adminlte-asset',
     ),
   ),
+  'lavrentiev/yii2-toastr' => 
+  array (
+    'name' => 'lavrentiev/yii2-toastr',
+    'version' => 'dev-master',
+    'alias' => 
+    array (
+      '@lavrentiev/widgets/toastr' => $vendorDir . '/lavrentiev/yii2-toastr/src',
+    ),
+  ),
 );

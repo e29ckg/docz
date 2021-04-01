@@ -30,7 +30,7 @@ private static $installed = array (
     'aliases' => 
     array (
     ),
-    'reference' => '4b69f7fda1c3943474f915de9cd4202fdf8fdb46',
+    'reference' => 'cd003fa5664ced7c03875dd2955716394cdf0240',
     'name' => 'yiisoft/yii2-app-basic',
   ),
   'versions' => 
@@ -73,12 +73,12 @@ private static $installed = array (
     ),
     'bower-asset/jquery' => 
     array (
-      'pretty_version' => '3.5.1',
-      'version' => '3.5.1.0',
+      'pretty_version' => '2.2.4',
+      'version' => '2.2.4.0',
       'aliases' => 
       array (
       ),
-      'reference' => '4c0e4becb8263bb5b3e6dadc448d8e7305ef8215',
+      'reference' => 'c0185ab7c75aab88762c5aae780b9d83b80eda72',
     ),
     'bower-asset/punycode' => 
     array (
@@ -88,6 +88,15 @@ private static $installed = array (
       array (
       ),
       'reference' => '38c8d3131a82567bfef18da09f7f4db68c84f8a3',
+    ),
+    'bower-asset/toastr' => 
+    array (
+      'pretty_version' => '2.1.3',
+      'version' => '2.1.3.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => 'd6fef68471aa1836bc44ba1a41a90a96548b784f',
     ),
     'bower-asset/yii2-pjax' => 
     array (
@@ -277,6 +286,16 @@ private static $installed = array (
       array (
       ),
       'reference' => '35ea11d335fd638b5882ff1725228b3d35496ab1',
+    ),
+    'lavrentiev/yii2-toastr' => 
+    array (
+      'pretty_version' => 'dev-master',
+      'version' => 'dev-master',
+      'aliases' => 
+      array (
+        0 => '9999999-dev',
+      ),
+      'reference' => '7acb5ac0838752449529f664b2c32a77a824a21d',
     ),
     'myclabs/deep-copy' => 
     array (
@@ -821,7 +840,7 @@ private static $installed = array (
       'aliases' => 
       array (
       ),
-      'reference' => '4b69f7fda1c3943474f915de9cd4202fdf8fdb46',
+      'reference' => 'cd003fa5664ced7c03875dd2955716394cdf0240',
     ),
     'yiisoft/yii2-bootstrap' => 
     array (

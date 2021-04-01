@@ -2,6 +2,8 @@
 namespace app\widgets;
 
 use Yii;
+use lavrentiev\widgets\toastr\Notification;
+/* @var $this yii\web\View */
 
 /**
  * Alert widget renders a message from session flash. All flash messages are displayed
@@ -59,7 +61,6 @@ class Alert extends \yii\bootstrap\Widget
             }
 
             foreach ((array) $flash as $i => $message) {
-                echo '<script>swal("'.$message.'","","'.$type.'");</script>';
                 // echo \yii\bootstrap\Alert::widget([
                 //     'body' => $message,
                 //     'closeButton' => $this->closeButton,
@@ -68,6 +69,11 @@ class Alert extends \yii\bootstrap\Widget
                 //         'class' => $this->alertTypes[$type] . $appendClass,
                 //     ]),
                 // ]);
+                Notification::widget([
+                    'type' => $type,
+                    // 'title' => $message,
+                    'message' => $message
+                ]);
             }
 
             $session->removeFlash($type);
