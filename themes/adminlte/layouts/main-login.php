@@ -6,6 +6,12 @@ use yii\helpers\Html;
 /* @var $content string */
 
 dmstr\web\AdminLteAsset::register($this);
+    if (class_exists('backend\assets\AppAsset')) {
+        backend\assets\AppAsset::register($this);
+    } else {
+        app\assets\AppAsset::register($this);
+    }
+
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
