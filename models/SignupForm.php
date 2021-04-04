@@ -14,7 +14,7 @@ class SignupForm extends Model
     public $email;
     public $password;
     public $name;
-
+    public $dep;
 
     /**
      * {@inheritdoc}
@@ -38,6 +38,16 @@ class SignupForm extends Model
 
             ['name', 'required'],
 
+        ];
+    }
+
+    public function attributeLabels()
+    {
+        return [
+            'username' => 'UserName',
+            'password' => 'Password',
+            'name' => 'ชื่อ',
+            'dep' => 'ตำแหน่ง',
         ];
     }
 

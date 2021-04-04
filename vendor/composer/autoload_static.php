@@ -50,6 +50,11 @@ class ComposerStaticInit72663c86a7785e570c9980dad6de67fd
         array (
             'lavrentiev\\widgets\\toastr\\' => 26,
         ),
+        'k' => 
+        array (
+            'kartik\\select2\\' => 15,
+            'kartik\\base\\' => 12,
+        ),
         'd' => 
         array (
             'dmstr\\' => 6,
@@ -163,6 +168,14 @@ class ComposerStaticInit72663c86a7785e570c9980dad6de67fd
         'lavrentiev\\widgets\\toastr\\' => 
         array (
             0 => __DIR__ . '/..' . '/lavrentiev/yii2-toastr/src',
+        ),
+        'kartik\\select2\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/kartik-v/yii2-widget-select2/src',
+        ),
+        'kartik\\base\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/kartik-v/yii2-krajee-base/src',
         ),
         'dmstr\\' => 
         array (
@@ -306,9 +319,9 @@ class ComposerStaticInit72663c86a7785e570c9980dad6de67fd
         ),
         'Codeception\\' => 
         array (
-            0 => __DIR__ . '/..' . '/codeception/codeception/src/Codeception',
-            1 => __DIR__ . '/..' . '/codeception/stub/src',
-            2 => __DIR__ . '/..' . '/codeception/verify/src/Codeception',
+            0 => __DIR__ . '/..' . '/codeception/stub/src',
+            1 => __DIR__ . '/..' . '/codeception/verify/src/Codeception',
+            2 => __DIR__ . '/..' . '/codeception/codeception/src/Codeception',
         ),
     );
 

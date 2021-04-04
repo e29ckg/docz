@@ -6,7 +6,7 @@
     'aliases' => 
     array (
     ),
-    'reference' => 'cd003fa5664ced7c03875dd2955716394cdf0240',
+    'reference' => '17e912797eb4cdf63347e77589879ba408c30472',
     'name' => 'yiisoft/yii2-app-basic',
   ),
   'versions' => 
@@ -103,12 +103,12 @@
     ),
     'codeception/codeception' => 
     array (
-      'pretty_version' => '4.1.19',
-      'version' => '4.1.19.0',
+      'pretty_version' => '4.1.20',
+      'version' => '4.1.20.0',
       'aliases' => 
       array (
       ),
-      'reference' => '138dc9345a81ec994dcd6b9680c501a752a37b00',
+      'reference' => 'd8b16e13e1781dbc3a7ae8292117d520c89a9c5a',
     ),
     'codeception/lib-asserts' => 
     array (
@@ -220,12 +220,12 @@
     ),
     'egulias/email-validator' => 
     array (
-      'pretty_version' => '3.1.0',
-      'version' => '3.1.0.0',
+      'pretty_version' => '3.1.1',
+      'version' => '3.1.1.0',
       'aliases' => 
       array (
       ),
-      'reference' => '62c3b73c581c834885acf6e120b412b76acc495a',
+      'reference' => 'c81f18a3efb941d8c4d2e025f6183b5c6d697307',
     ),
     'ezyang/htmlpurifier' => 
     array (
@@ -262,6 +262,25 @@
       array (
       ),
       'reference' => '35ea11d335fd638b5882ff1725228b3d35496ab1',
+    ),
+    'kartik-v/yii2-krajee-base' => 
+    array (
+      'pretty_version' => 'v2.0.5',
+      'version' => '2.0.5.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '9ddb662bdf49fdb671a90853912a40418a26a0dd',
+    ),
+    'kartik-v/yii2-widget-select2' => 
+    array (
+      'pretty_version' => 'dev-master',
+      'version' => 'dev-master',
+      'aliases' => 
+      array (
+        0 => '2.2.x-dev',
+      ),
+      'reference' => '05ed365ea5ed3555646db27dfb9beea79757a054',
     ),
     'lavrentiev/yii2-toastr' => 
     array (
@@ -586,6 +605,15 @@
       ),
       'reference' => '99732be0ddb3361e16ad77b68ba41efc8e979019',
     ),
+    'select2/select2' => 
+    array (
+      'pretty_version' => '4.0.13',
+      'version' => '4.0.13.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '45f2b83ceed5231afa7b3d5b12b58ad335edd82e',
+    ),
     'swiftmailer/swiftmailer' => 
     array (
       'pretty_version' => 'v6.2.7',
@@ -816,7 +844,7 @@
       'aliases' => 
       array (
       ),
-      'reference' => 'cd003fa5664ced7c03875dd2955716394cdf0240',
+      'reference' => '17e912797eb4cdf63347e77589879ba408c30472',
     ),
     'yiisoft/yii2-bootstrap' => 
     array (
