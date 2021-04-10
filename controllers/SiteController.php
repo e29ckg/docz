@@ -14,6 +14,7 @@ use app\models\PasswordResetRequestForm;
 use app\models\ResetPasswordForm;
 use app\models\SignupForm;
 use app\models\ContactForm;
+use app\models\UserProfile;
 
 /**
  * Site controller
@@ -91,6 +92,19 @@ class SiteController extends Controller
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
+            Yii::$app->session->setFlash('success', ['ยินดีต้องรับเข้าสู่ระบบ']);
+            $pr = UserProfile::findOne(['user_id' => Yii::$app->user->identity->id]);
+                if($pr){
+                    Yii::$app->session->set('profile',[
+                        'user_id' => $pr->user_id,
+                        'name' => $pr->name,   
+                        'dep_name' => $pr->dep_name                     
+                        ]);
+                }else{
+                    Yii::$app->session->setFlash('danger', ['ไม่มีโปรไฟล์']);
+                    return $this->redirect(['profile/create']);
+                }
+            
             return $this->goBack();
         } else {
             $model->password = '';

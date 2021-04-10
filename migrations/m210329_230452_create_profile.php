@@ -20,6 +20,7 @@ class m210329_230452_create_profile extends Migration
             'sname' => $this->string(255),
             'dep_name' => $this->string(255),
             'group_work' => $this->string(255),
+            'role' => $this->string(255),
             'photo' => $this->string(255),
             'sign_photo' => $this->string(255),
             'created_at' => $this->timestamp()

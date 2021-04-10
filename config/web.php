@@ -42,7 +42,15 @@ $config = [
         ],
         'user' => [
             'identityClass' => 'app\models\User',
-            'enableAutoLogin' => true,
+            // 'enableAutoLogin' => true,
+            'enableAutoLogin' => false,
+            'authTimeout' => 3600, // auth expire 
+        ],
+        'session' => [
+            'class' => 'yii\web\Session',
+            'cookieParams' => ['httponly' => true, 'lifetime' => 3600 * 4],
+            'timeout' => 3600, //session expire
+            'useCookies' => true
         ],
         'errorHandler' => [
             'errorAction' => 'site/error',
@@ -64,14 +72,19 @@ $config = [
             ],
         ],
         'db' => $db,
-        /*
+        
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                'index' => 'site/index',
+                'login' => 'site/login',
+                'logout' => 'site/logout',
+                'about' => 'site/about',
+                'profile' => 'profile/index',
             ],
         ],
-        */
+        
     ],
     'params' => $params,
 ];

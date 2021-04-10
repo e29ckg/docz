@@ -1,8 +1,8 @@
 <?php
 use lavrentiev\widgets\toastr\Notification;
 /* @var $this yii\web\View */
-Yii::$app->session->setFlash('success', ['Error 1', 'Error 2', 'Error 3']);
-$this->title = 'My Yii Application';
+// Yii::$app->session->setFlash('success', ['Error 1', 'Error 2', 'Error 3']);
+$this->title = 'DocZ ระบบจัดการเอกสาร';
 // Notification::widget([
 //     'type' => 'info',
 //     'title' => 'Toast Notifications',

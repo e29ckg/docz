@@ -1,8 +1,14 @@
 <?php
 use yii\helpers\Html;
-
+use yii\helpers\Url;
+use app\models\UserProfile;
+use app\models\User;
 /* @var $this \yii\web\View */
 /* @var $content string */
+
+if(!Yii::$app->user->isGuest ){
+    
+}
 ?>
 
 <header class="main-header">
@@ -18,6 +24,8 @@ use yii\helpers\Html;
         <div class="navbar-custom-menu">
 
             <ul class="nav navbar-nav">
+            <?php 
+                if(!Yii::$app->user->isGuest){?>
 
                 <!-- Messages: style can be found in dropdown.less-->
                 <li class="dropdown messages-menu">
@@ -226,11 +234,13 @@ use yii\helpers\Html;
                     </ul>
                 </li>
                 <!-- User Account: style can be found in dropdown.less -->
-
+                
+                
+                    
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <img src="<?= $directoryAsset ?>/img/user2-160x160.jpg" class="user-image" alt="User Image"/>
-                        <span class="hidden-xs">Alexander Pierce</span>
+                        <span class="hidden-xs"><?= Yii::$app->session->has('profile') ? Yii::$app->session['profile']['name']:'User'?></span>
                     </a>
                     <ul class="dropdown-menu">
                         <!-- User image -->
@@ -239,8 +249,9 @@ use yii\helpers\Html;
                                  alt="User Image"/>
 
                             <p>
-                                Alexander Pierce - Web Developer
-                                <small>Member since Nov. 2012</small>
+                                <?= Yii::$app->session->has('profile') ? Yii::$app->session['profile']['name']:'Null'?>
+                                <!-- Alexander Pierce - Web Developer -->
+                                <small><?= Yii::$app->session->has('profile') ? Yii::$app->session['profile']['dep_name']:'Null'?></small>
                             </p>
                         </li>
                         <!-- Menu Body -->
@@ -258,7 +269,7 @@ use yii\helpers\Html;
                         <!-- Menu Footer-->
                         <li class="user-footer">
                             <div class="pull-left">
-                                <a href="#" class="btn btn-default btn-flat">Profile</a>
+                                <a href="<?= Url::to(['/profile','uid' => '1'])?>" class="btn btn-default btn-flat">Profile</a>
                             </div>
                             <div class="pull-right">
                                 <?= Html::a(
@@ -270,7 +281,12 @@ use yii\helpers\Html;
                         </li>
                     </ul>
                 </li>
-
+                
+            <?php }else{?>
+<li>
+<a href="<?= Url::to(['login'])?>">Login</a>
+</li>
+            <?php } ?>
                 
             </ul>
         </div>

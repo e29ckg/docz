@@ -209,4 +209,12 @@ class User extends ActiveRecord implements IdentityInterface
     {
         $this->password_reset_token = null;
     }
+
+    public function isAdmin() { // this should say "public function", btw
+        // $testId = Yii::app()->user->id;
+        // echo $testId;
+        // print_r(User::model()->findByPk($testId));
+        // die();
+        return true;
+      }
 }
