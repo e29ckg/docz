@@ -12,9 +12,8 @@ class m210329_230452_create_profile extends Migration
      */
     public function safeUp()
     {
-        $this->createTable('user_profile', [
-            'id' => $this->primaryKey(),
-            'user_id' => $this->integer()->notNull(),
+        $this->createTable('user_profile', [            
+            'user_id' => $this->primaryKey(),
             'pfname' => $this->string(255),
             'name' => $this->string(255)->notNull(),
             'sname' => $this->string(255),
@@ -25,6 +24,18 @@ class m210329_230452_create_profile extends Migration
             'sign_photo' => $this->string(255),
             'created_at' => $this->timestamp()
         ]);
+        $this->insert('user_profile', ['user_id' => 1,'name' => 'admin']);
+
+        $this->createTable('profile_pfname', [
+            'id' => $this->primaryKey(),
+            'name' => $this->string(255),
+            'sort' => $this->integer(255),
+            'created_at' => $this->timestamp()
+        ]);
+        $this->insert('profile_pfname', ['name' => 'นาย','sort' => 1]);
+        $this->insert('profile_pfname', ['name' => 'นางสาว','sort' => 2]);
+        $this->insert('profile_pfname', ['name' => 'นาง','sort' => 3]);
+
         $this->createTable('user_group_work', [
             'id' => $this->primaryKey(),
             'name' => $this->string(255),

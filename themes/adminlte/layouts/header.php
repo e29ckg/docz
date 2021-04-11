@@ -249,7 +249,7 @@ if(!Yii::$app->user->isGuest ){
                                  alt="User Image"/>
 
                             <p>
-                                <?= Yii::$app->session->has('profile') ? Yii::$app->session['profile']['name']:'Null'?>
+                                <?= Yii::$app->session->has('profile') ? Yii::$app->session['profile']['name']:'Guest'?>
                                 <!-- Alexander Pierce - Web Developer -->
                                 <small><?= Yii::$app->session->has('profile') ? Yii::$app->session['profile']['dep_name']:'Null'?></small>
                             </p>
@@ -283,9 +283,12 @@ if(!Yii::$app->user->isGuest ){
                 </li>
                 
             <?php }else{?>
-<li>
-<a href="<?= Url::to(['login'])?>">Login</a>
-</li>
+                <li>
+                    <a href="<?= Url::to(['/signup'])?>">สมัครสมาชิก</a>
+                </li>
+                <li>
+                    <a href="<?= Url::to(['/login'])?>">Login</a>
+                </li>
             <?php } ?>
                 
             </ul>

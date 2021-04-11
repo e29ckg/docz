@@ -97,7 +97,7 @@ class SiteController extends Controller
                 if($pr){
                     Yii::$app->session->set('profile',[
                         'user_id' => $pr->user_id,
-                        'name' => $pr->name,   
+                        'name' => $pr->pfname.$pr->name. ' ' . $pr->sname,   
                         'dep_name' => $pr->dep_name                     
                         ]);
                 }else{
@@ -165,19 +165,19 @@ class SiteController extends Controller
      *
      * @return mixed
      */
-    public function actionSignup()
-    {
-        $this->layout = 'main-login';
-        $model = new SignupForm();
-        if ($model->load(Yii::$app->request->post()) && $model->signup()) {
-            Yii::$app->session->setFlash('success', 'Thank you for registration. Please check your inbox for verification email.');
-            return $this->goHome();
-        }
+    // public function actionSignup()
+    // {
+    //     $this->layout = 'main-login';
+    //     $model = new SignupForm();
+    //     if ($model->load(Yii::$app->request->post()) && $model->signup()) {
+    //         Yii::$app->session->setFlash('success', 'Thank you for registration. Please check your inbox for verification email.');
+    //         return $this->goHome();
+    //     }
 
-        return $this->render('signup', [
-            'model' => $model,
-        ]);
-    }
+    //     return $this->render('signup', [
+    //         'model' => $model,
+    //     ]);
+    // }
 
     /**
      * Requests password reset.

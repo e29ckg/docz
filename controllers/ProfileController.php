@@ -3,12 +3,18 @@
 namespace app\controllers;
 
 use Yii;
+// use app\models\UserProfile;
+use app\models\User;
 use app\models\UserProfile;
+use app\models\SignupFormProfile;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
+use yii\web\Response;
+use yii\bootstrap\ActiveForm;
+// use app\controllers\Response;
 
 /**
  * ProfileController implements the CRUD actions for UserProfile model.
@@ -98,6 +104,52 @@ class ProfileController extends Controller
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
+                'model' => $model,
+            ]);
+        }
+    }
+
+    public function actionCreate_profile()
+    {
+        $this->layout = 'main-login';
+        $model = new SignupFormProfile();
+
+        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return ActiveForm::validate($model);
+        }
+        
+        if ($model->load(Yii::$app->request->post())) {       
+            
+            $modelU = new User();
+            $modelP = new UserProfile();
+
+            $uid = time();
+            $modelU->id = $uid;
+            $modelU->username = $model->username;
+            $modelU->password_hash = Yii::$app->security->generatePasswordHash($model->password);
+            $modelU->email = $uid;
+
+            $modelP->user_id = $uid;
+            $modelP->pfname = $model->pfname;
+            $modelP->name = $model->name;
+            $modelP->sname = $model->sname;
+            $modelP->dep_name = $model->dep_name;
+            $modelP->group_work = $model->group_work;
+            // $modelP->photo = 1;
+            // $modelP->sign_photo = 1;
+            // $modelU->save();
+            if($modelP->save() && $modelU->save()){
+                Yii::$app->session->setFlash('success', 'Thank you for registration. รอการติกต่อกลับ');
+                return $this->redirect(['site/index']);
+            }else{
+                return $this->render('_create_profile', [
+                    'model' => $model,
+                ]); 
+            }
+
+        } else {
+            return $this->render('_create_profile', [
                 'model' => $model,
             ]);
         }

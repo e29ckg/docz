@@ -5,7 +5,8 @@ $db = require __DIR__ . '/db.php';
 
 $config = [
     'id' => 'basic',
-    'name' => 'DocZ',
+    'name' => '<b>Doc</b>Z',
+    'language' => 'th-TH',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'aliases' => [
@@ -81,6 +82,7 @@ $config = [
                 'login' => 'site/login',
                 'logout' => 'site/logout',
                 'about' => 'site/about',
+                'signup' => 'profile/create_profile',
                 'profile' => 'profile/index',
             ],
         ],

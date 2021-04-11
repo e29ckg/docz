@@ -4,18 +4,27 @@ namespace app\models;
 use Yii;
 use yii\base\Model;
 use app\models\User;
-
+use app\models\UserProfile;
 
 /**
  * Signup form
  */
-class SignupForm extends Model
+class SignupFormProfile extends Model
 {
     public $username;
     public $email;
     public $password;
+    public $rpassword;
+    public $pfname;
     public $name;
+    public $sname;
     public $dep;
+    public $dep_name;
+    public $group_work;
+    public $phone;
+    public $line_id;
+    public $photo;
+    public $sign_photo;
 
     /**
      * {@inheritdoc}
@@ -25,20 +34,21 @@ class SignupForm extends Model
         return [
             ['username', 'trim'],
             ['username', 'required'],
-            ['username', 'unique', 'targetClass' => '\app\models\User', 'message' => 'This username has already been taken.'],
+            ['username', 'unique', 'targetClass' => '\app\models\User', 'message' => 'มีผู้ใช้ชื่อนี้แล้ว.'],
             ['username', 'string', 'min' => 2, 'max' => 255],
 
             ['email', 'trim'],
-            ['email', 'required'],
-            ['email', 'email'],
-            ['email', 'string', 'max' => 255],
-            ['email', 'unique', 'targetClass' => '\app\models\User', 'message' => 'This email address has already been taken.'],
+            // ['email', 'required'],
+            // ['email', 'email'],
+            // ['email', 'string', 'max' => 255],
+            ['email', 'unique', 'targetClass' => '\app\models\User', 'message' => 'email นี้มีผู้ใช้แล้ว.'],
 
-            ['password', 'required'],
+            [['password','rpassword'], 'required'],
+            ['rpassword', 'compare', 'compareAttribute' => 'password'],
             ['password', 'string', 'min' => Yii::$app->params['user.passwordMinLength']],
-
+            
             ['name', 'required'],
-            ['dep', 'required'],
+            [['pfname','sname','dep_name','group_work'], 'string'],
 
         ];
     }
@@ -46,10 +56,19 @@ class SignupForm extends Model
     public function attributeLabels()
     {
         return [
-            'username' => 'UserName',
+            'username' => 'Username',
             'password' => 'Password',
+            'rpassword' => 'Retype Password',
+            'pfname' => 'คำนำหน้าชื่อ',
             'name' => 'ชื่อ',
-            'dep' => 'ตำแหน่ง',
+            'sname' => 'นามสกุล',
+            'dep_name' => 'ตำแหน่ง',
+            'group_work' => 'กลุ่มงาน',
+            'email' => 'อีเมล์',
+            'phone' => 'เบอร์โทรศัพท์',
+            'line_id' => 'ID LINE',
+            'photo' => 'ภาพประจำตัว',
+            'sign_photo' => 'ลายเซนต์',
         ];
     }
 
