@@ -28,7 +28,6 @@ class User extends ActiveRecord implements IdentityInterface
     const STATUS_INACTIVE = 9;
     const STATUS_ACTIVE = 10;
 
-
     /**
      * {@inheritdoc}
      */
@@ -55,6 +54,7 @@ class User extends ActiveRecord implements IdentityInterface
         return [
             ['status', 'default', 'value' => self::STATUS_INACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_INACTIVE, self::STATUS_DELETED]],
+            
         ];
     }
 
@@ -217,4 +217,12 @@ class User extends ActiveRecord implements IdentityInterface
         // die();
         return true;
       }
+
+      public function getProfile()
+
+            {
+
+                return $this->hasOne(UserProfile::className(), ['user_id' => 'id']);
+
+            }
 }

@@ -14,13 +14,13 @@ $config = [
         '@npm'   => '@vendor/npm-asset',
     ],
     'components' => [
-        'view' => [
-                'theme' => [
-                    'pathMap' => [
-                    '@app/views' => '@app/themes/adminlte'
-                    ],
-                ],
-        ],
+        // 'view' => [
+        //         'theme' => [
+        //             'pathMap' => [
+        //             '@app/views' => '@app/themes/adminlte'
+        //             ],
+        //         ],
+        // ],
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => '99299929',
@@ -83,7 +83,7 @@ $config = [
                 'logout' => 'site/logout',
                 'about' => 'site/about',
                 'signup' => 'profile/create_profile',
-                'profile' => 'profile/index',
+                'profile' => 'profile/view',
             ],
         ],
         

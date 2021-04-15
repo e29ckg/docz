@@ -4,18 +4,14 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\bootstrap\Modal;
 
-/* @var $this yii\web\View */
-/* @var $model app\models\UserProfile */
-
-$this->title = $model->profile->pfname.$model->profile->name.' '.$model->profile->sname;
-// $this->params['breadcrumbs'][] = ['label' => 'Profiles', 'url' => ['index']];
+$this->title = $model->profile->name;
+$this->params['breadcrumbs'][] = ['label' => 'Profiles', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 
 $dataRole = ['ddd','aaaa','dddd'];
 ?>
 <div class="row">
         <div class="col-md-3">
-
           <!-- Profile Image -->
           <div class="box box-primary">
             <div class="box-body box-profile">
@@ -33,12 +29,12 @@ $dataRole = ['ddd','aaaa','dddd'];
                 </li>
                 <li class="list-group-item">
                   <b>Line ID</b> <a class="pull-right"><?=$model->profile->line_id?></a>
-                </li>                
+                </li> 
               </ul>
 
               <!-- <a href="#" class="btn btn-primary btn-block"><b>Follow</b></a> -->
               <button type="button"  id="activity-update-profile" data-id="<?=$model->id?>" data-target = "activity-modal" class="btn btn-primary btn-block" >แก้ไขข้อมูล</button>
-                      
+              
             </div>
             <!-- /.box-body -->
           </div>
@@ -131,7 +127,7 @@ $dataRole = ['ddd','aaaa','dddd'];
                       <button type="submit" class="btn btn-danger">Submit</button>
                     </div> -->
                     <div class="col-sm-offset-2 col-sm-2">
-                      <button type="button"  id="activity-changepassword" data-id="<?=$model->id?>" data-target = "activity-modal" class="btn btn-warning" >Change Password</button>
+                      <!-- <button type="button"  id="activity-changepassword" data-id="<?=$model->id?>" data-target = "activity-modal" class="btn btn-warning" >Change Password</button> -->
                       
                     </div>
                   </div>
@@ -181,7 +177,7 @@ function init_click_handlers(){
       var fID = $(this).data("id");
       // alert(fID);
         $.get(
-            "/profile/update_profile",{id:fID},
+            "/admin/update_profile",{id:fID},
             function (data)
             {
                 $("#activity-modal").find(".modal-body").html(data);

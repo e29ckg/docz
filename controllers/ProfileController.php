@@ -6,6 +6,7 @@ use Yii;
 // use app\models\UserProfile;
 use app\models\User;
 use app\models\UserProfile;
+use app\models\ProfileChangePassword;
 use app\models\SignupFormProfile;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
@@ -27,23 +28,23 @@ class ProfileController extends Controller
     public function behaviors()
     {
         return [
-            // 'access' => [
-            //     'class' => \yii\filters\AccessControl::className(),
-            //     'only' => ['index','create', 'update'],
-            //     'rules' => [
-            //         // deny all POST requests
-            //         [
-            //             'allow' => false,
-            //             'verbs' => ['POST']
-            //         ],
-            //         // allow authenticated users
-            //         [
-            //             'allow' => true,
-            //             'roles' => ['@'],
-            //         ],
-            //         // everything else is denied
-            //     ],
-            // ],
+            'access' => [
+                'class' => \yii\filters\AccessControl::className(),
+                'only' => ['index','create', 'update','view','Change_password'],
+                'rules' => [
+                    // deny all POST requests
+                    [
+                        'allow' => false,
+                        'verbs' => ['POST']
+                    ],
+                    // allow authenticated users
+                    [
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                    // everything else is denied
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -73,10 +74,19 @@ class ProfileController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionView($id)
+    public function actionView($id = null)
     {
+        if($id == null){
+            $id = Yii::$app->user->id;
+        }
+        $model = User::findOne(['id' => $id]);
+        if (Yii::$app->request->isAjax) {
+            return $this->renderAjax('view',[
+                'model' => $model,
+            ]);
+        }
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $model,
         ]);
     }
 
@@ -143,16 +153,62 @@ class ProfileController extends Controller
                 Yii::$app->session->setFlash('success', 'Thank you for registration. รอการติกต่อกลับ');
                 return $this->redirect(['site/index']);
             }else{
-                return $this->render('_create_profile', [
+                return $this->render('_profile_create', [
                     'model' => $model,
                 ]); 
             }
 
         } else {
-            return $this->render('_create_profile', [
+            return $this->render('_profile_create', [
                 'model' => $model,
             ]);
         }
+    }
+
+    public function actionUpdate_profile($id = null)
+    {
+        // $this->layout = 'main-login';
+        if($id == null){
+            $id = Yii::$app->user->id;
+        }
+        $model = UserProfile::findOne(['user_id' =>$id]);
+
+        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return ActiveForm::validate($model);
+        }
+        
+        if ($model->load(Yii::$app->request->post())) {      
+            // $model->user_id = $uid;
+            $model->pfname = $model->pfname;
+            $model->name = $model->name;
+            $model->sname = $model->sname;
+            $model->dep_name = $model->dep_name;
+            $model->group_work = $model->group_work;
+            $model->phone = $model->phone;
+            $model->line_id = $model->line_id;
+            // $modelP->photo = 1;
+            // $modelP->sign_photo = 1;
+            // $modelU->save();
+            if($model->save()){
+                Yii::$app->session->setFlash('success', 'ปรับปรุงข้อมูลเรียบร้อย');
+                return $this->redirect(['/profile']);
+            }else{
+                return $this->render('_profile_update', [
+                    'model' => $model,
+                ]); 
+            }
+
+        } 
+        if(Yii::$app->request->isAjax){
+            return $this->renderAjax('_profile_update',[
+                'model' => $model,
+            ]);
+        }    
+        return $this->render('_profile_update', [
+            'model' => $model,
+        ]);
+        
     }
 
     /**
@@ -161,36 +217,8 @@ class ProfileController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionUpdate($id = null)
-    {
-        // $id = ;
-        $model = $this->findModel(['user_id' => Yii::$app->user->identity->id]);
-        if(!$model){
-            return $this->redirect(['create']);
-        }
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            $pr = UserProfile::findOne(['user_id' => Yii::$app->user->identity->id]);
-                if($pr){
-                    Yii::$app->session->set('profile',[
-                        'user_id' => $pr->user_id,
-                        'name' => $pr->name,   
-                        'dep_name' => $pr->dep_name                     
-                        ]);
-                }
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
-        }
-    }
+    
 
-    /**
-     * Deletes an existing UserProfile model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
-     * @return mixed
-     */
     public function actionDelete($id)
     {
         $this->findModel($id)->delete();
@@ -213,4 +241,39 @@ class ProfileController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+
+    public function actionChange_password($id = null)
+    {
+        // $this->layout = 'main';
+        $model = new ProfileChangePassword();
+        if($id == null){
+            $id = Yii::$app->user->id;
+        }
+        $model->id = $id;
+        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return ActiveForm::validate($model);
+        }
+        
+        if ($model->load(Yii::$app->request->post())) {       
+            $modelU = User::findOne($model->id);
+            $modelU->password_hash = Yii::$app->security->generatePasswordHash($model->password);
+            // $modelU->update();
+            if($modelU->save()){
+                Yii::$app->session->setFlash('success', 'ปรับปรุงเรียบร้อย..');
+                return $this->redirect(['/profile']);
+            }
+
+        } 
+        if(Yii::$app->request->isAjax){
+            return $this->renderAjax('_change_password', [
+                'model' => $model,
+            ]);
+        }
+        return $this->render('_change_password', [
+            'model' => $model,
+        ]);
+       
+    }
+    
 }

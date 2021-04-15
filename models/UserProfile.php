@@ -7,7 +7,6 @@ use Yii;
 /**
  * This is the model class for table "user_profile".
  *
- * @property int $id
  * @property int $user_id
  * @property string|null $pfname
  * @property string $name
@@ -39,7 +38,7 @@ class UserProfile extends \yii\db\ActiveRecord
             
             [['user_id'], 'integer'],
             [['created_at'], 'safe'],
-            [['pfname', 'name', 'sname', 'dep_name', 'group_work', 'photo', 'sign_photo'], 'string', 'max' => 255],
+            [['pfname', 'name', 'sname', 'dep_name', 'group_work','phone','line_id', 'photo', 'sign_photo'], 'string', 'max' => 255],
         ];
     }
 
@@ -49,13 +48,12 @@ class UserProfile extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
             'user_id' => 'User ID',
-            'pfname' => 'Pfname',
-            'name' => 'Name',
-            'sname' => 'Sname',
-            'dep_name' => 'Dep Name',
-            'group_work' => 'Group Work',
+            'pfname' => 'คำนำหน้า',
+            'name' => 'ชื่อ',
+            'sname' => 'นามสกุล',
+            'dep_name' => 'ตำแหน่ง',
+            'group_work' => 'กลุ่มงาน',
             'photo' => 'Photo',
             'sign_photo' => 'Sign Photo',
             'created_at' => 'Created At',

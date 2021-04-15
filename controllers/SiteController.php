@@ -92,19 +92,11 @@ class SiteController extends Controller
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            Yii::$app->session->setFlash('success', ['ยินดีต้องรับเข้าสู่ระบบ']);
-            $pr = UserProfile::findOne(['user_id' => Yii::$app->user->identity->id]);
-                if($pr){
-                    Yii::$app->session->set('profile',[
-                        'user_id' => $pr->user_id,
-                        'name' => $pr->pfname.$pr->name. ' ' . $pr->sname,   
-                        'dep_name' => $pr->dep_name                     
-                        ]);
-                }else{
-                    Yii::$app->session->setFlash('danger', ['ไม่มีโปรไฟล์']);
-                    return $this->redirect(['profile/create']);
-                }
-            
+            if($model->password == 'password'){
+                Yii::$app->session->setFlash('success', ['กรุณาเปลี่ยนรหัสผ่าน']); 
+                return $this->redirect(['/profile/change_password']);
+            }
+            Yii::$app->session->setFlash('success', ['ยินดีต้องรับเข้าสู่ระบบ']); 
             return $this->goBack();
         } else {
             $model->password = '';
