@@ -7,7 +7,7 @@ use app\models\User;
 /* @var $content string */
 
 if( Yii::$app->user->identity ){
-    $UP = UserProfile::findOne(['user_id' =>  Yii::$app->user->identity->id]);
+    $model = UserProfile::findOne(['user_id' =>  Yii::$app->user->identity->id]);
 }
 ?>
 
@@ -239,19 +239,19 @@ if( Yii::$app->user->identity ){
                     
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <img src="<?= $directoryAsset ?>/img/user2-160x160.jpg" class="user-image" alt="User Image"/>
-                        <span class="hidden-xs"><?=  Yii::$app->user->identity ? $UP->pfname.$UP->name.' '.$UP->sname :'Guest'?></span>
+                        <!-- <img src="<?= $directoryAsset ?>/img/user2-160x160.jpg" class="user-image" alt="User Image"/> -->
+                        <span class="hidden-xs"><?=  Yii::$app->user->identity ? $model->pfname.$model->name.' '.$model->sname :'Guest'?></span>
                     </a>
                     <ul class="dropdown-menu">
                         <!-- User image -->
                         <li class="user-header">
-                            <img src="<?= $directoryAsset ?>/img/user2-160x160.jpg" class="img-circle"
+                            <img src="<?= $model->image($model->photo)?>" class="img-circle"
                                  alt="User Image"/>
 
                             <p>
-                                <?= Yii::$app->user->identity ? $UP->pfname.$UP->name.' '.$UP->sname :'Guest'?>
+                                <?= Yii::$app->user->identity ? $model->pfname.$model->name.' '.$model->sname :'Guest'?>
                                 <!-- Alexander Pierce - Web Developer -->
-                                <small><?= Yii::$app->user->identity ? $UP->dep_name:''?></small>
+                                <small><?= Yii::$app->user->identity ? $model->dep_name:''?></small>
                             </p>
                         </li>
                         <!-- Menu Body -->

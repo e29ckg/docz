@@ -32,7 +32,11 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?php
                     foreach($models as $model){?>
                         <tr>
-                            <td><?= $model->id ?></td>
+                            <td>
+                            <img class="profile-user-img img-responsive img-circle" 
+                                src="<?= $model->profile->image($model->profile->photo)?>" alt="User profile picture">
+                                <?= $model->id ?>
+                            </td>
                             <td>
                                 <a href="#" data-id="<?=$model->id?>" class="activity-view-link" data-target = "activity-modal"><?=$model->username?></a>
                                 <span><?= $model->profile->name ? '('.$model->profile->pfname.$model->profile->name.' '.$model->profile->sname .')': ''?></span>

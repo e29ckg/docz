@@ -9,7 +9,8 @@ use app\models\User;
 use app\models\UserProfile;
 use yii\web\Response;
 use yii\widgets\ActiveForm;
-
+use yii\web\UploadedFile;
+use yii\helpers\Url;
 /**
  * Site controller
  */
@@ -31,7 +32,7 @@ class AdminController extends Controller
                         'roles' => ['?'],
                     ],
                     [
-                        'actions' => ['user','update_profile','reset_password'],
+                        'actions' => ['user','update_profile','reset_password','set_active','set_deactive'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -143,6 +144,8 @@ class AdminController extends Controller
     {
         // $this->layout = 'main-login';        
         $model = UserProfile::findOne(['user_id' => $id]);
+        $photo_old = $model->photo;
+        $sign_photo_old = $model->sign_photo;
 
         if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
             Yii::$app->response->format = Response::FORMAT_JSON;
@@ -158,9 +161,30 @@ class AdminController extends Controller
             $model->group_work = $model->group_work;
             $model->phone = $model->phone;
             $model->line_id = $model->line_id;
-            // $modelP->photo = 1;
-            // $modelP->sign_photo = 1;
-            // $modelU->save();
+            // $model->photo = $photo_old;
+            // $model->sign_photo =$sign_photo_old;
+            if($name = UploadedFile::getInstance($model, 'photo')){            
+                $path = 'uploads/profile/'.md5($name->basename.rand(1,400)).'.'.$name->extension;
+                if ($name->saveAs($path)) {                    // file is uploaded successfully
+                    if(!$photo_old == '' && file_exists(Url::to('@webroot/'.$photo_old ))){
+                        unlink(Url::to('@webroot/'.$photo_old ));
+                    }
+                    $model->photo = $path;
+                }
+            }else{
+                $model->photo = $photo_old;
+            }
+            if($nameS = UploadedFile::getInstance($model, 'sign_photo')){            
+                $pathS = 'uploads/profile/'.md5($nameS->basename.rand(1,400)).'.'.$nameS->extension;
+                if ($nameS->saveAs($pathS)) {                    // file is uploaded successfully
+                    if(!$sign_photo_old == '' && file_exists(Url::to('@webroot/'.$sign_photo_old ))){
+                        unlink(Url::to('@webroot/'.$sign_photo_old ));
+                    }
+                    $model->sign_photo = $pathS;
+                }
+            }else{
+                $model->sign_photo = $sign_photo_old;
+            }
             if($model->save()){
                 Yii::$app->session->setFlash('success', 'ปรับปรุงข้อมูลเรียบร้อย');
                 return $this->redirect(['user']);

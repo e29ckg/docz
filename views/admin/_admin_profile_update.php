@@ -7,6 +7,7 @@ use yii\helpers\ArrayHelper;
 use app\models\ProfilePfname;
 use app\models\UserDepName;
 use app\models\UserGroupWork;
+use yii\helpers\Url;
 
 $ProfilePfname = ProfilePfname::find()->all();
 $listData = ArrayHelper::map($ProfilePfname,'name','name');
@@ -55,6 +56,7 @@ $fieldOptionLine_id= [
     <?php $form = ActiveForm::begin([
         'id' => 'reg-form',
         'enableAjaxValidation' => true,
+        'options' => ['enctype' => 'multipart/form-data']
     ]
     ); ?>
     <div class="box-body">              
@@ -90,8 +92,16 @@ $fieldOptionLine_id= [
             <?= $form->field($model, 'line_id',$fieldOptionPhone)->textInput(['placeholder' => $model->getAttributeLabel('line_id'),'maxlength' => true]) ?>
         </div>
         <div class="row">
-        <?= $form->field($model, 'photo',$fieldOptionPhone)->textInput(['maxlength' => true]) ?>
-        <?= $form->field($model, 'sign_photo',$fieldOptionPhone)->textInput(['maxlength' => true]) ?>
+        
+            <div class="col-md-6">
+                <img src="<?=$model->image($model->photo)?>" alt="photo"class="profile-user-img img-responsive img-circle">  <br>
+                <?= $form->field($model, 'photo',$fieldOptionPhone)->fileInput() ?>
+            </div>
+            <div class="col-md-6">
+            <img src="<?=$model->image($model->sign_photo)?>" alt="photo"class="profile-user-img img-responsive img-circle">  <br>
+                
+                <?= $form->field($model, 'sign_photo',$fieldOptionPhone)->fileInput() ?>
+            </div>
         </div>
 
     </div>

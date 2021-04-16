@@ -53,6 +53,10 @@ $fieldOptionUserGroupWork = [
     'options' => ['class' => 'form-group has-feedback'],
     'inputTemplate' => "{input}<span class='form-control-feedback'></span>"
 ];
+$fieldOptionPhone = [
+    'options' => ['class' => 'form-group has-feedback col-md-6'],
+    'inputTemplate' => "{input}<span class='form-control-feedback' ></span>"
+];
 ?>
 <div class="login-box">
     <div class="login-logo">
@@ -66,6 +70,7 @@ $fieldOptionUserGroupWork = [
     <?php $form = ActiveForm::begin([
         'id' => 'reg-form',
         'enableAjaxValidation' => true,
+        'options' => ['enctype' => 'multipart/form-data']
     ]
     ); ?>
     <div class="box-body table-responsive">
@@ -117,10 +122,8 @@ $fieldOptionUserGroupWork = [
         <?= $form->field($model, 'email')->textInput(['placeholder' => $model->getAttributeLabel('email'),'maxlength' => true]) ?>
         <?= $form->field($model, 'phone')->textInput(['placeholder' => $model->getAttributeLabel('phone'),'maxlength' => true]) ?>
         <?= $form->field($model, 'line_id')->textInput(['placeholder' => $model->getAttributeLabel('line_id'),'maxlength' => true]) ?>
-
-        <?= $form->field($model, 'photo')->textInput(['maxlength' => true]) ?>
-
-        <?= $form->field($model, 'sign_photo')->textInput(['maxlength' => true]) ?>
+        <?= $form->field($model, 'photo',$fieldOptionPhone)->fileInput() ?>
+        <?= $form->field($model, 'sign_photo',$fieldOptionPhone)->fileInput() ?>   
 
     </div>
     <div class="box-footer">

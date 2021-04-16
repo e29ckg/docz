@@ -3,7 +3,8 @@
 namespace app\models;
 
 use Yii;
-
+use yii\web\UploadedFile;
+use yii\helpers\Url;
 /**
  * This is the model class for table "user_profile".
  *
@@ -22,6 +23,8 @@ class UserProfile extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
+
+
     public static function tableName()
     {
         return 'user_profile';
@@ -38,7 +41,8 @@ class UserProfile extends \yii\db\ActiveRecord
             
             [['user_id'], 'integer'],
             [['created_at'], 'safe'],
-            [['pfname', 'name', 'sname', 'dep_name', 'group_work','phone','line_id', 'photo', 'sign_photo'], 'string', 'max' => 255],
+            [['pfname', 'name', 'sname', 'dep_name', 'group_work','phone','line_id', 'sign_photo'], 'string', 'max' => 255],
+            [['photo'], 'file', 'extensions' => 'png, jpg'],
         ];
     }
 
@@ -59,4 +63,11 @@ class UserProfile extends \yii\db\ActiveRecord
             'created_at' => 'Created At',
         ];
     }
+    public function image($photo){
+        if(!$photo ==''  && file_exists(Url::to('@webroot/'.$photo))){
+           return Url::to('@web/'.$photo);
+        }
+        return Url::to(Url::to('@web/img/user2-160x160.jpg'));
+    }
+    
 }

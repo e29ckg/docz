@@ -16,7 +16,7 @@ $dataRole = ['ddd','aaaa','dddd'];
           <div class="box box-primary">
             <div class="box-body box-profile">
               <img class="profile-user-img img-responsive img-circle" 
-                src="<?= $model->profile->photo ? Url::to('@web/img/photo/user2-160x160.jpg') : Url::to('@web/img/user2-160x160.jpg')?>" alt="User profile picture">
+                src="<?= $model->profile->image($model->profile->photo)?>" alt="User profile picture">
 
               <h3 class="profile-username text-center"><?= $model->profile->pfname.$model->profile->name . ' ' .$model->profile->sname?></h3>
 
