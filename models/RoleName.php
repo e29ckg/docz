@@ -5,22 +5,22 @@ namespace app\models;
 use Yii;
 
 /**
- * This is the model class for table "user_role".
+ * This is the model class for table "role_name".
  *
  * @property int $id
- * @property int $user_id
- * @property int $role_id
  * @property string $name
+ * @property int|null $sort
+ * @property string|null $description
  * @property string $created_at
  */
-class UserRole extends \yii\db\ActiveRecord
+class RoleName extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return 'user_role';
+        return 'role_name';
     }
 
     /**
@@ -29,10 +29,13 @@ class UserRole extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'role_id', 'name'], 'required'],
-            [['user_id', 'role_id'], 'integer'],
+            [['name'], 'required'],
+            [['sort'], 'integer'],
+            [['status'], 'boolean'],
             [['created_at'], 'safe'],
             [['name'], 'string', 'max' => 255],
+            ['name', 'unique', 'targetClass' => '\app\models\RoleName', 'message' => 'This name has already been taken.'],
+           
         ];
     }
 
@@ -43,9 +46,9 @@ class UserRole extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'user_id' => 'User ID',
-            'role_id' => 'Role ID',
-            'name' => 'Name',
+            'name' => 'ชื่อสิทธิ์',
+            'sort' => 'Sort',
+            'status' => 'สถานะ',
             'created_at' => 'Created At',
         ];
     }

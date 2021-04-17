@@ -49,7 +49,7 @@ class SignupFormProfile extends Model
             
             ['name', 'required'],
             [['pfname','sname','dep_name','group_work'], 'string'],
-
+            [['photo','sign_photo'], 'file', 'extensions' => 'png, jpg'],
         ];
     }
 

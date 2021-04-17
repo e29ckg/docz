@@ -54,7 +54,7 @@ $fieldOptionUserGroupWork = [
     'inputTemplate' => "{input}<span class='form-control-feedback'></span>"
 ];
 $fieldOptionPhone = [
-    'options' => ['class' => 'form-group has-feedback col-md-6'],
+    'options' => ['class' => 'form-group has-feedback'],
     'inputTemplate' => "{input}<span class='form-control-feedback' ></span>"
 ];
 ?>

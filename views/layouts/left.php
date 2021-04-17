@@ -10,12 +10,15 @@
                     ['label' => 'Debug', 'icon' => 'dashboard', 'url' => ['/debug']],
                     ['label' => 'about', 'url' => ['site/about'], 'visible' => !(Yii::$app->user->isGuest) && (Yii::$app->user->id == 2)],
                     ['label' => 'Login', 'url' => ['site/login'], 'visible' => Yii::$app->user->isGuest],
+                    ['label' => 'Setting', 'options' => ['class' => 'header text-center']],
                     [
                         'label' => 'Admin',
                         'url' => '#',
                         'visible' => !Yii::$app->user->isGuest && (Yii::$app->user->id == 1),
                         'items' =>[
-                            ['label' => 'User', 'icon' => 'file-code-o', 'url' => ['/admin/user'],],
+                            ['label' => 'User', 'icon' => 'file-code-o', 'url' => ['/admin/user'],],                            
+                            ['label' => 'กำหนดสิทธ์', 'icon' => 'file-code-o', 'url' => ['/role/index'],],
+                            ['label' => 'ชื่อสิทธ์', 'icon' => 'file-code-o', 'url' => ['/role/name'],],
                         ]
                     ],
                     [

@@ -88,6 +88,11 @@ class ProfileController extends Controller
     {
         $model = new UserProfile();
 
+        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return ActiveForm::validate($model);
+        }
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {            
             $pr = UserProfile::findOne(['user_id' => Yii::$app->user->identity->id]);
                 if($pr){

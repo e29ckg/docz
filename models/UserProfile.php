@@ -41,8 +41,8 @@ class UserProfile extends \yii\db\ActiveRecord
             
             [['user_id'], 'integer'],
             [['created_at'], 'safe'],
-            [['pfname', 'name', 'sname', 'dep_name', 'group_work','phone','line_id', 'sign_photo'], 'string', 'max' => 255],
-            [['photo'], 'file', 'extensions' => 'png, jpg'],
+            [['pfname', 'name', 'sname', 'dep_name', 'group_work','phone','line_id'], 'string', 'max' => 255],
+            [['photo','sign_photo'], 'file', 'extensions' => 'png, jpg'],
         ];
     }
 
