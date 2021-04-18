@@ -38,7 +38,8 @@ $this->params['breadcrumbs'][] = $this->title;
                                 <?= $model->id ?>
                             </td>
                             <td>
-                                <a href="#" data-id="<?=$model->id?>" class="activity-view-link" data-target = "activity-modal"><?=$model->username?></a>
+                                <a href="<?=Url::to(['/profile/view','id'=>$model->id])?>" ><?=$model->username?></a>
+                                <!-- <a href="#" data-id="<?=$model->id?>" class="activity-view-link" data-target = "activity-modal"><?=$model->username?></a> -->
                                 <span><?= $model->profile->name ? '('.$model->profile->pfname.$model->profile->name.' '.$model->profile->sname .')': ''?></span>
                                 <span class="badge bg-red"><?=$model->status == 9 ? 'ระงับการใช้งาน': ''?></span></td>
                             <td>

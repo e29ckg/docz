@@ -6,6 +6,7 @@ use Yii;
 // use app\models\UserProfile;
 use app\models\User;
 use app\models\UserProfile;
+use app\models\Role;
 use app\models\ProfileChangePassword;
 use app\models\SignupFormProfile;
 use yii\data\ActiveDataProvider;
@@ -69,6 +70,7 @@ class ProfileController extends Controller
             $id = Yii::$app->user->id;
         }
         $model = User::findOne(['id' => $id]);
+        
         if (Yii::$app->request->isAjax) {
             return $this->renderAjax('view',[
                 'model' => $model,
@@ -299,6 +301,76 @@ class ProfileController extends Controller
             'model' => $model,
         ]);
        
+    }
+
+//------------------------------Role------------------------------------
+
+    public function actionRole_create($id)
+    {
+        $model = new Role();
+
+        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return ActiveForm::validate($model);
+        }
+
+        if ($model->load(Yii::$app->request->post())) { 
+
+            if($model->save()){
+                Yii::$app->session->setFlash('success', 'เพิ่มข้อมูลเรียบร้อย');
+                return $this->redirect(['/profile/view']);
+            }
+        }
+        if(Yii::$app->request->isAjax){
+            return $this->renderAjax('_role_form',[
+                'model' => $model,
+                'id' => $id,
+                'title' => 'เพิ่มตำแหน่ง'
+            ]);
+        }
+        return $this->render('_role_form', [
+            'model' => $model,
+            'id' => $id,
+            'title' => 'เพิ่มตำแหน่ง'
+        ]);            
+    }
+
+    public function actionRole_update($id)
+    {
+        $model = Role::findOne($id);
+
+        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return ActiveForm::validate($model);
+        }
+
+        if ($model->load(Yii::$app->request->post())) { 
+
+            if($model->save()){
+                Yii::$app->session->setFlash('success', 'ปรับปรุงข้อมูลเรียบร้อย');
+                return $this->redirect(['/profile/view']);
+            }
+        }
+        if(Yii::$app->request->isAjax){
+            return $this->renderAjax('_role_form',[
+                'model' => $model,
+                'id' => $model->user_id,
+                'title' => 'แก้ไขตำแหน่ง'
+            ]);
+        }
+        return $this->render('_role_form', [
+            'model' => $model,
+            'id' => $model->user_id,
+            'title' => 'แก้ไขตำแหน่ง'
+        ]);            
+    }
+
+    public function actionRole_del($id){
+        $model = Role::findOne($id);
+        if($model->delete()){
+            Yii::$app->session->setFlash('success', 'ลบข้อมูลเรียบร้อย');
+        }
+        return $this->redirect(['/profile/view']);
     }
     
 }

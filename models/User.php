@@ -229,4 +229,9 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return $this->profile->pfname.$this->profile->name.' '.$this->profile->sname;
     }
+
+    public function getRole()
+    {
+        return $this->hasMany(Role::className(), ['user_id' => 'id']);
+    }
 }
