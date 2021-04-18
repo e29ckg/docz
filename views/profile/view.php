@@ -47,17 +47,17 @@ $dataRole = ['ddd','aaaa','dddd'];
     <!-- About Me Box -->
     <div class="box box-primary">
       <div class="box-header with-border">
-        <h3 class="box-title">About Me</h3>
+        <h3 class="box-title"><strong><i class="fa fa-pencil margin-r-5"></i> Role Power</strong></h3>
       </div>
       <!-- /.box-header -->
       <div class="box-body">  
 
-        <strong><i class="fa fa-pencil margin-r-5"></i> Role</strong>
+        <!-- <strong><i class="fa fa-pencil margin-r-5"></i> Role Power</strong> -->
 
-        <p>
+        <!-- <p> -->
           <?php
-              foreach($dataRole as $role){?>
-                  <span class="label label-danger"><?= $role ?></span>
+              foreach($model->rolepower as $role){?>
+                  <span class="label label-danger"><?= $role->role_name->name ?></span>
           <?php } ?>
           <!-- <span class="label label-danger">UI Design</span>
           <span class="label label-success">Coding</span>
@@ -114,7 +114,7 @@ $dataRole = ['ddd','aaaa','dddd'];
     </div>
     <!-- /.nav-tabs-custom -->
     <div class="row">
-
+                
       <div class="col-md-4">
         <!-- Widget: user widget style 1 -->
         <div class="box box-widget widget-user-2">
@@ -124,8 +124,8 @@ $dataRole = ['ddd','aaaa','dddd'];
               <img class="img-circle" src="<?=Url::to('@web/img/crown.png')?>" alt="User Avatar">
             </div>
             <!-- /.widget-user-image -->
-            <h3 class="widget-user-username">ทั่วไป</h3>
-            <h5 class="widget-user-desc">ตำแหน่งอนุมัติ</h5>
+            <h3 class="widget-user-username">ตำแหน่งปกติ</h3>
+            <h5 class="widget-user-desc">ตำแหน่ง</h5>
           </div>
           <div class="box-footer no-padding">
             <ul class="nav nav-stacked">
@@ -143,19 +143,16 @@ $dataRole = ['ddd','aaaa','dddd'];
       </div>
 
 <?php foreach($model->role as $role){ ?>
-      <div class="col-md-4">
-        <!-- Widget: user widget style 1 -->
-        <div class="box box-widget widget-user-2">
-          <!-- Add the bg color to the header using any of the bg-* classes -->
-          <div class="widget-user-header bg-red">
-            <div class="widget-user-image">
-              <img class="img-circle" src="<?=Url::to('@web/img/crown.png')?>" alt="User Avatar">
+        <div class="col-md-4">
+          <!-- Widget: user widget style 1 -->
+          <div class="box box-widget widget-user">
+            <!-- Add the bg color to the header using any of the bg-* classes -->
+            <div class="widget-user-header bg-aqua-active">
+              <h3 class="widget-user-username"><?=$role->role_name->name?></h3>
+              <h5 class="widget-user-desc">ตำแหน่งใช้ลงนาม</h5>
             </div>
-            <!-- /.widget-user-image -->
-            <h3 class="widget-user-username"><?=$role->role_name->name?></h3>
-            <h5 class="widget-user-desc">ตำแหน่งอนุมัติ</h5>
-          </div>
-          <div class="box-footer no-padding">
+            
+            <div class="box-footer no-padding">
             <ul class="nav nav-stacked">
               <li><h5 class="text-center"><?= $role->name_dep1 ? $role->name_dep1 : '-'?></h5></li>
               <li><h5 class="text-center"><?= $role->name_dep2 ? $role->name_dep2 : '-'?></h5></li>
@@ -167,9 +164,13 @@ $dataRole = ['ddd','aaaa','dddd'];
               </li>
             </ul>
           </div>
+          </div>
+          <!-- /.widget-user -->
         </div>
+
+      <!-- <div class="col-md-4 -->
         <!-- /.widget-user -->
-      </div>
+      <!-- </div> -->
 <?php } ?>
       
 

@@ -234,4 +234,9 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return $this->hasMany(Role::className(), ['user_id' => 'id']);
     }
+
+    public function getRolepower()
+    {
+        return $this->hasMany(RolePower::className(), ['user_id' => 'id']);
+    }
 }

@@ -18,7 +18,7 @@
                         'items' =>[
                             ['label' => 'User', 'icon' => 'file-code-o', 'url' => ['/admin/user'],],                            
                             ['label' => 'กำหนดสิทธ์', 'icon' => 'file-code-o', 'url' => ['/role/index'],],
-                            ['label' => 'ชื่อสิทธ์', 'icon' => 'file-code-o', 'url' => ['/role/name'],],
+                            ['label' => 'กำหนดขั้นตอน', 'icon' => 'file-code-o', 'url' => ['/docprofile/index'],],
                         ]
                     ],
                     [

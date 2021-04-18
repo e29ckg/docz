@@ -38,8 +38,8 @@ class RolePower extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'role_name_id' => 'Role Name ID',
-            'user_id' => 'User ID',
+            'role_name_id' => 'หน้าที่',
+            'user_id' => 'ผู้รับผิดชอบ',
         ];
     }
 
