@@ -6,14 +6,16 @@ use yii\bootstrap\Modal;
 
 
 
-dmstr\web\AdminLteAsset::register($this);
+// dmstr\web\AdminLteAsset::register($this);
+app\assets\AdminLteAsset::register($this);
+app\assets\AdminLtePluginAsset::register($this);
     if (class_exists('backend\assets\AppAsset')) {
         backend\assets\AppAsset::register($this);
     } else {
         app\assets\AppAsset::register($this);
     }
 
-    
+$this->registerCssFile('https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700');   
 
     $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@vendor/almasaeed2010/adminlte/dist');
     ?>
