@@ -7,7 +7,7 @@ use yii\helpers\Url;
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'User Profiles';
+$this->title = 'รายงานวันทำการประจำวัน';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
@@ -15,7 +15,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="col-md-12">
         <div class="box">
             <div class="box-header with-border">
-                <h3 class="box-title">DocProfile</h3>
+                <h3 class="box-title"></h3>
                 <div class="box-tools">
                     <!-- <?= Html::a('Create', ['create'], ['class' => 'btn btn-success btn-flat']) ?> -->
                     <button id="activity-create" class="btn btn-success btn-flat">เพิ่ม</button>
@@ -29,28 +29,30 @@ $this->params['breadcrumbs'][] = $this->title;
                             <th style="width: 10px">#</th>
                             <th>วันที่</th>
                             <th>ชื่อ</th>
-                            <th>ขั้นตอน</th>
-                            <th style="width: 100px"></th>
+                            <th>ไฟล์</th>
+                            <th style="width: 150px"></th>
                         </tr>
                         <?php foreach($models as $model){ ?>
                         <tr>
                             <td><?= $model->id?></td>
-                            <td><?= date("Y-m-d", strtotime("$model->doc_date"));?></td>
+                            <td><?= date("d-Y-m", strtotime("$model->doc_date"));?></td>
                             <td>
-                            <?= date("Y-m-d", strtotime("$model->doc_date"));?>
                                 <?=$model->doc_date?>
                                 <?=$model->name?>
-                                <button data-id="<?=$model->id?>" class="activity-view btn btn-success btn-xs">view</button>
-                                <?= Html::a('view', ['view','id'=>$model->id], ['class' => 'btn btn-success btn-flat']) ?>
+                                <!-- <button data-id="<?=$model->id?>" class="activity-view btn btn-success btn-flat">view</button> -->
+                                <!-- <?= Html::a('view', ['view','id'=>$model->id], ['class' => 'btn btn-success btn-flat']) ?> -->
                             </td>
-                            <td>                                
+                            <td>   
+                                <?php if($model->bsdr_file){?>
+                                    <a href="#" data-id="<?=$model->id?>" class="activity-view btn btn-success btn-flat"><i class="fa fa-file-pdf-o " aria-hidden="true"></i></a>
                                 
-                                     </td>
+                                <?php } ?>
+                            </td>
                             <td>
-                            <button data-id="<?=$model->id?>" class="activity-update-doc-profile btn btn-warning btn-xs">แก้ไข</button>
+                            <button data-id="<?=$model->id?>" class="activity-update btn btn-warning btn-flat">แก้ไข</button>
                               
                                 <!-- <button data-id="<?=$model->id?>" class="activity-update-role-power btn btn-warning btn-xs">แก้ไข</button> -->
-                                <a href="<?= Url::to(['/bsdr/del','model_id'=>$model->id]) ?>" onclick="return confirm('Are you sure you want to Delete ?');" data-method="post" class="btn btn-danger">ลบ</a>
+                                <a href="<?= Url::to(['/bsdr/del','id'=>$model->id]) ?>" onclick="return confirm('Are you sure you want to Delete ?');" class="btn btn-danger btn-flat">ลบ</a>
                             </td>
                         </tr>
                         <?php } ?>
@@ -97,27 +99,12 @@ function init_click_handlers(){
             );
         });   
 
-        $(".activity-create-doc-profile-sub").click(function(e) {
-            var fID = $(this).data("id");
-            $.get(
-                "/docprofile/doc_profile_sub_create",
-                {
-                    doc_profile_id: fID
-                },
-                function (data)
-                {
-                    $("#activity-modal").find(".modal-body").html(data);
-                    $(".modal-body").html(data);
-                    $(".modal-title").html("");
-                    $("#activity-modal").modal("show");
-                }
-            );
-        });    
-        $(".activity-update-role-power").click(function(e) {
+            
+        $(".activity-update").click(function(e) {
             var fID = $(this).data("id");
             // alert(fID);
             $.get(
-                "/role/$doc_profile_update",
+                "/bsdr/update",
                 {
                     id: fID
                 },

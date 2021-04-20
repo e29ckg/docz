@@ -29,7 +29,7 @@ $this->registerCssFile('https://fonts.googleapis.com/css?family=Source+Sans+Pro:
         <title><?= Html::encode($this->title) ?></title>
         <?php $this->head() ?>
     </head>
-    <body class="hold-transition skin-blue sidebar-mini">
+    <body id="body" class="hold-transition skin-blue sidebar-mini ">
     <?php $this->beginBody() ?>
     <div class="wrapper">
 

@@ -10,17 +10,17 @@ use Yii;
  * @property int $id
  * @property string $doc_date
  * @property string $name
- * @property string $bsdr_file
+ * @property string $file
  * @property string $created
  */
-class DoczBsdr extends \yii\db\ActiveRecord
+class DoczB extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return 'docz_bsdr';
+        return 'docz_b';
     }
 
     /**
@@ -32,7 +32,7 @@ class DoczBsdr extends \yii\db\ActiveRecord
             [['doc_date', 'name'], 'required'],
             [['doc_date', 'created'], 'safe'],
             [['name'], 'string', 'max' => 255],
-            [['bsdr_file'], 'file', 'extensions' => 'pdf, PDF']
+            [['file'], 'file', 'extensions' => 'pdf, PDF']
         ];
     }
 
@@ -45,8 +45,14 @@ class DoczBsdr extends \yii\db\ActiveRecord
             'id' => 'ID',
             'doc_date' => 'วันที่',
             'name' => 'ชื่อเอกสาร',
-            'bsdr_file' => 'File',
+            'file' => 'File',
             'created' => 'Created',
         ];
+    }
+
+    public function getDoc_manage()
+    {
+        return $this->hasMany(DocManage::className(), ['doc_form' => 'doc_form','doc_id'=>'id'])
+                    ->orderBy(['sort' => SORT_ASC]);
     }
 }

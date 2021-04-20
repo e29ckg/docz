@@ -12,8 +12,8 @@
                     ['label' => 'about', 'url' => ['site/about'], 'visible' => !(Yii::$app->user->isGuest) && (Yii::$app->user->id == 2)],
                     ['label' => 'Login', 'url' => ['site/login'], 'visible' => Yii::$app->user->isGuest],
                     ['label' => 'เจ้าหน้าที่สารบรรณ', 'options' => ['class' => 'header text-center']],                    
-                    ['label' => 'ระบบเอกสาร', 'icon' => 'file-code-o', 'url' => ['/bsdr/index']],
-                    ['label' => 'นำเอกสารเข้าระบบ', 'icon' => 'file-code-o', 'url' => ['/bsdr/create']],
+                    ['label' => 'ระบบเอกสาร', 'icon' => 'file-code-o', 'url' => ['/docz/index']],
+                    // ['label' => 'นำเอกสารเข้าระบบ', 'icon' => 'file-code-o', 'url' => ['/docz/create']],
                     ['label' => 'Setting', 'options' => ['class' => 'header text-center']],
                     [
                         'label' => 'Admin',

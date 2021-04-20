@@ -7,20 +7,35 @@ use yii\helpers\Url;
 
 $this->title = 'bsdr';
 $listRoleName =[
-    'ข้าราชการ'=>'ข้าราชการ',
-    'ข้าราชการ wfh'=>'ข้าราชการ wfh',
+    'ผอ.'=>'ผอ.',
+    'ผู้พิพากษาหัวหน้าศาล'=>'ผู้พิพากษาหัวหน้าศาล',
 ];
 $fieldOption = [
     'options' => ['class' => 'form-group has-feedback'],
     'inputTemplate' => "{input}<span class='help-block'></span>",
     'template'=>'{label}<div class="col-sm-10 form-group has-feedback">{input}{error}</div>'
 ];
+// $fieldOption = [
+//     'options' => ['class' => 'form-group has-feedback col-md-4'],
+//     'inputTemplate' => "{input}<span class='form-control-feedback'></span>"
+// ];
 
+// 'id' => 'ID',
+//             'r_number' => 'R Number',
+//             'r_date' => 'R Date',
+//             'doc_speed' => 'Doc Speed',
+//             'doc_form_number' => 'Doc Form Number',
+//             'doc_date' => 'Doc Date',
+//             'doc_to' => 'Doc To',
+//             'name' => 'Name',
+//             'file' => 'File',
+//             'user_create' => 'User Create',
+//             'created' => 'Created',
 ?>
           <!-- Horizontal Form -->
     <div class="box">
         <div class="box-header with-border">
-            <h3 class="box-title"><?=$this->title ?></h3>
+            <h3 class="box-title"></h3>
         </div>
             <!-- /.box-header -->
             <!-- form start -->
@@ -31,14 +46,23 @@ $fieldOption = [
             'options' => ['enctype' => 'multipart/form-data','class'=>'form-horizontal']
         ]
         ); ?>
-        <div class="box-body">                
-            <?= $form->field($model, 'name',$fieldOption)
-                ->dropDownList(
-                    $listRoleName,
-                    ['prompt'=>'เลือก..']
-                    )
-                ->label($model->getAttributeLabel('name'),['class'=>'col-sm-2 control-label']) 
-            ?>
+        <div class="box-body">        
+
+        <?= $form->field($model, 'r_number',$fieldOption)
+                ->textInput(['placeholder' => $model->getAttributeLabel('r_number'),'maxlength' => true])
+                ->label($model->getAttributeLabel('r_number'),['class'=>'col-sm-2 control-label']) ?>
+        
+        <?= $form->field($model, 'r_date',$fieldOption)
+                ->textInput(['placeholder' => $model->getAttributeLabel('r_date'),'maxlength' => true])
+                ->label($model->getAttributeLabel('r_date'),['class'=>'col-sm-2 control-label']) ?>
+        
+        <?= $form->field($model, 'doc_speed',$fieldOption)
+                ->textInput(['placeholder' => $model->getAttributeLabel('doc_speed'),'maxlength' => true])
+                ->label($model->getAttributeLabel('doc_speed'),['class'=>'col-sm-2 control-label']) ?>
+        
+        <?= $form->field($model, 'doc_form_number',$fieldOption)
+                ->textInput(['placeholder' => $model->getAttributeLabel('doc_form_number'),'maxlength' => true])
+                ->label($model->getAttributeLabel('doc_form_number'),['class'=>'col-sm-2 control-label']) ?>
         
         <?= $form->field($model, 'doc_date',$fieldOption)
             ->textInput([
@@ -46,9 +70,23 @@ $fieldOption = [
                 'maxlength' => true,
                 'id' => 'datepicker2'])
             ->label($model->getAttributeLabel('doc_date'),['class'=>'col-sm-2 control-label']);  ?>
+       
+        <?= $form->field($model, 'doc_to',$fieldOption)
+                ->dropDownList(
+                    $listRoleName,
+                    ['prompt'=>'เลือก..']
+                    )
+                ->label($model->getAttributeLabel('doc_to'),['class'=>'col-sm-2 control-label']) 
+            ?> 
+        <?= $form->field($model, 'name',$fieldOption)
+                ->textInput(['placeholder' => $model->getAttributeLabel('name'),'maxlength' => true])
+                ->label($model->getAttributeLabel('name'),['class'=>'col-sm-2 control-label']) ?>
+        
+        
+        
            
-            <?= $form->field($model, 'bsdr_file',$fieldOption)->fileInput()
-                ->label($model->getAttributeLabel('bsdr_file'),['class'=>'col-sm-2 control-label']); ?>                                
+            <?= $form->field($model, 'file',$fieldOption)->fileInput()
+                ->label($model->getAttributeLabel('file'),['class'=>'col-sm-2 control-label']); ?>                                
             </div>
             <!-- /.box-body -->
             <div class="box-footer">              
@@ -67,7 +105,7 @@ $fieldOption = [
 function init_click_handlers(){
     // $( "#datepicker2" ).datepicker({ defaultDate: "04/19/2021" });
     $("#datepicker2").datepicker({
-        format: "dd/mm/yyyy",
+        format: "yyyy-mm-dd",
         todayBtn: true,
         language: "th",             
         thaiyear: true ,

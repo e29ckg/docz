@@ -48,6 +48,7 @@ $fieldOption = [
             <!-- /.box-footer -->
         <!-- </form> -->
         <?= $form->field($model, 'doc_profile_id')->hiddenInput(['value' => $doc_profile_id])->label(false) ?>
+        <?= $form->field($model, 'code')->hiddenInput(['value' => $code])->label(false) ?>
         <?php ActiveForm::end(); ?>
     </div>
           <!-- /.box -->    

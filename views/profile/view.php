@@ -115,32 +115,6 @@ $dataRole = ['ddd','aaaa','dddd'];
     <!-- /.nav-tabs-custom -->
     <div class="row">
                 
-      <div class="col-md-4">
-        <!-- Widget: user widget style 1 -->
-        <div class="box box-widget widget-user-2">
-          <!-- Add the bg color to the header using any of the bg-* classes -->
-          <div class="widget-user-header bg-red">
-            <div class="widget-user-image">
-              <img class="img-circle" src="<?=Url::to('@web/img/crown.png')?>" alt="User Avatar">
-            </div>
-            <!-- /.widget-user-image -->
-            <h3 class="widget-user-username">ตำแหน่งปกติ</h3>
-            <h5 class="widget-user-desc">ตำแหน่ง</h5>
-          </div>
-          <div class="box-footer no-padding">
-            <ul class="nav nav-stacked">
-              <li><a href="#" class="text-center"><?= $model->profile->dep_name ? $model->profile->dep_name:'-'?></a></li>
-              <!-- <li><a href="#">Tasks <span class="pull-right badge bg-aqua">5</span></a></li>
-              <li><a href="#">Completed Projects <span class="pull-right badge bg-green">12</span></a></li> -->
-              <li>
-                <button type="button"  id="activity-update-profile2" data-id="<?=$model->id?>" data-target = "activity-modal" class="btn btn-primary btn-block" >แก้ไขข้อมูล</button>
-                <!-- <a href="#" class="text-center btn btn-warning btn-block">แก้ไข</a> -->
-              </li>
-            </ul>
-          </div>
-        </div>
-        <!-- /.widget-user -->
-      </div>
 
 <?php foreach($model->role as $role){ ?>
         <div class="col-md-4">

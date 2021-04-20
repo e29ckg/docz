@@ -44,7 +44,7 @@ class DocprofileController extends Controller
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'doc_profile_del' => ['post'],
+                    // 'doc_profile_del' => ['post'],
                 ],
             ],
         ];
@@ -142,8 +142,8 @@ class DocprofileController extends Controller
     }
 
 
-//------------------------------// Role Power //----------------------------------------------------------------
-    public function actionDoc_profile_sub_create($doc_profile_id)
+//------------------------------// //----------------------------------------------------------------
+    public function actionDoc_profile_sub_create($doc_profile_id,$code)
     {
         $model = new DocProfileSub();
 
@@ -162,12 +162,14 @@ class DocprofileController extends Controller
         if(Yii::$app->request->isAjax){
             return $this->renderAjax('_doc_profile_sub',[
                 'model' => $model,
-                'doc_profile_id' => $doc_profile_id
+                'doc_profile_id' => $doc_profile_id,
+                'code' =>$code
             ]);
         }
         return $this->render('_doc_profile_sub', [
             'model' => $model,
-            'doc_profile_id' => $doc_profile_id
+            'doc_profile_id' => $doc_profile_id,
+            'code' => $code
         ]);            
     }
 

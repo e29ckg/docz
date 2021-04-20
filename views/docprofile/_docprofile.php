@@ -24,12 +24,19 @@ $fieldOption = [
             <!-- form start -->
         <!-- <form class="form-horizontal"> -->
         <?php $form = ActiveForm::begin([
-            'id' => 'reg-form',
+            'id' => 'doc-profile-form',
             'enableAjaxValidation' => true,
             'options' => ['enctype' => 'multipart/form-data','class'=>'form-horizontal']
         ]
         ); ?>
-            <div class="box-body">                
+            <div class="box-body">      
+            <?= $form->field($model, 'code',$fieldOption)
+                    ->textInput([
+                        'placeholder' => $model->getAttributeLabel('code'),
+                        'maxlength' => true
+                        ])
+                    ->label($model->getAttributeLabel('code'),['class'=>'col-sm-2 control-label']) ?>
+                          
             <?= $form->field($model, 'name',$fieldOption)
                     ->textInput([
                         'placeholder' => $model->getAttributeLabel('name'),

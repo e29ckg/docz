@@ -9,11 +9,13 @@ use Yii;
  *
  * @property int $id
  * @property string $doc_form
- * @property int $user_id
- * @property string $name
+ * @property int $doc_id
  * @property int $role_name_id
+ * @property int $user_id
  * @property int|null $sort
  * @property string|null $detail
+ * @property int|null $st
+ * @property string|null $updated
  * @property string $created
  */
 class DocManage extends \yii\db\ActiveRecord
@@ -32,11 +34,11 @@ class DocManage extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['doc_form', 'user_id', 'name', 'role_name_id'], 'required'],
-            [['user_id', 'role_name_id', 'sort'], 'integer'],
+            [['doc_form', 'doc_id', 'role_name_id', 'user_id'], 'required'],
+            [['doc_id', 'role_name_id', 'user_id', 'sort', 'st'], 'integer'],
             [['detail'], 'string'],
-            [['created'], 'safe'],
-            [['doc_form', 'name'], 'string', 'max' => 255],
+            [['updated', 'created'], 'safe'],
+            [['doc_form'], 'string', 'max' => 255],
         ];
     }
 
@@ -48,12 +50,22 @@ class DocManage extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'doc_form' => 'Doc Form',
-            'user_id' => 'User ID',
-            'name' => 'Name',
+            'doc_id' => 'Doc ID',
             'role_name_id' => 'Role Name ID',
+            'user_id' => 'User ID',
             'sort' => 'Sort',
             'detail' => 'Detail',
+            'st' => 'St',
+            'updated' => 'Updated',
             'created' => 'Created',
         ];
+    }
+    public function getRole_name()
+    {
+        return $this->hasOne(RoleName::className(), ['id' => 'role_name_id']);
+    }
+    public function role_name()
+    {
+        return $this->role_name->name ;
     }
 }

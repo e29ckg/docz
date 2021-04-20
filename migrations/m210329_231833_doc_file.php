@@ -14,6 +14,7 @@ class m210329_231833_doc_file extends Migration
     {
         $this->createTable('doc_file', [
             'id' => $this->primaryKey(),
+            'docz_id' => $this->integer(),
             'doc_form' => $this->string(255)->notNull(),
             'name' => $this->string(255)->notNull(),
             'file' => $this->string(255),

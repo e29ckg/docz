@@ -26,8 +26,10 @@ class DocProfile extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name'], 'string', 'max' => 255],
-            [['name'], 'required'],
+            [['name','code'], 'string', 'max' => 255],
+            [['name','code'], 'required'],
+            ['code', 'unique', 'targetClass' => '\app\models\DocProfile', 'message' => 'This CODE has already been taken.'],
+            
         ];
     }
 
@@ -39,9 +41,10 @@ class DocProfile extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'name' => 'ชื่อ',
+            'code' => 'CODE'
         ];
     }
-    public function getDoccps()
+    public function getDocps()
     {
         return $this->hasMany(DocProfileSub::className(), ['doc_profile_id' => 'id'])
                     ->orderBy(['sort' => SORT_ASC]);
