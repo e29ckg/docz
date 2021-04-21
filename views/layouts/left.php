@@ -13,6 +13,8 @@
                     ['label' => 'Login', 'url' => ['site/login'], 'visible' => Yii::$app->user->isGuest],
                     ['label' => 'เจ้าหน้าที่สารบรรณ', 'options' => ['class' => 'header text-center']],                    
                     ['label' => 'ระบบเอกสาร', 'icon' => 'file-code-o', 'url' => ['/docz/index']],
+                    ['label' => 'อยู่ระหว่างดำเนินการ', 'icon' => 'file-code-o', 'url' => ['/docz/index_2']],
+                    ['label' => 'ดำเนินการเสร็จ', 'icon' => 'file-code-o', 'url' => ['/docz/index_3']],
                     // ['label' => 'นำเอกสารเข้าระบบ', 'icon' => 'file-code-o', 'url' => ['/docz/create']],
                     ['label' => 'Setting', 'options' => ['class' => 'header text-center']],
                     [

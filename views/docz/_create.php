@@ -103,7 +103,7 @@ $fieldOption = [
 <?php $this->registerJs('
 
 function init_click_handlers(){
-    // $( "#datepicker2" ).datepicker({ defaultDate: "04/19/2021" });
+    // $( "#datepicker2" ).datepicker();
     $("#datepicker2").datepicker({
         format: "yyyy-mm-dd",
         todayBtn: true,

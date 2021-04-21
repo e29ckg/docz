@@ -75,21 +75,21 @@ class DoczController extends Controller
      */
     public function actionIndex()
     {
-        $models = Docz::find()->orderBy(['id'=>SORT_DESC])->all();
+        $models = Docz::find()->where(['st'=>1])->orderBy(['id'=>SORT_DESC])->all();
         return $this->render('index',[
             'models' => $models
         ]);
     }
 
-    public function actionIndex2() //อยู่ระหว่างดำเนินการ
+    public function actionIndex_2() //อยู่ระหว่างดำเนินการ
     {
-        $models = Docz::find()->all();
-        return $this->render('index',[
+        $models = Docz::find()->where(['st'=>2])->orderBy(['id'=>SORT_DESC])->all();
+        return $this->render('index_2',[
             'models' => $models
         ]);
     }
 
-    public function actionIndex3() //เสร็จสิ้นแล้ว
+    public function actionIndex_3() //เสร็จสิ้นแล้ว
     {
         $models = Docz::find()->all();
         return $this->render('index',[
@@ -154,14 +154,13 @@ class DoczController extends Controller
         if ($model->load(Yii::$app->request->post())) {      
             if($name = UploadedFile::getInstance($model, 'file')){            
                 $path = 'uploads/docz/'.md5($name->basename.rand(1,400)).'.'.$name->extension;
-                if ($name->saveAs($path)) {                    // file is uploaded successfully
-                    // if(!$photo_old == '' && file_exists(Url::to('@webroot/'.$photo_old ))){
-                    //     unlink(Url::to('@webroot/'.$photo_old ));
-                    // }
+                if ($name->saveAs($path)) { 
                     $model->file = $path;
                 }
             }
             $model->doc_form = $this->code; //ชื่อโปรแกรม
+            $model->r_date = date("Y-m-d h:i:s", strtotime($model->r_date)); //ชื่อโปรแกรม
+            $model->doc_date = date("Y-m-d", strtotime($model->doc_date)); //ชื่อโปรแกรม
             if($model->save()){
                 Yii::$app->session->setFlash('success', 'บันทักข้อมูลเรียบร้อย'.$model->doc_date);
                 return $this->redirect(['index']);
@@ -353,5 +352,27 @@ class DoczController extends Controller
         }
         return false;
     } 
+    
+    public function actionStart($id){
+        $model = Docz::findOne($id);
+        $model->user_create = Yii::$app->user->id;
+        $model->st = 2;
+        $model->start = date("Y-m-d H:i:s");
+        $model->save(); 
+        
+        foreach($model->doc_manage as $dm){
+            if($dm->sort == 1){
+                $dm->st = 2;
+            }else{
+                $dm->st = 1;
+            }                
+            $dm->created = date("Y-m-d H:i:s");
+            $dm->save();
+        }
+        $model->save();
+        return $this->redirect(['index']);;
+    } 
+
+
 
 }

@@ -14,16 +14,19 @@ class m210329_231833_docz extends Migration
     {
         $this->createTable('docz', [
             'id' => $this->primaryKey(),            
-            'r_number' => $this->integer()->notNull(),
-            'r_date' => $this->string(),
+            'r_number' => $this->string()->notNull(),
+            'r_date' => $this->dateTime(),
             'doc_speed' =>$this->string(),
             'doc_form_number' => $this->string(),
-            'doc_date' => $this->string(),
+            'doc_date' => $this->dateTime(),
             'doc_form' => $this->string(),            
             'doc_to' => $this->string()->notNull(),
             'name' => $this->string(1000)->notNull(),
             'file' => $this->string(255),
-            'user_create' => $this->string(),            
+            'user_create' => $this->integer(),            
+            'st'=> $this->integer()->defaultValue(1),
+            'start'=> $this->dateTime(),
+            'end'=> $this->dateTime(),
             'created'=> $this->timestamp(),
         ]);
     }

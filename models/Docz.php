@@ -35,14 +35,14 @@ class Docz extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['r_number'], 'integer'],
+            [['user_create'], 'integer'],
             [['r_number','doc_to', 'name'], 'required'],
-            [['created'], 'safe'],
-            [['r_date', 'doc_speed', 'doc_form_number','doc_form', 'doc_date', 'doc_to', 'user_create'], 'string', 'max' => 255],
+            [['r_date','doc_date','created'], 'safe'],
+            [['r_number','doc_speed', 'doc_form_number','doc_form',  'doc_to'], 'string', 'max' => 255],
             [['name'], 'string', 'max' => 1000],
             ['r_number', 'unique', 'targetClass' => '\app\models\Docz', 'message' => 'เลขนี้มีในระบบแล้ว.'],
             [['file'], 'file','skipOnEmpty' => true, 'extensions' => 'pdf, PDF'],
-            
+            [['r_number'],'my_required'],
         ];
     }
 
@@ -63,8 +63,32 @@ class Docz extends \yii\db\ActiveRecord
             'doc_to' => 'เรียน',            
             'file' => 'File',
             'user_create' => 'ผู้นำเข้า',
+            'st'=> 'สถานะ',
+            'start'=> 'เริ่ม',
+            'end'=> 'เสร็จสิ้น',
             'created' => 'Created',
         ];
+    }
+    public function my_required($attribute_name, $params)
+
+    {
+
+        if (empty($this->file)
+
+            && empty($this->message)
+
+        ) {
+
+            $this->addError($attribute_name, Yii::t('user', 'At least 1 of the field must be filled up properly'));
+
+
+            return false;
+
+        }
+
+
+        return true;
+
     }
 
     public function getDoc_manage()
@@ -72,6 +96,12 @@ class Docz extends \yii\db\ActiveRecord
         return $this->hasMany(DocManage::className(), ['doc_id'=>'id'])
                     ->orderBy(['sort' => SORT_DESC]);
     }
+
+    // public function DM_2()
+    // {
+    //     return $this->hasMany(DocManage::className(), ['doc_id'=>'id'])
+    //                 ->orderBy(['sort' => SORT_DESC]);
+    // }
 
     public function getDoc_file()
     {

@@ -17,8 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="box-header with-border">
                 <h3 class="box-title">Docz</h3>
                 <div class="box-tools">
-                    <!-- <?= Html::a('Create', ['create'], ['class' => 'btn btn-success btn-flat']) ?> -->
-                    <button id="activity-create" class="btn btn-success btn-flat">เพิ่ม</button>
+                    
                 </div>
             </div>
             <!-- /.box-header -->
@@ -29,48 +28,33 @@ $this->params['breadcrumbs'][] = $this->title;
                             <th style="width: 10px">#</th>
                             <th style="width: 100px">วันที่</th>
                             <th >ชื่อ</th>
-                            <th style="width: 50px">ไฟล์หนังสือ</th>
-                            <th style="width: 50px">ไฟล์แนบ</th>
-                            <th style="width: 100px"></th>
-                            <th style="width: 100px"></th>
+                            <th style="width: 200px"></th>
+                            <th style="width: 150px">เอกสารอยู่ที่</th>
                         </tr>
                         <?php foreach($models as $model){ ?>
                         <tr>
                             <td><?= $model->r_number?></td>
-                            <td><?= date("Y-m-d", strtotime("$model->doc_date"));?></td>
-                            <td class="mailbox-subject">
-                                <p> 
-                                    <?= $model->doc_speed ?>
-                                    <?=$model->doc_form_number ? 'ที่ ศย '.$model->doc_form_number : ''?>
-                                    <?=$model->doc_date ? 'ลงวันที่ '.date("Y-m-d",strtotime($model->doc_date)) : ''?>
-                                    <?=$model->name ? 'เรื่อง '.$model->name : ''?>
-                                </p>
-                                <!-- <button data-id="<?=$model->id?>" class="activity-view btn btn-success btn-flat">view</button> -->
-                                <!-- <?= Html::a('สถานะ', ['view_st','id'=>$model->id], ['class' => 'btn btn-success btn-flat']) ?> -->
-                            </td>
-                            
-                            <td>   
-                                <?php if($model->file){?>
-                                    <a href="#" data-id="<?=$model->id?>" class="activity-view "><i class="fa fa-file-pdf-o " aria-hidden="true"></i></a>
-                                <?php } ?>
+                            <td><?= date("Y-m-d", strtotime("$model->doc_date"));?></td>                            
+                            <td> </td>
+                            <td>
+                                <?php 
+                                    $x=count($model->doc_manage);
+                                    $i=0;
+                                    foreach($model->doc_manage as $dm){
+                                        if($dm->st == '3'){
+                                            $i++;
+                                        }
+                                    } 
+                                    $x = ($i / $x) * 100 ;  
+                                    // echo (1 / 3 ) * 100;  
+                                ?>
+                                <div class="progress active">
+                                    <div class="progress-bar progress-bar-primary progress-bar-striped" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: <?= $x; ?>%">
+                                        <span class="sr-only">40% Complete (success) </span>
+                                    </div>
+                                </div> 
                             </td>
                             <td>
-                                <?php foreach($model->doc_file as $f){ ?>
-                                    <?php if($f->file){?>
-                                        <a href="#" data-id="<?=$f->id?>" class="activity-view_att"><i class="fa fa-file-pdf-o " aria-hidden="true"></i></a>
-                                    <?php } ?>
-                                <?php } ?>
-                                <button data-id="<?=$model->id?>" class="activity-att btn btn-warning btn-flat btn-xs">ไฟล์แนบ</button>
-                            </td>
-                            <td>
-                                
-                                
-                                <button data-id="<?=$model->id?>" class="activity-update btn btn-warning btn-flat btn-xs">แก้ไข</button>
-                                <!-- <button data-id="<?=$model->id?>" class="activity-update-role-power btn btn-warning btn-xs">แก้ไข</button> -->
-                                <a href="<?= Url::to(['/docz/del','id'=>$model->id]) ?>" onclick="return confirm('Are you sure you want to Delete ?');" class="btn btn-danger btn-flat btn-xs">ลบ</a>
-                            </td>
-                            <td>
-                            <a href="<?=Url::to(['/docz/send','id'=>$model->id])?>" class="btn btn-primary btn-block btn-flat ">เสนอ</a>
                             </td>
                         </tr>
                         <?php } ?>

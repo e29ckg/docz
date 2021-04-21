@@ -28,10 +28,9 @@ class m210329_231833_doc_profile extends Migration
             'sort' => $this->integer(),
         ]);
 
-        // $this->insert('doc_profile_sub', ['doc_profile_id' => 1,'role_name_id'=>1,'sort' => 1]);
-        $this->insert('doc_profile_sub', ['doc_profile_id' => 1,'role_name_id'=>2,'sort' => 2]);
-        $this->insert('doc_profile_sub', ['doc_profile_id' => 1,'role_name_id'=>8,'sort' => 3]);
-        $this->insert('doc_profile_sub', ['doc_profile_id' => 1,'role_name_id'=>9,'sort' => 4]);        
+        $this->insert('doc_profile_sub', ['doc_profile_id' => 1,'role_name_id'=>2,'sort' => 1]);
+        $this->insert('doc_profile_sub', ['doc_profile_id' => 1,'role_name_id'=>8,'sort' => 2]);
+        $this->insert('doc_profile_sub', ['doc_profile_id' => 1,'role_name_id'=>9,'sort' => 3]);        
 
     }
 
