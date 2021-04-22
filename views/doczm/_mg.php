@@ -52,12 +52,30 @@ use yii\helpers\Url;
                         <?php } ?>
 
                         <div class="timeline-item">
-                            <span class="time"><i class="fa fa-clock-o"></i>12345555 <?=$dm->updated?></span>
+                            <span class="time"><i class="fa fa-clock-o"></i><?=$dm->updated?></span>
 
                             <h3 class="timeline-header">
                                 <a href="#"><?=$dm->role_name()?></a>
                             </h3>
-                            
+
+                            <?php if($dm->st == 2){ ?>
+                                <div class="timeline-body">
+                                    <p style="white-space: pre-line"><?=$dm->detail?></p>
+                                </div>
+                                <div class="timeline-footer">
+                                    <div class="pull-right">
+                                        <a href="<?=Url::to(['send','id'=>$dm->id])?>" class="btn btn-primary btn-xs">ส่งต่อ</a>
+                                    </div>                                
+                                    <a data-id="<?=$dm->id?>" class="activity-mg-edit btn btn-warning btn-xs">แก้ไข</a>
+                                </div>
+                            <?php }else if($dm->st == 3){ ?>
+                                <div class="timeline-body">
+                                    <p style="white-space: pre-line"><?=$dm->detail?></p>
+                                </div>
+                                <div class="timeline-footer">
+                                    
+                                </div>
+                            <?php } ?>
                         </div>
                     </li>
                     <!-- END timeline item --> 
@@ -65,22 +83,7 @@ use yii\helpers\Url;
 
                     <li>
                     <i class="fa fa-clock-o bg-gray"></i>
-                    <div class="timeline-item">
-                            <!-- <span class="time"><i class="fa fa-clock-o"></i>12345555 <?=$dm->updated?></span> -->
-
-                            <!-- <h3 class="timeline-header">
-                            
-                            </h3> -->
-
-                            <!-- <div class="timeline-body">
-
-                            </div> -->
-                            <div class="timeline-footer">
-                            <!-- <a class="btn btn-primary btn-xs">Read more</a> -->
-
-                            <a href="<?= Url::to(['docz/start','id'=> $model->id ])?>" data-method="post" class="activity-start btn btn-primary btn-block">เริ่ม</a>
-                            </div>
-                        </div>
+                    
                     </li>
                 </ul>    
             </div>
@@ -88,16 +91,15 @@ use yii\helpers\Url;
     </div>
 </div> 
 
-
 <?php $this->registerJs('
 
 function init_click_handlers(){
     
-    $(".activity-send-del").click(function(e) {
+    $(".activity-mg-edit").click(function(e) {
             var fID = $(this).data("id");
             // alert(fID);
             $.get(
-                "/docz/send_del",
+                "/doczm/mg_edit",
                 {
                     id: fID
                 },

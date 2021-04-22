@@ -17,8 +17,8 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="box-header with-border">
                 <h3 class="box-title">Docz</h3>
                 <div class="box-tools">
-                    <?= Html::a('Create', ['create'], ['class' => 'btn btn-success btn-flat']) ?>
-                    <!-- <button id="activity-create" class="btn btn-success btn-flat">เพิ่ม</button> -->
+                    <!-- <?= Html::a('Create', ['create'], ['class' => 'btn btn-success btn-flat']) ?> -->
+                    <button id="activity-create" class="btn btn-success btn-flat">เพิ่ม</button>
                 </div>
             </div>
             <!-- /.box-header -->

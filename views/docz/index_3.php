@@ -62,10 +62,8 @@ $this->params['breadcrumbs'][] = $this->title;
                                 </div> 
                             </td>
                             <td>
-                                <span class="pull-right-container">
-                                    <small class="label pull-right bg-blue"><?= $role_name?></small>
-                                </span> 
-                            </td>
+                                <a href="<?=Url::to(['/docz/send_to_user','id'=>$model->id])?>" class="btn btn-primary btn-block btn-flat ">จ่ายงาน</a>
+                             </td>
                         </tr>
                         <?php } ?>
                     </tbody>

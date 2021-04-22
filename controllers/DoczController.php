@@ -29,7 +29,7 @@ class DoczController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['create','index','set_active','set_deactive','update_profile','reset_password'],
+                'only' => ['create','index'],
                 'rules' => [
                     [
                         'actions' => ['signup'],
@@ -37,7 +37,7 @@ class DoczController extends Controller
                         'roles' => ['?'],
                     ],
                     [
-                        'actions' => ['index','create','update_profile','reset_password','set_active','set_deactive'],
+                        'actions' => ['index','create'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -91,8 +91,8 @@ class DoczController extends Controller
 
     public function actionIndex_3() //เสร็จสิ้นแล้ว
     {
-        $models = Docz::find()->all();
-        return $this->render('index',[
+        $models = Docz::find()->where(['st'=>3])->orderBy(['id'=>SORT_DESC])->all();
+        return $this->render('index_3',[
             'models' => $models
         ]);
     }

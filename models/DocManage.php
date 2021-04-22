@@ -54,8 +54,8 @@ class DocManage extends \yii\db\ActiveRecord
             'role_name_id' => 'Role Name ID',
             'user_id' => 'User ID',
             'sort' => 'Sort',
-            'detail' => 'Detail',
-            'st' => 'St',
+            'detail' => 'รายละเอียด..',
+            'st' => 'สถานะ',
             'updated' => 'Updated',
             'created' => 'Created',
         ];
@@ -68,4 +68,28 @@ class DocManage extends \yii\db\ActiveRecord
     {
         return $this->role_name->name ;
     }
+
+    public function getDocz()
+    {
+        return $this->hasOne(Docz::className(), ['id' => 'doc_id']);
+    }
+    public function docz_name()
+    {
+        return $this->docz->doc_speed ? '<span class="pull-right-container">
+                    <small class="label pull-right bg-blue">'.$this->docz->doc_speed.'</small>
+                    </span>':''
+                . $this->docz->doc_form_number ? ' ที่ ศย '.$this->docz->doc_form_number.' ' : ''
+                . $this->docz->name;
+    }
+    public function url_file()
+    {
+        return $this->docz->file;
+    }
+
+    public function getDoc_file()
+    {
+        return $this->hasMany(DocFile::className(), ['id'=>'doc_id'])
+                    ->orderBy(['id' => SORT_ASC]);
+    }   
+
 }

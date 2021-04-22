@@ -47,6 +47,10 @@ class RolePower extends \yii\db\ActiveRecord
     {
         return $this->hasOne(RoleName::className(), ['id' => 'role_name_id']);
     }
+    public function role_name()
+    {
+        return $this->role_name->name;
+    }
 
     public function getUser()
     {
