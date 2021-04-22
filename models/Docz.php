@@ -42,7 +42,7 @@ class Docz extends \yii\db\ActiveRecord
             [['name'], 'string', 'max' => 1000],
             ['r_number', 'unique', 'targetClass' => '\app\models\Docz', 'message' => 'เลขนี้มีในระบบแล้ว.'],
             [['file'], 'file','skipOnEmpty' => true, 'extensions' => 'pdf, PDF'],
-            [['r_number'],'my_required'],
+            // [['r_number'],'my_required'],
         ];
     }
 

@@ -34,7 +34,11 @@ $this->params['breadcrumbs'][] = $this->title;
                         <?php foreach($models as $model){ ?>
                         <tr>
                             <td><?= $model->r_number?></td>
-                            <td><?= date("Y-m-d", strtotime("$model->doc_date"));?></td>                            
+                            <td>
+                                <?= date("Y-m-d", strtotime("$model->doc_date"));?>
+                                <?= $model->doc_speed; ?>
+                                <?= $model->name; ?>
+                            </td>                            
                             <td> </td>
                             <td>
                                 <?php 
@@ -49,7 +53,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                     // echo (1 / 3 ) * 100;  
                                 ?>
                                 <div class="progress active">
-                                    <div class="progress-bar progress-bar-primary progress-bar-striped" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: <?= $x; ?>%">
+                                    <div class="progress-bar progress-bar-primary progress-bar-striped" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: <?= $x==0 ? '5' : $x; ?>%">
                                         <span class="sr-only">40% Complete (success) </span>
                                     </div>
                                 </div> 
