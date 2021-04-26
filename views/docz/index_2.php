@@ -25,7 +25,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <table class="table table-bordered">
                     <tbody>
                         <tr>
-                            <th style="width: 10px">#</th>
+                            <th style="width: 10px">เลขที่รับ</th>
                             <th style="width: 100px">วันที่</th>
                             <th >ชื่อ</th>
                             <th style="width: 200px"></th>
@@ -36,10 +36,16 @@ $this->params['breadcrumbs'][] = $this->title;
                             <td><?= $model->r_number?></td>
                             <td>
                                 <?= date("Y-m-d", strtotime("$model->doc_date"));?>
-                                <?= $model->doc_speed; ?>
-                                <?= $model->name; ?>
                             </td>                            
-                            <td> </td>
+                            <td>
+                                <p> 
+                                    <?= $model->doc_speed ?'
+                                            <small class="label  bg-red">'.$model->doc_speed.'</small>
+                                        ':''?>
+                                    <?=$model->doc_form_number ? 'ที่ ศย '.$model->doc_form_number : ''?>
+                                    <?=$model->doc_date ? 'ลงวันที่ '.date("Y-m-d",strtotime($model->doc_date)) : ''?>
+                                    <?=$model->name ? 'เรื่อง '.$model->name : ''?>
+                                </p> </td>
                             <td>
                                 <?php 
                                     $x=count($model->doc_manage);

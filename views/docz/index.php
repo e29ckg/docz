@@ -31,7 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             <th >ชื่อ</th>
                             <th style="width: 50px">ไฟล์หนังสือ</th>
                             <th style="width: 50px">ไฟล์แนบ</th>
-                            <th style="width: 100px"></th>
+                            <th style="width: 125px"></th>
                             <th style="width: 100px"></th>
                         </tr>
                         <?php foreach($models as $model){ ?>
@@ -65,9 +65,9 @@ $this->params['breadcrumbs'][] = $this->title;
                             <td>
                                 
                                 
-                                <button data-id="<?=$model->id?>" class="activity-update btn btn-warning btn-flat btn-xs">แก้ไข</button>
+                                <button data-id="<?=$model->id?>" class="activity-update btn btn-warning btn-flat btn-md">แก้ไข</button>
                                 <!-- <button data-id="<?=$model->id?>" class="activity-update-role-power btn btn-warning btn-xs">แก้ไข</button> -->
-                                <a href="<?= Url::to(['/docz/del','id'=>$model->id]) ?>" onclick="return confirm('Are you sure you want to Delete ?');" class="btn btn-danger btn-flat btn-xs">ลบ</a>
+                                <a href="<?= Url::to(['/docz/del','id'=>$model->id]) ?>" onclick="return confirm('Are you sure you want to Delete ?');" class="btn btn-danger btn-flat btn-md">ลบ</a>
                             </td>
                             <td>
                             <a href="<?=Url::to(['/docz/send','id'=>$model->id])?>" class="btn btn-primary btn-block btn-flat ">เสนอ</a>
