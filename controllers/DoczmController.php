@@ -101,9 +101,14 @@ class DoczmController extends Controller
     public function actionMg_edit($id) //หน้า _mg กด 
     {
         $model = DocManage::findOne($id);
- 
+
+        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return ActiveForm::validate($model);
+        }
+        
         if ($model->load(Yii::$app->request->post())) {      
-            
+            $model->user_id = Yii::$app->user->id;
             if($model->save()){
                 Yii::$app->session->setFlash('success', 'บันทักข้อมูลเรียบร้อย');
                 return $this->redirect(['mg','id'=>$model->doc_id]);
@@ -119,6 +124,26 @@ class DoczmController extends Controller
         return $this->render('_mg_edit',[
             'model' => $model
         ]);
+    }
+
+    public function actionMg_return($id) //หน้า _mg กดตึกลับ
+    {
+        $model = DocManage::findOne($id);
+        $sort = $model->sort - 1;
+
+        if($sort == 0){
+            $DZ = Docz::findOne($model->doc_id);
+            $DZ->st = 1;
+            $DZ->save();
+        }else{
+            $DM = DocManage::find()->where(['doc_id'=>$model->doc_id,'sort'=>$sort])->one();
+            $DM->st = 2;
+            $DM->save();
+        }
+        $model->st = 1;
+        $model->user_id = Yii::$app->user->id;
+        $model->save();
+        return $this->redirect(['index','role_name_id'=>$model->role_name_id]);
     }
 
     public function actionSend($id) //หน้า _mg กด 

@@ -60,17 +60,22 @@ use yii\helpers\Url;
 
                             <?php if($dm->st == 2){ ?>
                                 <div class="timeline-body">
+                                    <p style="white-space: pre-line"><b><?=$dm->ty?></b></p>
                                     <p style="white-space: pre-line"><?=$dm->detail?></p>
+                                    <p style="white-space: pre-line"><?=$dm->username()?></p>
                                 </div>
                                 <div class="timeline-footer">
                                     <div class="pull-right">
                                         <a href="<?=Url::to(['send','id'=>$dm->id])?>" class="btn btn-primary btn-xs">ส่งต่อ</a>
                                     </div>                                
-                                    <a data-id="<?=$dm->id?>" class="activity-mg-edit btn btn-warning btn-xs">แก้ไข</a>
+                                    <a data-id="<?=$dm->id?>" class="activity-mg-edit btn btn-warning ">แก้ไข</a>
+                                    <a href="<?=Url::to(['/doczm/mg_return','id'=>$dm->id])?>" onclick="return confirm('เอกสารนี้ต้องการตีกลับใช่ไหม ?');" class="btn btn-danger btn-xs">ตีกลับเอกสาร</a>
                                 </div>
                             <?php }else if($dm->st == 3){ ?>
                                 <div class="timeline-body">
+                                    <p style="white-space: pre-line"><b><?=$dm->ty?></b></p>
                                     <p style="white-space: pre-line"><?=$dm->detail?></p>
+                                    <p class="text-right" style="white-space: pre-line"><?=$dm->username()?></p>
                                 </div>
                                 <div class="timeline-footer">
                                     
@@ -100,6 +105,23 @@ function init_click_handlers(){
             // alert(fID);
             $.get(
                 "/doczm/mg_edit",
+                {
+                    id: fID
+                },
+                function (data)
+                {
+                    $("#activity-modal").find(".modal-body").html(data);
+                    $(".modal-body").html(data);
+                    $(".modal-title").html("");
+                    $("#activity-modal").modal("show");
+                }
+            );
+        }); 
+    $(".activity-mg-return").click(function(e) {
+            var fID = $(this).data("id");
+            // alert(fID);
+            $.get(
+                "/doczm/mg_return",
                 {
                     id: fID
                 },

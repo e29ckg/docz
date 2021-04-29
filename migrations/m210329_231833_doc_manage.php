@@ -19,6 +19,7 @@ class m210329_231833_doc_manage extends Migration
             'role_name_id' => $this->integer()->notNull(),
             'user_id' => $this->integer()->notNull(),            
             'sort' => $this->integer(),
+            'ty' => $this->text(),
             'detail' => $this->text(),            
             'st' => $this->integer(),           
             'updated'=> $this->dateTime(),

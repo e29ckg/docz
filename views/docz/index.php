@@ -52,7 +52,9 @@ $this->params['breadcrumbs'][] = $this->title;
                             <td>   
                                 <?php if($model->file){?>
                                     <a href="#" data-id="<?=$model->id?>" class="activity-view "><i class="fa fa-file-pdf-o " aria-hidden="true"></i></a>
-                                <?php } ?>
+                                <?php }else{
+                                    echo 'ไม่มีหนังสือ';
+                                } ?>
                             </td>
                             <td>
                                 <?php foreach($model->doc_file as $f){ ?>

@@ -36,7 +36,7 @@ class DocManage extends \yii\db\ActiveRecord
         return [
             [['doc_form', 'doc_id', 'role_name_id', 'user_id'], 'required'],
             [['doc_id', 'role_name_id', 'user_id', 'sort', 'st'], 'integer'],
-            [['detail'], 'string'],
+            [['detail','ty'], 'string'],
             [['updated', 'created'], 'safe'],
             [['doc_form'], 'string', 'max' => 255],
         ];
@@ -54,6 +54,7 @@ class DocManage extends \yii\db\ActiveRecord
             'role_name_id' => 'Role Name ID',
             'user_id' => 'User ID',
             'sort' => 'Sort',
+            'ty' => 'ตรายาง',
             'detail' => 'รายละเอียด..',
             'st' => 'สถานะ',
             'updated' => 'Updated',
@@ -73,14 +74,15 @@ class DocManage extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Docz::className(), ['id' => 'doc_id']);
     }
-    public function docz_name()
+    public function getProfile()
     {
-        return $this->docz->doc_speed ? '<span class="pull-right-container">
-                    <small class="label pull-right bg-blue">'.$this->docz->doc_speed.'</small>
-                    </span>':''
-                . $this->docz->doc_form_number ? ' ที่ ศย '.$this->docz->doc_form_number.' ' : ''
-                . $this->docz->name;
+        return $this->hasOne(UserProfile::className(), ['user_id' => 'user_id']);
     }
+    public function username()
+    {
+        return $this->profile->name;
+    }
+    
     public function url_file()
     {
         return $this->docz->file;
@@ -91,5 +93,7 @@ class DocManage extends \yii\db\ActiveRecord
         return $this->hasMany(DocFile::className(), ['id'=>'doc_id'])
                     ->orderBy(['id' => SORT_ASC]);
     }   
+
+
 
 }

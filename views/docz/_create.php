@@ -6,19 +6,31 @@ use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
 
 $this->title = 'bsdr';
+$listSpeed =[
+    'ด่วน'=>'ด่วน',
+    'ด่วนที่สุด'=>'ด่วนที่สุด',
+];
 $listRoleName =[
     'ผอ.'=>'ผอ.',
     'ผู้พิพากษาหัวหน้าศาล'=>'ผู้พิพากษาหัวหน้าศาล',
 ];
-$fieldOption = [
-    'options' => ['class' => 'form-group has-feedback'],
-    'inputTemplate' => "{input}<span class='help-block'></span>",
-    'template'=>'{label}<div class="col-sm-10 form-group has-feedback">{input}{error}</div>'
-];
 // $fieldOption = [
-//     'options' => ['class' => 'form-group has-feedback col-md-4'],
-//     'inputTemplate' => "{input}<span class='form-control-feedback'></span>"
+//     'options' => ['class' => 'form-group has-feedback'],
+//     'inputTemplate' => "{input}<span class='help-block'></span>",
+//     'template'=>'{label}<div class="col-sm-10 form-group has-feedback">{input}{error}</div>'
 // ];
+$fieldOption = [
+    'options' => ['class' => 'has-feedback col-md-4'],
+    'inputTemplate' => "{input}<span class='form-control-feedback'></span>"
+];
+$fieldOptionC2 = [
+    'options' => ['class' => 'has-feedback col-md-6'],
+    'inputTemplate' => "{input}<span class='form-control-feedback'></span>"
+];
+$fieldOptionC12 = [
+    'options' => ['class' => 'has-feedback col-md-12'],
+    'inputTemplate' => "{input}<span class='form-control-feedback'></span>"
+];
 
 // 'id' => 'ID',
 //             'r_number' => 'R Number',
@@ -46,41 +58,51 @@ $fieldOption = [
             'options' => ['enctype' => 'multipart/form-data','class'=>'form-horizontal']
         ]
         ); ?>
-        <div class="box-body">        
-
-        <?= $form->field($model, 'r_number',$fieldOption)
-                ->textInput(['placeholder' => $model->getAttributeLabel('r_number'),'maxlength' => true])
-                ->label($model->getAttributeLabel('r_number'),['class'=>'col-sm-2 control-label']) ?>
+        <div class="box-body row">        
+        <div class="col-md-12">
+        <?= $form->field($model, 'r_number',$fieldOptionC2)
+                ->textInput(['placeholder' => 'ตัวอย่าง. 1/64','maxlength' => true])
+                ->label($model->getAttributeLabel('r_number')) ?>
+        
         
         <?= $form->field($model, 'r_date',$fieldOption)
-                ->textInput(['placeholder' => $model->getAttributeLabel('r_date'),'maxlength' => true])
-                ->label($model->getAttributeLabel('r_date'),['class'=>'col-sm-2 control-label']) ?>
+            ->textInput([
+                'placeholder' => $model->getAttributeLabel('r_date'),
+                'maxlength' => true,
+                'id' => 'datepicker1'])
+            ->label();  ?>
+        
+        </div>
         
         <?= $form->field($model, 'doc_speed',$fieldOption)
-                ->textInput(['placeholder' => $model->getAttributeLabel('doc_speed'),'maxlength' => true])
-                ->label($model->getAttributeLabel('doc_speed'),['class'=>'col-sm-2 control-label']) ?>
+                ->dropDownList(
+                    $listSpeed,
+                    ['prompt'=>'เลือก..']
+                    )
+                ->label($model->getAttributeLabel('doc_speed')) 
+            ?> 
         
         <?= $form->field($model, 'doc_form_number',$fieldOption)
                 ->textInput(['placeholder' => $model->getAttributeLabel('doc_form_number'),'maxlength' => true])
-                ->label($model->getAttributeLabel('doc_form_number'),['class'=>'col-sm-2 control-label']) ?>
+                ->label() ?>
         
         <?= $form->field($model, 'doc_date',$fieldOption)
             ->textInput([
                 'placeholder' => $model->getAttributeLabel('doc_date'),
                 'maxlength' => true,
                 'id' => 'datepicker2'])
-            ->label($model->getAttributeLabel('doc_date'),['class'=>'col-sm-2 control-label']);  ?>
+            ->label();  ?>
        
-        <?= $form->field($model, 'doc_to',$fieldOption)
+        <?= $form->field($model, 'doc_to',$fieldOptionC12)
                 ->dropDownList(
                     $listRoleName,
                     ['prompt'=>'เลือก..']
                     )
-                ->label($model->getAttributeLabel('doc_to'),['class'=>'col-sm-2 control-label']) 
+                ->label($model->getAttributeLabel('doc_to')) 
             ?> 
-        <?= $form->field($model, 'name',$fieldOption)
+        <?= $form->field($model, 'name',$fieldOptionC12)
                 ->textInput(['placeholder' => $model->getAttributeLabel('name'),'maxlength' => true])
-                ->label($model->getAttributeLabel('name'),['class'=>'col-sm-2 control-label']) ?>
+                ->label($model->getAttributeLabel('name')) ?>
         
         
         
@@ -104,6 +126,13 @@ $fieldOption = [
 
 function init_click_handlers(){
     // $( "#datepicker2" ).datepicker();
+    $("#datepicker1").datepicker({
+        format: "yyyy-mm-dd",
+        todayBtn: true,
+        language: "th",             
+        thaiyear: true ,
+      }).datepicker("setDate", "0");
+
     $("#datepicker2").datepicker({
         format: "yyyy-mm-dd",
         todayBtn: true,

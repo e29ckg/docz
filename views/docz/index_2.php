@@ -45,7 +45,8 @@ $this->params['breadcrumbs'][] = $this->title;
                                     <?=$model->doc_form_number ? 'ที่ ศย '.$model->doc_form_number : ''?>
                                     <?=$model->doc_date ? 'ลงวันที่ '.date("Y-m-d",strtotime($model->doc_date)) : ''?>
                                     <?=$model->name ? 'เรื่อง '.$model->name : ''?>
-                                </p> </td>
+                                </p> 
+                            </td>
                             <td>
                                 <?php 
                                     $x=count($model->doc_manage);
@@ -69,7 +70,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             </td>
                             <td>
                                 <span class="pull-right-container">
-                                    <small class="label pull-right bg-blue"><?= $role_name?></small>
+                                    <small class="label pull-right bg-blue"><?= isset($role_name) ? $role_name : '-'?></small>
                                 </span> 
                             </td>
                         </tr>

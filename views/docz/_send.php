@@ -53,7 +53,7 @@ use yii\helpers\Url;
                         <?php } ?>
 
                         <div class="timeline-item">
-                            <span class="time"><i class="fa fa-clock-o"></i>12345555 <?=$dm->updated?></span>
+                            <span class="time"><i class="fa fa-clock-o"></i><?=$dm->updated?></span>
 
                             <h3 class="timeline-header">
                                 <a href="#"><?=$dm->role_name()?></a>
@@ -67,7 +67,7 @@ use yii\helpers\Url;
                     <li>
                     <i class="fa fa-clock-o bg-gray"></i>
                     <div class="timeline-item">
-                            <!-- <span class="time"><i class="fa fa-clock-o"></i>12345555 <?=$dm->updated?></span> -->
+                            <!-- <span class="time"><i class="fa fa-clock-o"></i>12345555 </span> -->
 
                             <!-- <h3 class="timeline-header">
                             
