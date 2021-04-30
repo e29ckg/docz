@@ -16,9 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="box">
             <div class="box-header with-border">
                 <h3 class="box-title">Docz</h3>
-                <div class="box-tools">
-                    
-                </div>
+                <div class="box-tools"> </div>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
@@ -26,44 +24,26 @@ $this->params['breadcrumbs'][] = $this->title;
                     <tbody>
                         <tr>
                             <th style="width: 10px">#</th>
-                            <th style="width: 100px">วันที่</th>
                             <th >ชื่อ</th>
-                            <th style="width: 200px"></th>
-                            <th style="width: 150px">เอกสารอยู่ที่</th>
+                            <th style="width: 100px"></th>
                         </tr>
                         <?php foreach($models as $model){ ?>
                         <tr>
-                            <td><?= $model->r_number?></td>
-                            <td>
-                                <?= date("Y-m-d", strtotime("$model->doc_date"));?>
-                                <?= $model->doc_speed; ?>
-                                <?= $model->name; ?>
-                            </td>                            
-                            <td> </td>
-                            <td>
-                                <?php 
-                                    $x=count($model->doc_manage);
-                                    $i=0;
-                                    foreach($model->doc_manage as $dm){
-                                        if($dm->st == '3'){
-                                            $i++;
-                                        }
-                                        if($dm->st  == '2'){
-                                            $role_name = $dm->role_name();
-                                        }
-                                    } 
-                                    $x = ($i / $x) * 100 ;  
-                                    // echo (1 / 3 ) * 100;  
-                                ?>
-                                <div class="progress active">
-                                    <div class="progress-bar progress-bar-danger progress-bar-striped" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: <?= $x==0 ? '5' : $x; ?>%">
-                                        <span class="sr-only"><?=$x?>% Complete (success) </span>
-                                    </div>
-                                </div> 
+                            <td><?= $model->id?></td>
+                            <td class="mailbox-subject">
+                                <p>
+                                <?= $model->docz->doc_speed ?'
+                                            <small class="label  bg-red">'.$model->docz->doc_speed.'</small>
+                                        ':''?>
+                                    <?=$model->docz->doc_form_number ? 'ที่ ศย '.$model->docz->doc_form_number : ''?>
+                                    <?=$model->docz->doc_date ? 'ลงวันที่ '.date("Y-m-d",strtotime($model->docz->doc_date)) : ''?>
+                                    <?=$model->docz->name ? 'เรื่อง '.$model->docz->name : ''?>
+                                </p>
                             </td>
+                            
                             <td>
-                                <a href="<?=Url::to(['/docz/send_to_user','id'=>$model->id])?>" class="btn btn-primary btn-block btn-flat ">จ่ายงาน/เก็บ</a>
-                             </td>
+                            <a href="<?=Url::to(['/docz/to_read','id'=>$model->doc_id])?>" class="btn btn-primary btn-block btn-flat ">อ่าน</a>
+                            </td>
                         </tr>
                         <?php } ?>
                     </tbody>
@@ -72,6 +52,8 @@ $this->params['breadcrumbs'][] = $this->title;
             <!-- /.box-body -->
         </div>
     </div>
+
+
 </div>
 
 <?php $this->registerJs('

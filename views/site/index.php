@@ -17,7 +17,7 @@ $this->title = 'DocZ ระบบจัดการเอกสาร';
 
         <p class="lead">ระบบจัดการเอกสาร.</p>
 
-        <p><a class="btn btn-lg btn-success" href="#">ระบบจัดการเอกสาร.</a></p>
+        <!-- <p><a class="btn btn-lg btn-success" href="#">ระบบจัดการเอกสาร.</a></p> -->
     </div>
 
     <div class="body-content">

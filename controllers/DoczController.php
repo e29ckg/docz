@@ -10,6 +10,7 @@ use app\models\Docz;
 use app\models\DocFile;
 use app\models\DocManage;
 use app\models\DocProfile;
+use app\models\DocUserRead;
 use yii\web\Response;
 use yii\widgets\ActiveForm;
 use yii\web\UploadedFile;
@@ -371,8 +372,77 @@ class DoczController extends Controller
         }
         $model->save();
         return $this->redirect(['index']);;
+    }
+
+    public function actionSend_to_user($id){
+        $Docz = Docz::findOne($id);
+        $MUser = User::find()->where(['status'=>10])->all(); 
+        
+        $model = new DocUserRead();
+
+        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return ActiveForm::validate($model);
+        }
+        if ($model->load(Yii::$app->request->post())) {   
+            foreach($model->user_id as $ms){
+                $data[] = $ms;
+                $DUR = DocUserRead::find()->where(['doc_id'=>$Docz->id,'user_id'=>$ms])->count();
+                if($DUR == 0){
+                    $model = new DocUserRead();
+                    $model->user_id = $ms;
+                    $model->doc_id = $Docz->id;
+                    $model->ckeck = 0;
+                    $model->created = date("Y-m-d H:i:s");
+                    $model->save();
+                }
+            }
+            return print_r($data);
+        }
+        return $this->render('_send_to_user',[
+            'MUser' => $MUser,
+            'model' => $model
+        ]);
+    } 
+    public function actionIndex_to_read(){
+        $models = DocUserRead::find()->where(['ckeck'=>0,'user_id'=>Yii::$app->user->id])->all();             
+        
+        return $this->render('index_to_read',[
+            'models' => $models
+        ]);
+    } 
+    public function actionTo_read($id){
+        $model = Docz::findOne($id);             
+        $modelDs = DocUserRead::find()->where(['doc_id'=>$model->id,'user_id'=>Yii::$app->user->id])->all();
+        foreach($modelDs as $Ds){
+            if($Ds->ckeck == 0){
+                $Ds->ckeck = 1;
+                $Ds->ip = Yii::$app->getRequest()->getUserIP();
+                $Ds->updated = date("Y-m-d H:i:s");
+                $Ds->save();
+            }
+        }
+        return $this->render('_to_read',[
+            'model' => $model
+        ]);
     } 
 
+    public function actionAll(){
+        $models = Docz::find()
+                    ->orderBy(['id'=>SORT_DESC])
+                    ->limit(1000)
+                    ->all();             
+        
+        return $this->render('index_all',[
+            'models' => $models
+        ]);
+    }
 
+    public function actionAll_to_read($id){
+        $model = Docz::findOne($id);
+        return $this->render('_all_to_read',[
+            'model' => $model
+        ]);
+    } 
 
 }
