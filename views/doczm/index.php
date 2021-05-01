@@ -36,7 +36,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                     <?= $model->docz->doc_speed ?'
                                             <small class="label  bg-red">'.$model->docz->doc_speed.'</small>
                                         ':''?>
-                                    <?=$model->docz->doc_form_number ? 'ที่ ศย '.$model->docz->doc_form_number : ''?>
+                                    <?=$model->docz->doc_form_number ? 'ที่ '.$model->docz->doc_form_number : ''?>
                                     <?=$model->docz->doc_date ? 'ลงวันที่ '.date("Y-m-d",strtotime($model->docz->doc_date)) : ''?>
                                     <?=$model->docz->name ? 'เรื่อง '.$model->docz->name : ''?>
                                 </p> </td>

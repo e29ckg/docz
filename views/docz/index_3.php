@@ -25,21 +25,22 @@ $this->params['breadcrumbs'][] = $this->title;
                 <table class="table table-bordered">
                     <tbody>
                         <tr>
-                            <th style="width: 10px">#</th>
-                            <th style="width: 100px">วันที่</th>
+                            <th style="width: 50px">#</th>
                             <th >ชื่อ</th>
                             <th style="width: 200px"></th>
-                            <th style="width: 150px">เอกสารอยู่ที่</th>
+                            <th style="width: 150px"></th>
                         </tr>
                         <?php foreach($models as $model){ ?>
                         <tr>
                             <td><?= $model->r_number?></td>
                             <td>
-                                <?= date("Y-m-d", strtotime("$model->doc_date"));?>
-                                <?= $model->doc_speed; ?>
-                                <?= $model->name; ?>
-                            </td>                            
-                            <td> </td>
+                                <?= $model->doc_speed ?'
+                                        <small class="label  bg-red">'.$model->doc_speed.'</small>
+                                    ':''?>
+                                <?=$model->doc_form_number ? 'ที่ '.$model->doc_form_number : ''?>
+                                <?=$model->doc_date ? 'ลงวันที่ '.date("Y-m-d",strtotime($model->doc_date)) : ''?>
+                                <?=$model->name ? 'เรื่อง '.$model->name : ''?>
+                            </td>       
                             <td>
                                 <?php 
                                     $x=count($model->doc_manage);

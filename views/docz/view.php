@@ -17,7 +17,12 @@ $dataRole = ['ddd','aaaa','dddd'];
 <div class="col-md-12">
           <div class="box">
             <div class="box-header with-border">
-              <h3 class="box-title"><?=$model->id?><?= $model->doc_date . ' ' .$model->name ?></h3>
+              <h3 class="box-title">
+                <?= $model->doc_speed ?'<small class="label  bg-red">'.$model->doc_speed.'</small>':''?>
+                <?=$model->doc_form_number ? 'ที่ '.$model->doc_form_number : ''?>
+                <?=$model->doc_date ? 'ลงวันที่ '.date("Y-m-d",strtotime($model->doc_date)) : ''?>
+                <?=$model->name ? 'เรื่อง '.$model->name : ''?>
+              </h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body text-center"> 

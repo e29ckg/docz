@@ -12,7 +12,12 @@ use yii\helpers\Url;
     <div class="col-md-8">
         <div class="box box-primary">
             <div class="box-header with-border">
-              <h3 class="box-title"><?=$model->name?></h3>
+                <h3 class="box-title">
+                    <?= $model->doc_speed ?'<small class="label  bg-red">'.$model->doc_speed.'</small>':''?>
+                    <?=$model->doc_form_number ? 'ที่ '.$model->doc_form_number : ''?>
+                    <?=$model->doc_date ? 'ลงวันที่ '.date("Y-m-d",strtotime($model->doc_date)) : ''?>
+                    <?=$model->name ? 'เรื่อง '.$model->name : ''?>
+                </h3>
             </div>
             <div class="box-body text-center"> 
                 <?php if($model->file){ ?>
@@ -43,7 +48,7 @@ use yii\helpers\Url;
                     </li> -->
                     <?php foreach($model->doc_manage as $dm){ ?>
                 
-                    <li>
+                        <li>
                         <?php if($dm->st == 3){?>
                             <i class="fa fa-check bg-red"></i>
                         <?php }else if($dm->st == 2){ ?>
@@ -58,7 +63,30 @@ use yii\helpers\Url;
                             <h3 class="timeline-header">
                                 <a href="#"><?=$dm->role_name()?></a>
                             </h3>
-                            
+
+                            <?php if($dm->st == 2){ ?>
+                                <div class="timeline-body">
+                                    <p style="white-space: pre-line"><b><?=$dm->ty?></b></p>
+                                    <p style="white-space: pre-line"><?=$dm->detail?></p>
+                                    <p style="white-space: pre-line"><?=$dm->username()?></p>
+                                </div>
+                                <div class="timeline-footer">
+                                    <div class="pull-right">
+                                        <a href="<?=Url::to(['send','id'=>$dm->id])?>" class="btn btn-primary btn-xs">ส่งต่อ</a>
+                                    </div>                                
+                                    <a data-id="<?=$dm->id?>" class="activity-mg-edit btn btn-warning ">แก้ไข</a>
+                                    <a href="<?=Url::to(['/doczm/mg_return','id'=>$dm->id])?>" onclick="return confirm('เอกสารนี้ต้องการตีกลับใช่ไหม ?');" class="btn btn-danger btn-xs">ตีกลับเอกสาร</a>
+                                </div>
+                            <?php }else if($dm->st == 3){ ?>
+                                <div class="timeline-body">
+                                    <p style="white-space: pre-line"><b><?=$dm->ty?></b></p>
+                                    <p style="white-space: pre-line"><?=$dm->detail?></p>
+                                    <p class="text-right" style="white-space: pre-line"><?=$dm->username()?></p>
+                                </div>
+                                <div class="timeline-footer">
+                                    
+                                </div>
+                            <?php } ?>
                         </div>
                     </li>
                     <!-- END timeline item --> 

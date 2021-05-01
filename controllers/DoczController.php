@@ -98,6 +98,14 @@ class DoczController extends Controller
         ]);
     }
 
+    public function actionIndex_4() //จ่ายแล้ว
+    {
+        $models = Docz::find()->where(['st'=>4])->orderBy(['id'=>SORT_DESC])->all();
+        return $this->render('index_4',[
+            'models' => $models
+        ]);
+    }
+
     public function actionView($id)
     {
         $model = Docz::findOne($id);
@@ -371,7 +379,7 @@ class DoczController extends Controller
             $dm->save();
         }
         $model->save();
-        return $this->redirect(['index']);;
+        return $this->redirect(['index']);
     }
 
     public function actionSend_to_user($id){
@@ -397,7 +405,9 @@ class DoczController extends Controller
                     $model->save();
                 }
             }
-            return print_r($data);
+            $Docz->st = 4;
+            $Docz->save();
+            return $this->redirect(['index_3']);
         }
         return $this->render('_send_to_user',[
             'MUser' => $MUser,

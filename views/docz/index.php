@@ -41,7 +41,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             <td class="mailbox-subject">
                                 <p> 
                                     <?= $model->doc_speed ?>
-                                    <?=$model->doc_form_number ? 'ที่ ศย '.$model->doc_form_number : ''?>
+                                    <?=$model->doc_form_number ? 'ที่ '.$model->doc_form_number : ''?>
                                     <?=$model->doc_date ? 'ลงวันที่ '.date("Y-m-d",strtotime($model->doc_date)) : ''?>
                                     <?=$model->name ? 'เรื่อง '.$model->name : ''?>
                                 </p>
