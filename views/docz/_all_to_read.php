@@ -49,35 +49,12 @@ use yii\helpers\Url;
                     <?php foreach($model->doc_manage as $dm){ ?>
                 
                         <li>
-                        <?php if($dm->st == 3){?>
                             <i class="fa fa-check bg-red"></i>
-                        <?php }else if($dm->st == 2){ ?>
-                            <i class="fa fa-comments-o bg-yellow"></i>
-                        <?php }else{ ?>
-                            <i class="fa fa-user bg-aqua bg-blue"></i>
-                        <?php } ?>
-
                         <div class="timeline-item">
                             <span class="time"><i class="fa fa-clock-o"></i><?=$dm->updated?></span>
-
                             <h3 class="timeline-header">
                                 <a href="#"><?=$dm->role_name()?></a>
                             </h3>
-
-                            <?php if($dm->st == 2){ ?>
-                                <div class="timeline-body">
-                                    <p style="white-space: pre-line"><b><?=$dm->ty?></b></p>
-                                    <p style="white-space: pre-line"><?=$dm->detail?></p>
-                                    <p style="white-space: pre-line"><?=$dm->username()?></p>
-                                </div>
-                                <div class="timeline-footer">
-                                    <div class="pull-right">
-                                        <a href="<?=Url::to(['send','id'=>$dm->id])?>" class="btn btn-primary btn-xs">ส่งต่อ</a>
-                                    </div>                                
-                                    <a data-id="<?=$dm->id?>" class="activity-mg-edit btn btn-warning ">แก้ไข</a>
-                                    <a href="<?=Url::to(['/doczm/mg_return','id'=>$dm->id])?>" onclick="return confirm('เอกสารนี้ต้องการตีกลับใช่ไหม ?');" class="btn btn-danger btn-xs">ตีกลับเอกสาร</a>
-                                </div>
-                            <?php }else if($dm->st == 3){ ?>
                                 <div class="timeline-body">
                                     <p style="white-space: pre-line"><b><?=$dm->ty?></b></p>
                                     <p style="white-space: pre-line"><?=$dm->detail?></p>
@@ -86,7 +63,6 @@ use yii\helpers\Url;
                                 <div class="timeline-footer">
                                     
                                 </div>
-                            <?php } ?>
                         </div>
                     </li>
                     <!-- END timeline item --> 
@@ -100,7 +76,7 @@ use yii\helpers\Url;
             </div>
         </div>
         <div>
-        <a href="<?=Url::to(['/docz/all']) ?>" class="btn btn-warning">กลับ</a>
+        <a href="<?=Url::to(Yii::$app->request->referrer)?>" class="btn btn-warning">กลับ</a>
         </div>
     </div>
 

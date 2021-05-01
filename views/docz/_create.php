@@ -43,6 +43,8 @@ $fieldOptionC12 = [
 //             'file' => 'File',
 //             'user_create' => 'User Create',
 //             'created' => 'Created',
+
+// $this->registerCssFile('http://www.google.com/ss.css');   
 ?>
           <!-- Horizontal Form -->
     <div class="box">
@@ -68,8 +70,10 @@ $fieldOptionC12 = [
         <?= $form->field($model, 'r_date',$fieldOption)
             ->textInput([
                 'placeholder' => $model->getAttributeLabel('r_date'),
+                // 'type'=>'datetime-local',
                 'maxlength' => true,
-                'id' => 'datepicker1'])
+                'id' => 'datepicker1'
+                ])
             ->label();  ?>
         
         </div>
@@ -126,17 +130,14 @@ $fieldOptionC12 = [
 
 function init_click_handlers(){
     // $( "#datepicker2" ).datepicker();
-    $("#datepicker1").datepicker({
-        format: "yyyy-mm-dd",
-        todayBtn: true,
-        language: "th",             
-        thaiyear: true ,
-      }).datepicker("setDate", "0");
+    $("#datepicker1").datetimepicker({
+        // format: "yyyy-mm-dd",
+      });
 
     $("#datepicker2").datepicker({
         format: "yyyy-mm-dd",
         todayBtn: true,
-        language: "th",             
+        language:"th-th",             
         thaiyear: true ,
       }).datepicker("setDate", "0");
 

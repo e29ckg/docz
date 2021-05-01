@@ -306,7 +306,11 @@ class DoczController extends Controller
     public function actionSend($id)
     {
         $model = Docz::findOne($id);
-        $modelD = DocProfile::find()->where(['code' => $this->code])->one();        
+        $modelD = DocProfile::find()->where(['code' => $this->code])->one();   
+        // $count = DocManage::find()->where(['doc_id'=>$id])->count();  
+        if(empty($model->start)) {
+            $this->stamp_rub($model->id);
+        }  //stamp เลขรับ ลงphp
         foreach($modelD->docps as $ds){   
             $count = DocManage::find()->where(['doc_id'=>$id,'role_name_id'=>$ds->role_name_id])->count();         
             if($count == 0){
@@ -317,10 +321,7 @@ class DoczController extends Controller
                 $m->role_name_id = $ds->role_name_id;
                 $m->sort = $ds->sort;
                 $m->save();
-
-            }
-            // $m->date_begin = '';
-            // $m->date_end ='';
+            }            
         }
         if(Yii::$app->request->isAjax){
             return $this->renderAjax('_send',[
@@ -453,6 +454,46 @@ class DoczController extends Controller
         return $this->render('_all_to_read',[
             'model' => $model
         ]);
+    } 
+
+    public function stamp_rub($id){
+        $model = Docz::findOne($id);
+        $mpdf = new \Mpdf\Mpdf();
+        // $mpdf->SetImportUse(); // only with mPDF <8.0
+
+        $completePath = Url::to('@webroot/'.$model->file);
+        $pagecount = $mpdf->SetSourceFile($completePath);
+        $mpdf->SetDocTemplate($completePath);
+        // $mpdf->AddFont('THSarabun', '', 'THSarabun.php'); //ธรรมดา
+        $mpdf->SetFont('garuda', '', 8);
+        $mpdf->AddPage();
+            $mpdf->SetXY(140, 5);
+            $mpdf->SetDrawColor(0, 0, 255);
+            $mpdf->setTextColor('0', '0', '255');
+            $mpdf->Cell(60, 6, 'ศาลเยาวชนและครอบครัวจังหวัดประจวบคีรีขันธ์', 'LTR', 1, '');
+            $mpdf->SetXY(140, 10);
+            $mpdf->SetFont('garuda', '', 10);
+            $mpdf->Cell(60, 6, 'รับที่  '.$model->r_number, 'LR', 1, '');
+            $mpdf->SetXY(140, 15);
+            $mpdf->Cell(60, 6, 'วันที่ '.$model->dateThaiTime($model->r_date), 'BLR', 1, '');
+            // $mpdf->SetXY(140, 20);
+            // $mpdf->Cell(60, 6, '', 'BLR', 1, '');
+        
+        for ($x = 2; $x <= $pagecount; $x++) {            
+            $mpdf->AddPage();
+
+        }
+        
+          
+        // The height of the template as it was printed is returned as $actualsize['h']
+        // The width of the template as it was printed is returned as $actualsize['w']
+        // $mpdf->WriteHTML('Hello World'.$pagecount);
+        // $mpdf->WriteHTML('Hello World');
+        // $mpdf->WriteHTML( '1qqaaaaaa', 2 );
+        // $mpdf->WriteHTML(' '.Url::to('@webroot/'.$model->file).'a');
+        // $mpdf->Output();
+        $mpdf->Output(Url::to('@webroot/'.$model->file), \Mpdf\Output\Destination::FILE);
+        return true;
     } 
 
 }
