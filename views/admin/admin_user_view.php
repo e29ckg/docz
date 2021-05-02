@@ -163,7 +163,7 @@ function init_click_handlers(){
       var fID = $(this).data("id");
       // alert(fID);
         $.get(
-            "/profile/change_password",{id:fID},
+            "?r=profile/change_password",{id:fID},
             function (data)
             {
                 $("#activity-modal").find(".modal-body").html(data);
@@ -177,7 +177,7 @@ function init_click_handlers(){
       var fID = $(this).data("id");
       // alert(fID);
         $.get(
-            "/admin/update_profile",{id:fID},
+            "?r=admin/update_profile",{id:fID},
             function (data)
             {
                 $("#activity-modal").find(".modal-body").html(data);

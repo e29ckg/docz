@@ -11,6 +11,7 @@ use app\models\DocFile;
 use app\models\DocManage;
 use app\models\DocProfile;
 use app\models\DocUserRead;
+use app\models\Role;
 use yii\web\Response;
 use yii\widgets\ActiveForm;
 use yii\web\UploadedFile;
@@ -406,6 +407,9 @@ class DoczController extends Controller
                     $model->save();
                 }
             }
+            if($Docz->st <> 4){
+                $this->stamp_end($Docz->id);
+            }
             $Docz->st = 4;
             $Docz->save();
             return $this->redirect(['index_3']);
@@ -433,7 +437,9 @@ class DoczController extends Controller
                 $Ds->save();
             }
         }
-        return $this->render('_to_read',[
+        // $completePath = Yii::getAlias('@webroot/'.$model->file);
+        // return Yii::$app->response->sendFile($completePath, $model->file, ['inline'=>true]);
+        return $this->render('_all_to_read',[
             'model' => $model
         ]);
     } 
@@ -450,7 +456,10 @@ class DoczController extends Controller
     }
 
     public function actionAll_to_read($id){
+        // $this->layout = 'main-login';
         $model = Docz::findOne($id);
+        // $completePath = Yii::getAlias('@webroot/'.$model->file);
+        // return Yii::$app->response->sendFile($completePath, $model->file, ['inline'=>true]);
         return $this->render('_all_to_read',[
             'model' => $model
         ]);
@@ -495,5 +504,83 @@ class DoczController extends Controller
         $mpdf->Output(Url::to('@webroot/'.$model->file), \Mpdf\Output\Destination::FILE);
         return true;
     } 
+
+    public function stamp_end($id){
+        $model = Docz::findOne($id);
+        $mpdf = new \Mpdf\Mpdf([
+            'mode' => 'utf-8',
+        // 'format' => [190, 236],
+        // 'orientation' => 'L'
+        ]);
+
+        $html = '<p>hi world สวัสดี</p>';
+        $stylesheet = file_get_contents(Url::to('@webroot/css/pdf.css')); // external css
+        $mpdf->WriteHTML($stylesheet,1);
+        // $mpdf->WriteHTML($html,2);
+        // $mpdf->SetImportUse(); // only with mPDF <8.0
+        // $mpdf->text_input_as_HTML = true;
+
+        $completePath = Url::to('@webroot/'.$model->file);
+        $pagecount = $mpdf->SetSourceFile($completePath);
+        $mpdf->SetDocTemplate($completePath);
+        // $mpdf->AddFont('THSarabun', '', 'THSarabun.php'); //ธรรมดา       
+        
+        for ($x = 1; $x <= $pagecount; $x++) {            
+            $mpdf->AddPage();
+        }
+        $mpdf->SetFont('garuda', '', 8);
+        $mpdf->AddPage();
+            $mpdf->SetXY(140, 5);
+            $mpdf->SetDrawColor(0, 0, 255);
+            $mpdf->setTextColor('0', '0', '255');
+            $mpdf->Cell(60, 6, 'ศาลเยาวชนและครอบครัวจังหวัดประจวบคีรีขันธ์', 'LTR', 1, '');
+            $mpdf->SetXY(140, 10);
+            $mpdf->SetFont('garuda', '', 10);
+            $mpdf->Cell(60, 6, 'รับที่  '.$model->r_number, 'LR', 1, '');
+            $mpdf->SetXY(140, 15);
+            $mpdf->Cell(60, 6, 'วันที่ '.$model->dateThaiTime($model->r_date), 'BLR', 1, '');
+            //หัวหน้าส่วน
+            $x = 20;
+            $y = 25;
+            foreach($model->doc_manage_asc as $md){
+
+                // $mpdf->SetXY($x, $y);
+                $mpdf->WriteHTML($stylesheet,1);
+                $mpdf->WriteHTML('<p id="hh">'.$md->ty.'</p>',2);
+                $mpdf->WriteHTML('<p id="detail">'.$md->detail.'</p>',2);
+                $role_name = Role::find()->where(['user_id'=>$md->user_id,'role_name_id'=>$md->role_name_id])->one();
+                // $mpdf->WriteHTML('<br>');
+                if($role_name){
+                    $dep_name = '<br>'.$role_name->name_dep1; 
+                    $dep_name .= $role_name->name_dep2 ? '<br>'.$role_name->name_dep2 : '';
+                    $dep_name .= $role_name->name_dep3 ? '<br>'.$role_name->name_dep3 : '';
+                }else{
+                    $dep_name = '';
+                }                
+                if($md->profile->sign_photo){
+                    $sign_photo = '<img id="img" src="'.Url::to('@webroot/'.$md->profile->sign_photo).'" alt="sign_photo"><br>';
+                }else{
+                    $sign_photo ='<br>';
+                }
+                // $mpdf->WriteHTML($sign_photo,2);
+                $mpdf->WriteHTML('<p>'.$sign_photo.'('.$md->username().')'.$dep_name.'<br>'.$model->dateThaiTime($md->updated).'</p>');
+                $mpdf->WriteHTML('<p>--------------------------------------------------------------------------------</p>',2);
+                // $y = $y+60;
+                
+            }           
+        
+          
+        // The height of the template as it was printed is returned as $actualsize['h']
+        // The width of the template as it was printed is returned as $actualsize['w']
+        // $mpdf->WriteHTML('Hello World'.$pagecount);
+        // $mpdf->WriteHTML('Hello World');
+        // $mpdf->WriteHTML( '1qqaaaaaa', 2 );
+        // $mpdf->WriteHTML(' '.Url::to('@webroot/'.$model->file).'a');
+        // $mpdf->Output();
+        $mpdf->Output(Url::to('@webroot/'.$model->file), \Mpdf\Output\Destination::FILE);
+        return true;
+    } 
+
+
 
 }

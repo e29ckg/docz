@@ -87,7 +87,7 @@ $this->title = 'กำหนดสิทธ์';
 function init_click_handlers(){
     $("#activity-create-role-name").click(function(e) {
             $.get(
-                "/role/role_name_create",
+                "?r=role/role_name_create",
                 function (data)
                 {
                     $("#activity-modal").find(".modal-body").html(data);
@@ -101,7 +101,7 @@ function init_click_handlers(){
             var fID = $(this).data("id");
             // alert(fID);
             $.get(
-                "/role/role_name_update",
+                "?r=role/role_name_update",
                 {
                     id: fID
                 },
@@ -117,7 +117,7 @@ function init_click_handlers(){
 
         $("#activity-create-role-power").click(function(e) {
             $.get(
-                "/role/role_power_create",
+                "?r=role/role_power_create",
                 function (data)
                 {
                     $("#activity-modal").find(".modal-body").html(data);
@@ -131,7 +131,7 @@ function init_click_handlers(){
             var fID = $(this).data("id");
             // alert(fID);
             $.get(
-                "/role/role_power_update",
+                "?r=role/role_power_update",
                 {
                     id: fID
                 },

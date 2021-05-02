@@ -38,34 +38,27 @@ var_dump($listUserProfile);
                         'enableAjaxValidation' => true,
                         'options' => ['enctype' => 'multipart/form-data','class'=>'form-horizontal']
                     ]
-                    ); ?>
-                
-                        
-                
-                <div class="form-group">
-
-                  <div class="checkbox">
-                    <label>
-                      <input type="checkbox" class="checkbox">
-                      Checkbox 1
-                    </label>
-                  </div>
+                    ); ?>         
+                    <table class="table table-hover table-striped">
+                      <tr>
+                        <td><input id='checkall' type="checkbox" name="chkAll" id="chkAll"></td>
+                        <td class="text-left">CheckAll</td>
+                      </tr>
+                 
                   <?php foreach($MUser as $MU){?>
-                    <div class="checkbox">
-                        <label>
-                            <!-- <input type="checkbox" name="DocUserRead[user_id][]" value="1"> -->
-                            <input type="checkbox" class="checkbox" name="DocUserRead[user_id][]" value="<?=$MU->id?>">
-                            <?=$MU->name?>
-                        </label>
-                    </div>
+                    
+                      <tr>
+                        <td ><input type="checkbox" class="checkboxA" name="DocUserRead[user_id][]" value="<?=$MU->id?>"> </td>
+                        <td class="text-left"> <?= $MU->name?></td>
+                      </tr>
+                    
                     <?php } ?>
-                </div>
-        <label for="checkAll">
-            <input id='checkall' type="checkbox" name="chkAll" id="chkAll">CheckAll
-        </label>          
-	  
-  </table>   
-            </div>    
+                
+                </table> 
+                
+              <!-- /.mail-box-messages -->
+            </div>
+	     
             <div class="box-footer">              
             
                 <button type="submit" class="btn btn-info pull-right">Submit</button>
@@ -103,20 +96,20 @@ function init_click_handlers(){
         $("#checkall").change(function(){
             var checked = $(this).is(":checked");
             if(checked){
-              $(".checkbox").each(function(){
+              $(".checkboxA").each(function(){
                 $(this).prop("checked",true);
               });
             }else{
-              $(".checkbox").each(function(){
+              $(".checkboxA").each(function(){
                 $(this).prop("checked",false);
               });
             }
           });
         
          // Changing state of CheckAll checkbox 
-         $(".checkbox").click(function(){
+         $(".checkboxA").click(function(){
         
-           if($(".checkbox").length == $(".checkbox:checked").length) {
+           if($(".checkboxA").length == $(".checkboxA:checked").length) {
              $("#checkall").prop("checked", true);
            } else {
              $("#checkall").removeAttr("checked");

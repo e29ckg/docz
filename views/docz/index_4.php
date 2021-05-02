@@ -22,14 +22,17 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-                <table class="table table-bordered">
-                    <tbody>
+                <table class="table table-bordered" id="example2">
+                    <thead>
                         <tr>
                             <th style="width: 50px">#</th>
                             <th >ชื่อ</th>
                             <th style="width: 200px"></th>
                             <th style="width: 150px"></th>
                         </tr>
+                    </thead>
+                    <tbody>
+                        
                         <?php foreach($models as $model){ ?>
                         <tr>
                             <td><?= $model->r_number?></td>
@@ -62,6 +65,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <?php $this->registerJs('
 
 function init_click_handlers(){
+    
     $("#activity-create").click(function(e) {
             $.get(
                 "/docz/create",
@@ -165,6 +169,7 @@ function init_click_handlers(){
     
 }
 init_click_handlers(); //first run
+$("#example2").DataTable();
 // $("#customer_pjax_id").on("pjax:success", function() {
 //     init_click_handlers(); //reactivate links in grid after pjax update
 // });

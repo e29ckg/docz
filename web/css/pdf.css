@@ -1,0 +1,28 @@
+body {
+    font-family: "garuda";
+}
+p {
+    /* font-family: "THsarabun", Times, serif; */
+    /* font-family: "garuda", Times, serif; */
+    font-size: 14px;
+    color: blue;
+    text-align: center;
+  }
+
+#hh {
+    font-size: 14px;
+    color:darkorange;
+    text-align: left;
+  }
+#detail {
+    font-size: 14px;
+    color:rgb(85, 74, 241);
+    text-align: left;
+  }
+
+#img {
+    /* width: 46px; */
+    height: 44px;
+    /* text-align: center; */
+    /* background: url(img_navsprites.gif) 0 0; */
+}

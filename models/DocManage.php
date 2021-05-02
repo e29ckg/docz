@@ -80,7 +80,7 @@ class DocManage extends \yii\db\ActiveRecord
     }
     public function username()
     {
-        return $this->profile->name;
+        return $this->profile->pfname.$this->profile->name.' '.$this->profile->sname;
     }
     
     public function url_file()

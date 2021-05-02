@@ -74,7 +74,7 @@ $this->title = 'กำหนดสิทธ์';
 function init_click_handlers(){
     $("#activity-create-doc-profile").click(function(e) {
             $.get(
-                "/docprofile/doc_profile_create",
+                "?r=docprofile/doc_profile_create",
                 function (data)
                 {
                     $("#activity-modal").find(".modal-body").html(data);
@@ -88,7 +88,7 @@ function init_click_handlers(){
             var fID = $(this).data("id");
             // alert(fID);
             $.get(
-                "/docprofile/doc_profile_update",
+                "?r=docprofile/doc_profile_update",
                 {
                     id: fID
                 },
@@ -106,7 +106,7 @@ function init_click_handlers(){
             var fID = $(this).data("id");
             var fCODE = $(this).data("code");
             $.get(
-                "/docprofile/doc_profile_sub_create",
+                "?r=docprofile/doc_profile_sub_create",
                 {
                     doc_profile_id: fID,
                     code:fCODE
@@ -124,7 +124,7 @@ function init_click_handlers(){
             var fID = $(this).data("id");
             // alert(fID);
             $.get(
-                "/role/$doc_profile_update",
+                "?r=role/$doc_profile_update",
                 {
                     id: fID
                 },

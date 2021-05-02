@@ -97,11 +97,6 @@ class Docz extends \yii\db\ActiveRecord
                     ->orderBy(['sort' => SORT_DESC]);
     }
 
-    public function getDoc_manage_asc()
-    {
-        return $this->hasMany(DocManage::className(), ['doc_id'=>'id'])
-                    ->orderBy(['sort' => SORT_ASC]);
-    }
     // public function DM_2()
     // {
     //     return $this->hasMany(DocManage::className(), ['doc_id'=>'id'])

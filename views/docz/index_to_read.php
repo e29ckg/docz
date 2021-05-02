@@ -42,7 +42,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             </td>
                             
                             <td>
-                            <a href="<?=Url::to(['/docz/to_read','id'=>$model->doc_id])?>" class="btn btn-primary btn-block btn-flat ">อ่าน</a>
+                            <a href="<?=Url::to(['/docz/to_read','id'=>$model->doc_id])?>" class="btn btn-primary btn-block btn-flat" >อ่าน</a>
                             </td>
                         </tr>
                         <?php } ?>

@@ -92,7 +92,7 @@ $this->params['breadcrumbs'][] = $this->title;
 function init_click_handlers(){
     $("#activity-create-link").click(function(e) {
             $.get(
-                "/signup",
+                "?r=profile/create_profile",
                 function (data)
                 {
                     $("#activity-modal").find(".modal-body").html(data);
@@ -106,7 +106,7 @@ function init_click_handlers(){
             var fID = $(this).data("id");
             // alert(fID);
             $.get(
-                "/admin/view",
+                "?r=admin/view",
                 {
                     id: fID
                 },
@@ -122,7 +122,7 @@ function init_click_handlers(){
         $(".activity-set-active").click(function(e) {
             var fID = $(this).data("id");
                 $.get(
-                    "/admin/set_active",
+                    "?r=admin/set_active",
                     {
                         id: fID
                     },
@@ -139,7 +139,7 @@ function init_click_handlers(){
         $(".activity-set-deactive").click(function(e) {
             var fID = $(this).data("id");
                 $.get(
-                    "/admin/set_deactive",
+                    "?r=admin/set_deactive",
                     {
                         id: fID
                     },
@@ -156,7 +156,7 @@ function init_click_handlers(){
         $("#activity-reset-password").click(function(e) {
             var fID = $(this).data("id");
                 $.get(
-                    "/admin/reset_password",
+                    "?r=admin/reset_password",
                     {
                         id: fID
                     }
