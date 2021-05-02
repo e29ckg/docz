@@ -1,4 +1,12 @@
 RewriteEngine on
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule . index.php [L]
+#RewriteRule . index.php [L]
+RewriteRule .* docz/web/$0
+#RewriteRule .* docz/web/index.php [L]
+
+
+# Uncomment the following, if you want speaking URL
+#RewriteCond %{REQUEST_FILENAME} !-f
+#RewriteCond %{REQUEST_FILENAME} !-d
+#RewriteRule ^([^/]+/web)/.*$ $1/index.php

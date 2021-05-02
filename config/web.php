@@ -23,6 +23,7 @@ $config = [
         //         ],
         // ],
         'request' => [
+            'baseUrl'=>'/docz',
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => '99299929',
         ],
@@ -74,24 +75,27 @@ $config = [
             ],
         ],
         'db' => $db,
-        
-        'urlManager' => [
-            'enablePrettyUrl' => true,
-            'showScriptName' => false,
-            // 'enableStrictParsing' => false,
-            'rules' => [
-                '<controller:\w+>/<id:\d+>' => '<controller>/view',
-                '<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',
-                '<controller:\w+>/<action:\w+>' => '<controller>/<action>',
-                'module/<module:\w+>/<controller:\w+>/<action:\w+>' => '<module>/<controller>/<action>',
-                'index' => 'site/index',
-                'login' => 'site/login',
-                'logout' => 'site/logout',
-                'about' => 'site/about',
-                'signup' => 'profile/create_profile',
-                'profile' => 'profile/view',
-            ],
+        'urlManager'=>[
+            // 'enablePrettyUrl' => true,
+            'scriptUrl'=>'/docz/index.php',            
         ],
+        // 'urlManager' => [
+        //     'enablePrettyUrl' => true,
+        //     'showScriptName' => false,
+        //     // 'enableStrictParsing' => false,
+        //     'rules' => [
+        //         '<controller:\w+>/<id:\d+>' => '<controller>/view',
+        //         '<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',
+        //         '<controller:\w+>/<action:\w+>' => '<controller>/<action>',
+        //         'module/<module:\w+>/<controller:\w+>/<action:\w+>' => '<module>/<controller>/<action>',
+        //         'index' => 'site/index',
+        //         'login' => 'site/login',
+        //         'logout' => 'site/logout',
+        //         'about' => 'site/about',
+        //         'signup' => 'profile/create_profile',
+        //         'profile' => 'profile/view',
+        //     ],
+        // ],
         
     ],
     'params' => $params,

@@ -201,7 +201,7 @@ function init_click_handlers(){
       var fID = $(this).data("id");
       // alert(fID);
         $.get(
-            "/profile/change_password",{id:fID},
+            "?r=profile/change_password",{id:fID},
             function (data)
             {
                 $("#activity-modal").find(".modal-body").html(data);
@@ -215,7 +215,7 @@ function init_click_handlers(){
       var fID = $(this).data("id");
       // alert(fID);
         $.get(
-            "/profile/update_profile",{id:fID},
+            "?r=profile/update_profile",{id:fID},
             function (data)
             {
                 $("#activity-modal").find(".modal-body").html(data);
@@ -229,7 +229,7 @@ function init_click_handlers(){
       var fID = $(this).data("id");
       // alert(fID);
         $.get(
-            "/profile/update_profile",{id:fID},
+            "?r=profile/update_profile",{id:fID},
             function (data)
             {
                 $("#activity-modal").find(".modal-body").html(data);
@@ -243,7 +243,7 @@ function init_click_handlers(){
       var fID = $(this).data("id");
       // alert(fID);
         $.get(
-            "/profile/role_create",{id:fID},
+            "?r=profile/role_create",{id:fID},
             function (data)
             {
                 $("#activity-modal").find(".modal-body").html(data);
@@ -257,7 +257,7 @@ function init_click_handlers(){
     $(".activity-role-update").click(function(e) {
       var fID = $(this).data("id");
         $.get(
-            "/profile/role_update",{id:fID},
+            "?r=profile/role_update",{id:fID},
             function (data)
             {
                 $("#activity-modal").find(".modal-body").html(data);

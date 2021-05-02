@@ -21,7 +21,7 @@ $dataRole = ['ddd','aaaa','dddd'];
             </div>
             <!-- /.box-header -->
             <div class="box-body text-center"> 
-              <embed src="<?= Url::to(['@web/'.$model->file]) ?>" type="application/pdf" width="100%" height="600px" />
+              <embed src="<?= Url::to('@web/'.$model->file) ?>" type="application/pdf" width="100%" height="600px" />
             </div>
             <!-- /.box-body -->
           </div>

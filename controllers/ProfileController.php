@@ -223,7 +223,7 @@ class ProfileController extends Controller
                 
             if($model->save()){
                 Yii::$app->session->setFlash('success', 'ปรับปรุงข้อมูลเรียบร้อย');
-                return $this->redirect(['/profile']);
+                return $this->redirect(['/profile/view']);
             }
 
         } 
@@ -288,7 +288,7 @@ class ProfileController extends Controller
             // $modelU->update();
             if($modelU->save()){
                 Yii::$app->session->setFlash('success', 'ปรับปรุงเรียบร้อย..');
-                return $this->redirect(['/profile']);
+                return $this->redirect(['/profile/view']);
             }
 
         } 

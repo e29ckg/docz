@@ -21,7 +21,7 @@ use yii\helpers\Url;
             </div>
             <div class="box-body text-center"> 
                 <?php if($model->file){ ?>
-                    <embed src="<?= Url::to(['@web/'.$model->file]) ?>" type="application/pdf" width="100%" height="600px" />
+                    <embed src="<?= Url::to('@web/'.$model->file) ?>" type="application/pdf" width="100%" height="600px" />
                 <?php } ?>
             </div>            
         </div>
@@ -31,7 +31,7 @@ use yii\helpers\Url;
               <h3 class="box-title">ไฟล์แนบ<?=$df->name?></h3>
             </div>
             <div class="box-body text-center"> 
-              <embed src="<?= Url::to(['@web/'.$df->file]) ?>" type="application/pdf" width="100%" height="600px" />
+              <embed src="<?= Url::to('@web/'.$df->file) ?>" type="application/pdf" width="100%" height="600px" />
             </div>            
         </div>  
         <?php } ?>
@@ -71,7 +71,7 @@ use yii\helpers\Url;
                                 </div>
                                 <div class="timeline-footer">
                                     <div class="pull-right">
-                                        <a href="<?=Url::to(['send','id'=>$dm->id])?>" class="btn btn-primary btn-xs">ส่งต่อ</a>
+                                        <a href="<?=Url::to(['send','id'=>$dm->id])?>" class="btn btn-primary btn-xs" onclick="return confirm('ต้องการส่งต่อใช่หรือไม่ ?');">ส่งต่อ</a>
                                     </div>                                
                                     <a data-id="<?=$dm->id?>" class="activity-mg-edit btn btn-warning ">แก้ไข</a>
                                     <a href="<?=Url::to(['/doczm/mg_return','id'=>$dm->id])?>" onclick="return confirm('เอกสารนี้ต้องการตีกลับใช่ไหม ?');" class="btn btn-danger btn-xs">ตีกลับเอกสาร</a>
@@ -112,7 +112,7 @@ function init_click_handlers(){
             var fID = $(this).data("id");
             // alert(fID);
             $.get(
-                "/doczm/mg_edit",
+                "?r=doczm/mg_edit",
                 {
                     id: fID
                 },
@@ -125,23 +125,23 @@ function init_click_handlers(){
                 }
             );
         }); 
-    $(".activity-mg-return").click(function(e) {
-            var fID = $(this).data("id");
-            // alert(fID);
-            $.get(
-                "/doczm/mg_return",
-                {
-                    id: fID
-                },
-                function (data)
-                {
-                    $("#activity-modal").find(".modal-body").html(data);
-                    $(".modal-body").html(data);
-                    $(".modal-title").html("");
-                    $("#activity-modal").modal("show");
-                }
-            );
-        }); 
+    // $(".activity-mg-return").click(function(e) {
+    //         var fID = $(this).data("id");
+    //         // alert(fID);
+    //         $.get(
+    //             "/doczm/mg_return",
+    //             {
+    //                 id: fID
+    //             },
+    //             function (data)
+    //             {
+    //                 $("#activity-modal").find(".modal-body").html(data);
+    //                 $(".modal-body").html(data);
+    //                 $(".modal-title").html("");
+    //                 $("#activity-modal").modal("show");
+    //             }
+    //         );
+    //     }); 
     $("#body").addClass("sidebar-collapse");
 }
 init_click_handlers(); //first run

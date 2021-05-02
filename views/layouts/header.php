@@ -44,22 +44,10 @@ if( Yii::$app->user->identity ){
                                 <small><?= Yii::$app->user->identity ? $model->dep_name:''?></small>
                             </p>
                         </li>
-                        <!-- Menu Body -->
-                        <!-- <li class="user-body">
-                            <div class="col-xs-4 text-center">
-                                <a href="#">Followers</a>
-                            </div>
-                            <div class="col-xs-4 text-center">
-                                <a href="#">Sales</a>
-                            </div>
-                            <div class="col-xs-4 text-center">
-                                <a href="#">Friends</a>
-                            </div>
-                        </li> -->
-                        <!-- Menu Footer-->
+                        
                         <li class="user-footer">
                             <div class="pull-left">
-                                <a href="<?= Url::to(['/profile'])?>" class="btn btn-default btn-flat">Profile</a>
+                                <a href="<?= Url::to(['/profile/view'])?>" class="btn btn-default btn-flat">Profile</a>
                             </div>
                             <div class="pull-right">
                                 <?= Html::a(
@@ -74,10 +62,10 @@ if( Yii::$app->user->identity ){
                 
             <?php }else{?>
                 <li>
-                    <a href="<?= Url::to(['/signup'])?>">สมัครสมาชิก</a>
+                    <a href="<?= Url::to(['/profile/create_profile'])?>">สมัครสมาชิก</a>
                 </li>
                 <li>
-                    <a href="<?= Url::to(['/login'])?>">Login</a>
+                    <a href="<?= Url::to(['/site/login'])?>">Login</a>
                 </li>
                 
                 

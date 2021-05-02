@@ -21,7 +21,7 @@ use yii\helpers\Url;
             </div>
             <div class="box-body text-center"> 
                 <?php if($model->file){ ?>
-                    <embed src="<?= Url::to(['@web/'.$model->file]) ?>" type="application/pdf" width="100%" height="600px" />
+                    <embed src="<?= Url::to('@web/'.$model->file) ?>" type="application/pdf" width="100%" height="600px" />
                 <?php } ?>
             </div>            
         </div>

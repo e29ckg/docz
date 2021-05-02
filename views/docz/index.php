@@ -91,7 +91,7 @@ $this->params['breadcrumbs'][] = $this->title;
 function init_click_handlers(){
     $("#activity-create").click(function(e) {
             $.get(
-                "/docz/create",
+                "?r=docz/create",
                 function (data)
                 {
                     $("#activity-modal").find(".modal-body").html(data);
@@ -105,7 +105,7 @@ function init_click_handlers(){
             var fID = $(this).data("id");
             // alert(fID);
             $.get(
-                "/docz/view",
+                "?r=docz/view",
                 {
                     id: fID
                 },
@@ -122,7 +122,7 @@ function init_click_handlers(){
             var fID = $(this).data("id");
             // alert(fID);
             $.get(
-                "/docz/view_att",
+                "?r=docz/view_att",
                 {
                     id: fID
                 },
@@ -139,7 +139,7 @@ function init_click_handlers(){
             var fID = $(this).data("id");
             // alert(fID);
             $.get(
-                "/docz/att",
+                "?r=docz/att",
                 {
                     id: fID
                 },
@@ -158,7 +158,7 @@ function init_click_handlers(){
             var fID = $(this).data("id");
             // alert(fID);
             $.get(
-                "/docz/update",
+                "?r=docz/update",
                 {
                     id: fID
                 },
