@@ -71,7 +71,7 @@ use yii\helpers\Url;
                                 </div>
                                 <div class="timeline-footer">
                                     <div class="pull-right">
-                                        <a href="<?=Url::to(['send','id'=>$dm->id])?>" class="btn btn-primary btn-xs" onclick="return confirm('ต้องการส่งต่อใช่หรือไม่ ?');">ส่งต่อ</a>
+                                        <a href="<?=Url::to(['send','id'=>$dm->id])?>" class="btn btn-primary " onclick="return confirm('ต้องการส่งต่อใช่หรือไม่ ?');">ส่งต่อ</a>
                                     </div>                                
                                     <a data-id="<?=$dm->id?>" class="activity-mg-edit btn btn-warning ">แก้ไข</a>
                                     <a href="<?=Url::to(['/doczm/mg_return','id'=>$dm->id])?>" onclick="return confirm('เอกสารนี้ต้องการตีกลับใช่ไหม ?');" class="btn btn-danger btn-xs">ตีกลับเอกสาร</a>
