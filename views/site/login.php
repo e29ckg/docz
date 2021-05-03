@@ -63,8 +63,8 @@ $fieldOptions2 = [
         </div> -->
         <!-- /.social-auth-links -->
 
-        <a href="#">I forgot my password</a><br>
-        <a href="<?=Url::to(['/signup']) ?>" class="text-center">Register a new membership</a>
+        <!-- <a href="#">I forgot my password</a><br> -->
+        <a href="<?=Url::to(['/profile/create_profile']) ?>" class="text-center">Register a new membership</a>
 
     </div>
     <!-- /.login-box-body -->

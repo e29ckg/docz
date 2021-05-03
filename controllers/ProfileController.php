@@ -135,6 +135,7 @@ class ProfileController extends Controller
             $modelU->username = $model->username;
             $modelU->password_hash = Yii::$app->security->generatePasswordHash($model->password);
             $modelU->email = $uid;
+            $modelU->status = 10;
 
             $modelP->user_id = $uid;
             $modelP->pfname = $model->pfname;
@@ -223,7 +224,7 @@ class ProfileController extends Controller
                 
             if($model->save()){
                 Yii::$app->session->setFlash('success', 'ปรับปรุงข้อมูลเรียบร้อย');
-                return $this->redirect(['/profile/view']);
+                return $this->redirect(['/profile/view','id'=>$model->user_id]);
             }
 
         } 
@@ -318,7 +319,7 @@ class ProfileController extends Controller
 
             if($model->save()){
                 Yii::$app->session->setFlash('success', 'เพิ่มข้อมูลเรียบร้อย');
-                return $this->redirect(['/profile/view']);
+                return $this->redirect(['/profile/view','id'=>$id]);
             }
         }
         if(Yii::$app->request->isAjax){
