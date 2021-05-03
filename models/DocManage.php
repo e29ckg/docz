@@ -65,6 +65,12 @@ class DocManage extends \yii\db\ActiveRecord
     {
         return $this->hasOne(RoleName::className(), ['id' => 'role_name_id']);
     }
+
+    public function getRole_power()
+    {
+        return $this->hasMany(RolePower::className(), ['role_name_id' => 'role_name_id']);
+    }
+
     public function role_name()
     {
         return $this->role_name->name ;

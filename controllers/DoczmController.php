@@ -139,6 +139,12 @@ class DoczmController extends Controller
             $DM = DocManage::find()->where(['doc_id'=>$model->doc_id,'sort'=>$sort])->one();
             $DM->st = 2;
             $DM->save();
+            foreach($DM->role_power as $RP){
+                if($RP->user_profile->line_id){
+                    $sms = 'มีหนังสือตีกลับ..'.$model->docz->name;
+                    $this->Line_send($RP->user_profile->line_id,$sms);
+                }
+            }
         }
         $model->st = 1;
         $model->user_id = Yii::$app->user->id;
@@ -161,6 +167,12 @@ class DoczmController extends Controller
         if(!empty($DM_next->id)){
             $DM_next->st = 2;
             $DO->st = 2;
+            foreach($DM_next->role_power as $RP){
+                if($RP->user_profile->line_id){
+                    $sms = 'มีหนังสือต้องเซ็น';
+                    $this->Line_send($RP->user_profile->line_id,$sms);
+                }
+            }
             $DM_next->save();
         }else{            
             $DO->st = 3;
@@ -177,7 +189,7 @@ class DoczmController extends Controller
     }
 
     // send line notify
-    public function Line_send($token = 'zKsJKHnezJuHHCkClHcj8MfzZa8kWgL4Ss6HuIXgNXm',$sms = 'hi power')
+    public function Line_send($token,$sms)
     {
         // zKsJKHnezJuHHCkClHcj8MfzZa8kWgL4Ss6HuIXgNXm 
         // $model = new LineFormSend();
