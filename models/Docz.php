@@ -68,27 +68,19 @@ class Docz extends \yii\db\ActiveRecord
             'end'=> 'เสร็จสิ้น',
             'created' => 'Created',
         ];
+    }    
+
+    public function r_rub(){
+        $name = $this->r_number;
+        return $name;
     }
-    public function my_required($attribute_name, $params)
 
-    {
-
-        if (empty($this->file)
-
-            && empty($this->message)
-
-        ) {
-
-            $this->addError($attribute_name, Yii::t('user', 'At least 1 of the field must be filled up properly'));
-
-
-            return false;
-
-        }
-
-
-        return true;
-
+    public function name_doc(){
+        $name = $this->doc_speed ? '<small class="label  bg-red">'.$this->doc_speed.'</small>':'';
+        $name .=$this->doc_form_number ? 'ที่ '.$this->doc_form_number : '';
+        $name .=$this->doc_date ? 'ลงวันที่ '.date("Y-m-d",strtotime($this->doc_date)) : '';
+        $name .= $this->name ? 'เรื่อง '.$this->name : '';
+        return $name;
     }
 
     public function getDoc_manage()
@@ -102,11 +94,15 @@ class Docz extends \yii\db\ActiveRecord
         return $this->hasMany(DocManage::className(), ['doc_id'=>'id'])
                     ->orderBy(['sort' => SORT_ASC]);
     }
-    // public function DM_2()
-    // {
-    //     return $this->hasMany(DocManage::className(), ['doc_id'=>'id'])
-    //                 ->orderBy(['sort' => SORT_DESC]);
-    // }
+    public function getDoc_user_read()
+    {
+        return $this->hasMany(DocUserRead::className(), ['doc_id'=>'id']);
+                    // ->orderBy(['sort' => SORT_DESC]);
+    }
+    public function getUser_profile()
+    {
+        return $this->hasOne(UserProfile::className(), ['user_id'=>'user_create']);
+    }
 
     public function getDoc_file()
     {
@@ -125,4 +121,44 @@ class Docz extends \yii\db\ActiveRecord
 		$strMonthThai=$strMonthCut[$strMonth];
 		return "$strDay $strMonthThai $strYear, $strHour:$strMinute";
     }
+
+    public function Line_send($token,$sms)
+    {
+        $sms =  trim($sms);
+        date_default_timezone_set("Asia/Bangkok");
+        // zKsJKHnezJuHHCkClHcj8MfzZa8kWgL4Ss6HuIXgNXm 
+        // $model = new LineFormSend();
+        $json = null;
+        // if($model->load(Yii::$app->request->post())){
+            $api_url = 'https://notify-api.line.me/api/notify';
+            $headers = [
+                'Authorization: Bearer ' . $token
+            ];
+            $fields = [
+                'message' => $sms
+            ];
+            
+            try {
+                $ch = curl_init();
+            
+                curl_setopt($ch, CURLOPT_URL, $api_url);
+                curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+                curl_setopt($ch, CURLOPT_POST, count($fields));
+                curl_setopt($ch, CURLOPT_POSTFIELDS, $fields);
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+            
+                $res = curl_exec($ch);
+                curl_close($ch);
+                $json = json_decode($res);
+                if($json->status == 200){
+                    return true;
+                }
+            } catch (Exception $e) {
+                throw new Exception($e->getMessage);
+            }
+        return false;
+    }  
+
+    
 }

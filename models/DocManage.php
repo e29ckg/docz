@@ -61,6 +61,19 @@ class DocManage extends \yii\db\ActiveRecord
             'created' => 'Created',
         ];
     }
+    public function getRole()
+    {
+        return $this->hasOne(Role::className(), ['role_name_id' => 'role_name_id','user_id'=>'user_id']);
+    }
+
+    public function role_name_dep()
+    {
+        $name_dep = $this->role->name_dep1 ? $this->role->name_dep1 : '';
+        $name_dep .= $this->role->name_dep2 ? $this->role->name_dep2 : '';
+        $name_dep .= $this->role->name_dep3 ? $this->role->name_dep3 : '';
+        return $name_dep;
+    }
+
     public function getRole_name()
     {
         return $this->hasOne(RoleName::className(), ['id' => 'role_name_id']);

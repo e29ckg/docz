@@ -40,10 +40,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             <td><?= date("Y-m-d", strtotime("$model->doc_date"));?></td>
                             <td class="mailbox-subject">
                                 <p> 
-                                    <?= $model->doc_speed ?>
-                                    <?=$model->doc_form_number ? 'ที่ '.$model->doc_form_number : ''?>
-                                    <?=$model->doc_date ? 'ลงวันที่ '.date("Y-m-d",strtotime($model->doc_date)) : ''?>
-                                    <?=$model->name ? 'เรื่อง '.$model->name : ''?>
+                                    <?= $model->name_doc() ?>
                                 </p>
                                 <!-- <button data-id="<?=$model->id?>" class="activity-view btn btn-success btn-flat">view</button> -->
                                 <!-- <?= Html::a('สถานะ', ['view_st','id'=>$model->id], ['class' => 'btn btn-success btn-flat']) ?> -->
@@ -72,7 +69,10 @@ $this->params['breadcrumbs'][] = $this->title;
                                 <a href="<?= Url::to(['/docz/del','id'=>$model->id]) ?>" onclick="return confirm('Are you sure you want to Delete ?');" class="btn btn-danger btn-flat btn-md">ลบ</a>
                             </td>
                             <td>
-                            <a href="<?=Url::to(['/docz/send','id'=>$model->id])?>" class="btn btn-primary btn-block btn-flat ">เสนอ</a>
+                            <?php if($model->file){?>
+                                <a href="<?=Url::to(['/docz/send','id'=>$model->id])?>" class="btn btn-primary btn-block btn-flat ">เสนอ</a>
+                                <?php }?>
+                            
                             </td>
                         </tr>
                         <?php } ?>

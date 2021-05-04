@@ -13,10 +13,7 @@ use yii\helpers\Url;
         <div class="box box-primary">
             <div class="box-header with-border">
                 <h3 class="box-title">
-                    <?= $model->doc_speed ?'<small class="label  bg-red">'.$model->doc_speed.'</small>':''?>
-                    <?=$model->doc_form_number ? 'ที่ '.$model->doc_form_number : ''?>
-                    <?=$model->doc_date ? 'ลงวันที่ '.date("Y-m-d",strtotime($model->doc_date)) : ''?>
-                    <?=$model->name ? 'เรื่อง '.$model->name : ''?>
+                    <?=$model->name_doc()?>
                 </h3>
             </div>
             <div class="box-body text-center"> 
@@ -68,12 +65,13 @@ use yii\helpers\Url;
                                     <p style="white-space: pre-line"><b><?=$dm->ty?></b></p>
                                     <p style="white-space: pre-line"><?=$dm->detail?></p>
                                     <p style="white-space: pre-line"><?=$dm->username()?></p>
+                                    <p style="white-space: pre-line"><?=$dm->role_name_dep()?></p>
                                 </div>
                                 <div class="timeline-footer">
                                     <div class="pull-right">
                                         <a href="<?=Url::to(['send','id'=>$dm->id])?>" class="btn btn-primary " onclick="return confirm('ต้องการส่งต่อใช่หรือไม่ ?');">ส่งต่อ</a>
                                     </div>                                
-                                    <a data-id="<?=$dm->id?>" class="activity-mg-edit btn btn-warning ">แก้ไข</a>
+                                    <a data-id="<?=$dm->id?>" class="activity-mg-edit btn btn-warning ">ลงชื่อ</a>
                                     <a href="<?=Url::to(['/doczm/mg_return','id'=>$dm->id])?>" onclick="return confirm('เอกสารนี้ต้องการตีกลับใช่ไหม ?');" class="btn btn-danger btn-xs">ตีกลับเอกสาร</a>
                                 </div>
                             <?php }else if($dm->st == 3){ ?>
@@ -81,6 +79,7 @@ use yii\helpers\Url;
                                     <p style="white-space: pre-line"><b><?=$dm->ty?></b></p>
                                     <p style="white-space: pre-line"><?=$dm->detail?></p>
                                     <p class="text-right" style="white-space: pre-line"><?=$dm->username()?></p>
+                                    <p class="text-right" style="white-space: pre-line"><?=$dm->role_name_dep()?></p>
                                 </div>
                                 <div class="timeline-footer">
                                     

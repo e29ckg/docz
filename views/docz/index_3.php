@@ -34,12 +34,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         <tr>
                             <td><?= $model->r_number?></td>
                             <td>
-                                <?= $model->doc_speed ?'
-                                        <small class="label  bg-red">'.$model->doc_speed.'</small>
-                                    ':''?>
-                                <?=$model->doc_form_number ? 'ที่ '.$model->doc_form_number : ''?>
-                                <?=$model->doc_date ? 'ลงวันที่ '.date("Y-m-d",strtotime($model->doc_date)) : ''?>
-                                <?=$model->name ? 'เรื่อง '.$model->name : ''?>
+                                <?=$model->name_doc()?>
                             </td>       
                             <td>
                                 <?php 
@@ -63,7 +58,8 @@ $this->params['breadcrumbs'][] = $this->title;
                                 </div> 
                             </td>
                             <td>
-                                <a href="<?=Url::to(['/docz/send_to_user','id'=>$model->id])?>" class="btn btn-primary btn-block btn-flat ">จ่ายงาน/เก็บ</a>
+                                <a href="<?=Url::to(['/docz/send_to_user','id'=>$model->id])?>" class="activity-send-to-user btn btn-primary btn-block btn-flat ">จ่ายงาน/เก็บ</a>
+                                <!-- <a href="#" data-id="<?=$model->id?>" class="activity-send-to-user btn btn-primary btn-block btn-flat ">จ่ายงาน/เก็บ</a> -->
                              </td>
                         </tr>
                         <?php } ?>
@@ -78,23 +74,12 @@ $this->params['breadcrumbs'][] = $this->title;
 <?php $this->registerJs('
 
 function init_click_handlers(){
-    $("#activity-create").click(function(e) {
-            $.get(
-                "/docz/create",
-                function (data)
-                {
-                    $("#activity-modal").find(".modal-body").html(data);
-                    $(".modal-body").html(data);
-                    $(".modal-title").html("");
-                    $("#activity-modal").modal("show");
-                }
-            );
-        });
-    $(".activity-view").click(function(e) {
+    
+    $(".activity-send-to-user").click(function(e) {
             var fID = $(this).data("id");
             // alert(fID);
             $.get(
-                "/docz/view",
+                "?r=docz/send_to_user",
                 {
                     id: fID
                 },

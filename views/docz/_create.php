@@ -87,7 +87,7 @@ $fieldOptionC12 = [
             ?> 
         
         <?= $form->field($model, 'doc_form_number',$fieldOption)
-                ->textInput(['placeholder' => $model->getAttributeLabel('doc_form_number'),'maxlength' => true])
+                ->textInput(['placeholder' => $model->getAttributeLabel('ศย ...'),'maxlength' => true])
                 ->label() ?>
         
         <?= $form->field($model, 'doc_date',$fieldOption)
@@ -107,11 +107,8 @@ $fieldOptionC12 = [
         <?= $form->field($model, 'name',$fieldOptionC12)
                 ->textInput(['placeholder' => $model->getAttributeLabel('name'),'maxlength' => true])
                 ->label($model->getAttributeLabel('name')) ?>
-        
-        
-        
-           
-            <?= $form->field($model, 'file',$fieldOption)->fileInput()
+                   
+        <?= $form->field($model, 'file',$fieldOption)->fileInput()
                 ->label($model->getAttributeLabel('file'),['class'=>'col-sm-2 control-label']); ?>                                
             </div>
             <!-- /.box-body -->

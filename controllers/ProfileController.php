@@ -66,6 +66,20 @@ class ProfileController extends Controller
      */
     public function actionView($id = null)
     {
+        $client_id = 'eSAUJzHEddGlHDi6wK7CO6';
+        $api_url = 'https://notify-bot.line.me/oauth/authorize?';
+        $callback_url = 'http://127.0.0.1/docz/index.php?r=profile/callback';
+
+        $query = [
+            'response_type' => 'code',
+            'client_id' => $client_id,
+            'redirect_uri' => $callback_url,
+            'scope' => 'notify',
+            'state' => 'mylinenotify'
+        ];
+        
+        $result = $api_url . http_build_query($query);
+
         if($id == null){
             $id = Yii::$app->user->id;
         }
@@ -73,10 +87,12 @@ class ProfileController extends Controller
         
         if (Yii::$app->request->isAjax) {
             return $this->renderAjax('view',[
+                'result' => $result,
                 'model' => $model,
             ]);
         }
         return $this->render('view', [
+            'result' => $result,
             'model' => $model,
         ]);
     }
@@ -372,6 +388,66 @@ class ProfileController extends Controller
             Yii::$app->session->setFlash('success', 'ลบข้อมูลเรียบร้อย');
         }
         return $this->redirect(['/profile/view']);
+    }
+
+    public function actionCallback()
+    {
+        
+        $client_id = 'eSAUJzHEddGlHDi6wK7CO6';
+        $client_secret = 'Bs0IyQPhd9S7uhZPlv0QUarnQrZasLdKbgwaYcXSvNr';
+
+        $api_url = 'https://notify-bot.line.me/oauth/token';
+        $callback_url = 'http://127.0.0.1/docz/index.php?r=profile/callback';
+
+        parse_str($_SERVER['QUERY_STRING'], $queries);
+
+        //var_dump($queries);
+        $fields = [
+            'grant_type' => 'authorization_code',
+            'code' => $queries['code'],
+            'redirect_uri' => $callback_url,
+            'client_id' => $client_id,
+            'client_secret' => $client_secret
+        ];
+        
+        try {
+            $ch = curl_init();
+        
+            curl_setopt($ch, CURLOPT_URL, $api_url);
+            curl_setopt($ch, CURLOPT_POST, count($fields));
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $fields);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        
+            $res = curl_exec($ch);
+            curl_close($ch);
+        
+            if ($res == false){
+                // Yii::$app->session->setFlash('info', 'ส่งไม่ได้');
+                return false;
+                throw new Exception(curl_error($ch), curl_errno($ch));
+            }
+        
+            $json = json_decode($res);
+
+            if($json->status == 200){
+                $model = UserProfile::find()->where(['user_id'=> Yii::$app->user->id])->one();
+                $model->line_id =  $json->access_token;
+                $model->save();
+                Yii::$app->session->setFlash('success', 'บันทึกข้อมูล สำเร็จ');
+                return $this->redirect(['/profile/view']);
+            }
+            
+        
+            //var_dump($json);
+        } catch(Exception $e) {
+            throw new Exception($e->getMessage());
+            //var_dump($e);
+        }
+        // return $this->render('callback', [
+        //     'json' => $json
+        // ]);
+        return $json = '';
     }
     
 }

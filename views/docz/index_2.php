@@ -39,12 +39,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             </td>                            
                             <td>
                                 <p> 
-                                    <?= $model->doc_speed ?'
-                                            <small class="label  bg-red">'.$model->doc_speed.'</small>
-                                        ':''?>
-                                    <?=$model->doc_form_number ? 'ที่ '.$model->doc_form_number : ''?>
-                                    <?=$model->doc_date ? 'ลงวันที่ '.date("Y-m-d",strtotime($model->doc_date)) : ''?>
-                                    <?=$model->name ? 'เรื่อง '.$model->name : ''?>
+                                    <?=$model->name_doc()?>
                                 </p> 
                             </td>
                             <td>

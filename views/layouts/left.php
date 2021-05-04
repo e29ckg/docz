@@ -60,7 +60,7 @@ if(!(Yii::$app->user->isGuest)){
         }          
     }
 
-    $docz_index_to_read = DocUserRead::find()->where(['ckeck'=>0,'user_id'=>Yii::$app->user->id])->count();  
+    $docz_index_to_read = DocUserRead::find()->where(['check'=>0,'user_id'=>Yii::$app->user->id])->count();  
     if($docz_index_to_read == 0){$docz_index_to_read = '';}
         array_push($menu,['label' => 'หนังสือของฉัน', 'options' => ['class' => 'header text-center']]);                   
         array_push($menu,['label' => 'รอการอ่าน<span id="docz_index" class="label label-danger pull-right">'.$docz_index_to_read.'</span>', 'icon' => 'file-code-o', 'url' => ['/docz/index_to_read']]);  

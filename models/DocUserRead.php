@@ -10,7 +10,7 @@ use Yii;
  * @property int $id
  * @property int|null $user_id
  * @property int|null $doc_id
- * @property int|null $ckeck
+ * @property int|null $check
  * @property string|null $ip
  * @property string|null $updated
  * @property string|null $created
@@ -31,7 +31,7 @@ class DocUserRead extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['doc_id', 'ckeck'], 'integer'],
+            [['doc_id', 'check'], 'integer'],
             [['user_id','updated', 'created'], 'safe'],
             [['ip'], 'string', 'max' => 255],
         ];
@@ -46,7 +46,7 @@ class DocUserRead extends \yii\db\ActiveRecord
             'id' => 'ID',
             'user_id' => 'User ID',
             'doc_id' => 'Doc ID',
-            'ckeck' => 'Ckeck',
+            'check' => 'Check',
             'ip' => 'Ip',
             'updated' => 'Updated',
             'created' => 'Created',
@@ -55,5 +55,13 @@ class DocUserRead extends \yii\db\ActiveRecord
     public function getDocz()
     {
         return $this->hasOne(Docz::className(), ['id'=>'doc_id']);
+    }
+    public function getProfile()
+    {
+        return $this->hasOne(UserProfile::className(), ['user_id' => 'user_id']);
+    }
+    public function username()
+    {
+        return $this->profile->pfname.$this->profile->name.' '.$this->profile->sname;
     }
 }

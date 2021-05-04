@@ -169,7 +169,11 @@ class DoczController extends Controller
                 }
             }
             $model->doc_form = $this->code; //ชื่อโปรแกรม
-            $model->r_date = date("Y-m-d h:i:s", strtotime($model->r_date)); //ชื่อโปรแกรม
+            $model->r_number = $model->r_number.'/'.date("Y",strtotime(date("Y")+543));
+            if($model->r_date){
+                $model->r_date = date("Y-m-d h:i:s"); //
+            } 
+            $model->r_date = date("Y-m-d h:i:s", strtotime($model->r_date));
             $model->doc_date = date("Y-m-d", strtotime($model->doc_date)); //ชื่อโปรแกรม
             if($model->save()){
                 Yii::$app->session->setFlash('success', 'บันทักข้อมูลเรียบร้อย'.$model->doc_date);
@@ -310,8 +314,8 @@ class DoczController extends Controller
         $modelD = DocProfile::find()->where(['code' => $this->code])->one();   
         // $count = DocManage::find()->where(['doc_id'=>$id])->count();  
         if(empty($model->start)) {
-            $this->stamp_rub($model->id);
-        }  //stamp เลขรับ ลงphp
+            $this->stamp_rub($model->id);   //stamp เลขรับ ลงphp
+        }  
         foreach($modelD->docps as $ds){   
             $count = DocManage::find()->where(['doc_id'=>$id,'role_name_id'=>$ds->role_name_id])->count();         
             if($count == 0){
@@ -327,31 +331,20 @@ class DoczController extends Controller
         if(Yii::$app->request->isAjax){
             return $this->renderAjax('_send',[
                 'model' => $model,
-                // 'modelD' => $modelD,
             ]);
         }    
         return $this->render('_send', [
             'model' => $model,
-            // 'modelD' => $modelD,
         ]); 
     }
     public function actionSend_del($id)
     {
         $model = DocManage::find()->where(['id'=>$id])->One();    
         $id = $model->doc_id;   
-        // $model->delete();
         if(Yii::$app->request->isAjax){
-            // return $this->renderAjax('_send',[
-            //     'model' => $model,
-            //     // 'modelD' => $modelD,
-            // ]);
             return $this->redirect(['send','id'=>$id]);
         }    
         return $this->redirect(['send','id'=>$id]);
-        // return $this->render('_send', [
-        //     'model' => $model,
-        //     // 'modelD' => $modelD,
-        // ]); 
     }
 
 
@@ -363,7 +356,7 @@ class DoczController extends Controller
         }
         return false;
     } 
-    
+    //--------------กด เริ่ม------------
     public function actionStart($id){
         $model = Docz::findOne($id);
         $model->user_create = Yii::$app->user->id;
@@ -374,11 +367,18 @@ class DoczController extends Controller
         foreach($model->doc_manage as $dm){
             if($dm->sort == 1){
                 $dm->st = 2;
+                foreach($dm->role_power as $RP){
+                    if($RP->user_profile->line_id){
+                        $sms = '(ห.อำนวยการ)มีหนังสือต้องเซ็น';
+                        Docz::Line_send($RP->user_profile->line_id,$sms);
+                    }
+                }
             }else{
                 $dm->st = 1;
             }                
             $dm->created = date("Y-m-d H:i:s");
             $dm->save();
+            
         }
         $model->save();
         return $this->redirect(['index']);
@@ -402,7 +402,7 @@ class DoczController extends Controller
                     $model = new DocUserRead();
                     $model->user_id = $ms;
                     $model->doc_id = $Docz->id;
-                    $model->ckeck = 0;
+                    $model->check = 0;
                     $model->created = date("Y-m-d H:i:s");
                     $model->save();
                 }
@@ -414,31 +414,37 @@ class DoczController extends Controller
             $Docz->save();
             return $this->redirect(['index_3']);
         }
+        if(Yii::$app->request->isAjax){
+            return $this->renderAjax('_send_to_user',[
+                'MUser' => $MUser,
+                'model' => $model,
+            ]);
+        }
         return $this->render('_send_to_user',[
             'MUser' => $MUser,
             'model' => $model
         ]);
     } 
+
     public function actionIndex_to_read(){
-        $models = DocUserRead::find()->where(['ckeck'=>0,'user_id'=>Yii::$app->user->id])->all();             
+        $models = DocUserRead::find()->where(['check'=>0,'user_id'=>Yii::$app->user->id])->all();             
         
         return $this->render('index_to_read',[
             'models' => $models
         ]);
     } 
+
     public function actionTo_read($id){
         $model = Docz::findOne($id);             
         $modelDs = DocUserRead::find()->where(['doc_id'=>$model->id,'user_id'=>Yii::$app->user->id])->all();
         foreach($modelDs as $Ds){
-            if($Ds->ckeck == 0){
-                $Ds->ckeck = 1;
+            if($Ds->check == 0){
+                $Ds->check = 1;
                 $Ds->ip = Yii::$app->getRequest()->getUserIP();
                 $Ds->updated = date("Y-m-d H:i:s");
                 $Ds->save();
             }
-        }
-        // $completePath = Yii::getAlias('@webroot/'.$model->file);
-        // return Yii::$app->response->sendFile($completePath, $model->file, ['inline'=>true]);
+        } 
         return $this->render('_all_to_read',[
             'model' => $model
         ]);
@@ -458,9 +464,19 @@ class DoczController extends Controller
     public function actionAll_to_read($id){
         // $this->layout = 'main-login';
         $model = Docz::findOne($id);
-        // $completePath = Yii::getAlias('@webroot/'.$model->file);
-        // return Yii::$app->response->sendFile($completePath, $model->file, ['inline'=>true]);
         return $this->render('_all_to_read',[
+            'model' => $model
+        ]);
+    } 
+
+    public function actionCheck_read($id){        
+        $model = Docz::findOne($id);
+        if(Yii::$app->request->isAjax){
+            return $this->renderAjax('_check_read',[
+                'model' => $model
+            ]);
+        }
+        return $this->render('_check_read',[
             'model' => $model
         ]);
     } 

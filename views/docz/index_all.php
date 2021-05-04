@@ -32,15 +32,10 @@ $this->params['breadcrumbs'][] = $this->title;
                         
                         <?php foreach($models as $model){ ?>
                         <tr>
-                            <td><?= $model->id?></td>
+                            <td><?= $model->r_number?></td>
                             <td class="mailbox-subject">
                                 <p>
-                                <?= $model->doc_speed ?'
-                                            <small class="label  bg-red">'.$model->doc_speed.'</small>
-                                        ':''?>
-                                    <?=$model->doc_form_number ? 'ที่ '.$model->doc_form_number : ''?>
-                                    <?=$model->doc_date ? 'ลงวันที่ '.date("Y-m-d",strtotime($model->doc_date)) : ''?>
-                                    <?=$model->name ? 'เรื่อง '.$model->name : ''?>
+                                <?= $model->name_doc()?>
                                 </p>
                             </td>
                             

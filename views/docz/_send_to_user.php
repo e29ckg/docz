@@ -23,7 +23,7 @@ $fieldOption = [
     'inputTemplate' => "{input}<span class='form-control-feedback'></span>"
 ];
 
-var_dump($listUserProfile);
+// var_dump($listUserProfile);
 
 ?>
 <div class="row">
@@ -36,32 +36,28 @@ var_dump($listUserProfile);
                 <?php $form = ActiveForm::begin([
                         'id' => 'bsdr-form',
                         'enableAjaxValidation' => true,
-                        'options' => ['enctype' => 'multipart/form-data','class'=>'form-horizontal']
+                        // 'options' => ['enctype' => 'multipart/form-data','class'=>'form-horizontal']
                     ]
                     ); ?>         
                     <table class="table table-hover table-striped">
                       <tr>
                         <td><input id='checkall' type="checkbox" name="chkAll" id="chkAll"></td>
-                        <td class="text-left">CheckAll</td>
+                        <td class="text-left">ทั้งหมด</td>
                       </tr>
                  
-                  <?php foreach($MUser as $MU){?>
-                    
+                    <?php foreach($MUser as $MU){?>
                       <tr>
                         <td ><input type="checkbox" class="checkboxA" name="DocUserRead[user_id][]" value="<?=$MU->id?>"> </td>
                         <td class="text-left"> <?= $MU->name?></td>
                       </tr>
-                    
                     <?php } ?>
-                
                 </table> 
                 
-              <!-- /.mail-box-messages -->
             </div>
 	     
             <div class="box-footer">              
             
-                <button type="submit" class="btn btn-info pull-right">Submit</button>
+                <button type="submit" class="btn btn-info pull-right">ส่ง</button>
             </div>   
             <?php ActiveForm::end(); ?>     
         </div>
@@ -74,24 +70,6 @@ var_dump($listUserProfile);
 <?php $this->registerJs('
 
 function init_click_handlers(){
-    
-    $(".activity-send-del").click(function(e) {
-            var fID = $(this).data("id");
-            // alert(fID);
-            $.get(
-                "/docz/send_del",
-                {
-                    id: fID
-                },
-                function (data)
-                {
-                    $("#activity-modal").find(".modal-body").html(data);
-                    $(".modal-body").html(data);
-                    $(".modal-title").html("");
-                    $("#activity-modal").modal("show");
-                }
-            );
-        }); 
     
         $("#checkall").change(function(){
             var checked = $(this).is(":checked");
