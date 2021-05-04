@@ -68,7 +68,7 @@ class ProfileController extends Controller
     {
         $client_id = 'eSAUJzHEddGlHDi6wK7CO6';
         $api_url = 'https://notify-bot.line.me/oauth/authorize?';
-        $callback_url = 'http://127.0.0.1/docz/index.php?r=profile/callback';
+        $callback_url = Yii::$app->params['line_callback'];
 
         $query = [
             'response_type' => 'code',
@@ -397,7 +397,7 @@ class ProfileController extends Controller
         $client_secret = 'Bs0IyQPhd9S7uhZPlv0QUarnQrZasLdKbgwaYcXSvNr';
 
         $api_url = 'https://notify-bot.line.me/oauth/token';
-        $callback_url = 'http://127.0.0.1/docz/index.php?r=profile/callback';
+        $callback_url = Yii::$app->params['line_callback'];
 
         parse_str($_SERVER['QUERY_STRING'], $queries);
 

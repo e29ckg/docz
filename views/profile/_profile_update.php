@@ -51,7 +51,6 @@ $fieldOptionLine_id= [
 ];
 ?>
 <div class="row">    
-    <!-- /.login-logo -->
     
     <?php $form = ActiveForm::begin([
         'id' => 'reg-form',

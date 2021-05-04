@@ -59,18 +59,4 @@ class m210329_231832_create_user_role extends Migration
         return false;
     }
 
-    /*
-    // Use up()/down() to run migration code without a transaction.
-    public function up()
-    {
-
-    }
-
-    public function down()
-    {
-        echo "m210329_231832_create_user_role cannot be reverted.\n";
-
-        return false;
-    }
-    */
 }

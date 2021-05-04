@@ -58,6 +58,7 @@ class UserProfile extends \yii\db\ActiveRecord
             'sname' => 'นามสกุล',
             'dep_name' => 'ตำแหน่ง',
             'group_work' => 'กลุ่มงาน',
+            'line_id' => 'Line Token',
             'photo' => 'Photo',
             'sign_photo' => 'Sign Photo',
             'created_at' => 'Created At',
