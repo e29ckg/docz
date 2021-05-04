@@ -31,7 +31,7 @@ class DoczController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['create','index'],
+                'only' => ['create','index','index_2','index_3','index_4','view'],
                 'rules' => [
                     [
                         'actions' => ['signup'],
@@ -39,7 +39,7 @@ class DoczController extends Controller
                         'roles' => ['?'],
                     ],
                     [
-                        'actions' => ['index','create'],
+                        'actions' => ['index','create','index_2','index_3','index_4','view'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
