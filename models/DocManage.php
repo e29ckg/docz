@@ -66,11 +66,17 @@ class DocManage extends \yii\db\ActiveRecord
         return $this->hasOne(Role::className(), ['role_name_id' => 'role_name_id','user_id'=>'user_id']);
     }
 
-    public function role_name_dep()
+    public function role_name_dep($user_id,$role_name_id)
     {
-        $name_dep = $this->role->name_dep1 ? $this->role->name_dep1 : '';
-        $name_dep .= $this->role->name_dep2 ? $this->role->name_dep2 : '';
-        $name_dep .= $this->role->name_dep3 ? $this->role->name_dep3 : '';
+        $role_count = Role::find()->where(['role_name_id' => $role_name_id,'user_id'=>$user_id])->count();
+        $name_dep = '';
+        if($role_count > 0){
+            $role = Role::find()->where(['role_name_id' => $role_name_id,'user_id'=>$user_id])->count();
+            $name_dep = $role->name_dep1 ? $role->name_dep1 : '';
+            $name_dep .= $role->name_dep2 ? $role->name_dep2 : '';
+            $name_dep .= $role->name_dep3 ? $role->name_dep3 : '';
+
+        }
         return $name_dep;
     }
 

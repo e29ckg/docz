@@ -169,6 +169,10 @@ class DoczmController extends Controller
         }else{            
             $DO->st = 3;
             $DO->end = date("Y-m-d H:i:s");
+            if($DO->user_profile->line_id){
+                $sms = '(เจ้าหน้าที่สารบรรณ)'.'หนังสือกลับจากเสนอ.'. $DO->name ;
+                Docz::Line_send($DO->user_profile->line_id,$sms);
+            }
         }
         if($DO->save()){
             Yii::$app->session->setFlash('success', 'ส่งต่อแล้วจ้า');

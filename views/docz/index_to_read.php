@@ -32,7 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             <td><?= $model->id?></td>
                             <td class="mailbox-subject">
                                 <p>
-                                    <?=$model->name_doc()?>
+                                    <?=$model->docz->name_doc()?>
                                 </p>
                             </td>
                             

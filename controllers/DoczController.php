@@ -169,7 +169,7 @@ class DoczController extends Controller
                 }
             }
             $model->doc_form = $this->code; //ชื่อโปรแกรม
-            $model->r_number = $model->r_number.'/'.date("Y",strtotime(date("Y")+543));
+            // $model->r_number = $model->r_number.'/'.date("Y",strtotime(date("Y")+543));
             if($model->r_date){
                 $model->r_date = date("Y-m-d h:i:s"); //
             } 
@@ -192,7 +192,6 @@ class DoczController extends Controller
         ]); 
     }
 
-   
 
     public function actionUpdate($id)
     {

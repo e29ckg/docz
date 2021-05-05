@@ -7,6 +7,7 @@ use yii\helpers\Url;
 /* @var $model app\models\UserProfile */
 /* @var $form yii\widgets\ActiveForm */
 // var_dump($model->docps);
+
 ?>
 <div class="row">
     <div class="col-md-8">
@@ -51,7 +52,7 @@ use yii\helpers\Url;
                             <i class="fa fa-comments-o bg-yellow"></i>
                         <?php }else{ ?>
                             <i class="fa fa-user bg-aqua bg-blue"></i>
-                        <?php } ?>
+                        <?php  } ?>
 
                         <div class="timeline-item">
                             <span class="time"><i class="fa fa-clock-o"></i><?=$dm->updated?></span>
@@ -65,8 +66,7 @@ use yii\helpers\Url;
                                     <p style="white-space: pre-line"><b><?=$dm->ty?></b></p>
                                     <p style="white-space: pre-line"><?=$dm->detail?></p>
                                     <p style="white-space: pre-line"><?=$dm->username()?></p>
-                                    <p style="white-space: pre-line"><?=$dm->role_name_dep()?></p>
-                                </div>
+                                    </div>
                                 <div class="timeline-footer">
                                     <div class="pull-right">
                                         <a href="<?=Url::to(['send','id'=>$dm->id])?>" class="btn btn-primary " onclick="return confirm('ต้องการส่งต่อใช่หรือไม่ ?');">ส่งต่อ</a>
@@ -79,7 +79,6 @@ use yii\helpers\Url;
                                     <p style="white-space: pre-line"><b><?=$dm->ty?></b></p>
                                     <p style="white-space: pre-line"><?=$dm->detail?></p>
                                     <p class="text-right" style="white-space: pre-line"><?=$dm->username()?></p>
-                                    <p class="text-right" style="white-space: pre-line"><?=$dm->role_name_dep()?></p>
                                 </div>
                                 <div class="timeline-footer">
                                     
