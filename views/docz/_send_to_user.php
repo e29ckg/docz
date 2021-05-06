@@ -27,10 +27,30 @@ $fieldOption = [
 
 ?>
 <div class="row">
-    <div class="col-md-8">
+  <div class="col-md-8">
+    <div class="box box-primary">
+      <div class="box-header with-border">
+        <h3 class="box-title"><?=$Docz->name_doc()?></h3>
+      </div>
+      <div class="box-body text-center"> 
+        <embed src="<?= Url::to('@web/'.$Docz->file) ?>" type="application/pdf" width="100%" height="800px" />
+      </div>
+    </div>
+    <?php foreach($Docz->doc_file as $df){ ?>
         <div class="box box-primary">
             <div class="box-header with-border">
-              <h3 class="box-title"><?=$model->id?></h3>
+              <h3 class="box-title">ไฟล์แนบ<?=$df->name?></h3>
+            </div>
+            <div class="box-body text-center"> 
+              <embed src="<?= Url::to(['@web/'.$df->file]) ?>" type="application/pdf" width="100%" height="600px" />
+            </div>            
+        </div>  
+        <?php } ?>
+  </div>
+    <div class="col-md-4">
+        <div class="box box-primary">
+            <div class="box-header with-border">
+              <h3 class="box-title"><?=$Docz->id?></h3>
             </div>
             <div class="box-body text-center"> 
                 <?php $form = ActiveForm::begin([

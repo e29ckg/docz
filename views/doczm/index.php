@@ -34,7 +34,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             <td><?= $model->docz->r_date?></td>
                             <td><p> <?= $model->docz->name_doc()?></p></td>
                             <td>
-                                <a href="<?=Url::to(['/doczm/mg','id'=>$model->doc_id])?>" class="btn btn-primary btn-block btn-flat ">ตรวจสอบ</a>
+                                <a href="<?=Url::to(['/doczm/mg','doc_id'=>$model->doc_id,'role_name_id'=>$role_name_id])?>" class="btn btn-primary btn-block btn-flat ">ตรวจสอบ</a>
                             </td>
                         </tr>
                         <?php } ?>

@@ -56,6 +56,14 @@ class DocUserRead extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Docz::className(), ['id'=>'doc_id']);
     }
+    public function name_doc(){
+        $name = $this->docz->doc_speed ? '<small class="label  bg-red">'.$this->docz->doc_speed.'</small>':'';
+        $name .=$this->docz->doc_form_number ? 'ที่ '.$this->docz->doc_form_number : '';
+        $name .=$this->docz->doc_date ? 'ลงวันที่ '.date("Y-m-d",strtotime($this->docz->doc_date)) : '';
+        $name .= $this->docz->name ? 'เรื่อง '.$this->docz->name : '';
+        return $name;
+    }
+
     public function getProfile()
     {
         return $this->hasOne(UserProfile::className(), ['user_id' => 'user_id']);

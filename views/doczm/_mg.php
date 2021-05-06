@@ -3,12 +3,27 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\helpers\Url;
+use yii\helpers\ArrayHelper;
+
 /* @var $this yii\web\View */
 /* @var $model app\models\UserProfile */
 /* @var $form yii\widgets\ActiveForm */
 // var_dump($model->docps);
-
+$listTY =[
+    'เรียน ผู้พิพากษาหัวหน้าศาลฯ<br> - เพื่อโปรดทราบ' => '- เรียน ผู้พิพากษาหัวหน้าศาลฯ / - เพื่อโปรดทราบ',
+    'เรียน ผู้พิพากษาหัวหน้าศาลฯ<br> - เพื่อโปรดพิจารณา' => '- เรียน ผู้พิพากษาหัวหน้าศาลฯ / - เพื่อโปรดพิจารณา',
+    '-ทราบ<br>-ดำเนินการตามเสนอ '=>'- ทราบ / - ดำเนินการตามเสนอ ',
+    '- ทราบ'=>'- ทราบ',
+    'เรียน ผู้อำนวยการสำนักงานฯ<br> - เพื่อโปรดพิจารณา'=>'เรียน ผู้อำนวยการสำนักงานฯ / - เพื่อโปรดพิจารณา',
+    'เรียน ผู้อำนวยการสำนักงานฯ<br> - เพื่อโปรดทราบ'=>'เรียน ผู้อำนวยการสำนักงานฯ / - เพื่อโปรดทราบ'
+];
+$fieldOption = [
+    'options' => ['class' => 'form-group has-feedback'],
+    'inputTemplate' => "{input}<span class='help-block'></span>",
+    'template'=>'{label}<div class="col-sm-10 form-group has-feedback">{input}{error}</div>'
+];
 ?>
+
 <div class="row">
     <div class="col-md-8">
         <div class="box box-primary">
@@ -38,11 +53,7 @@ use yii\helpers\Url;
         <div class="box box-primary">
             <div class="box-body">            
                 <ul class="timeline timeline-inverse">
-                    <!-- <li class="time-label">
-                        <span class="bg-red">
-                            10 Feb. 2014
-                        </span>
-                    </li> -->
+               
                     <?php foreach($model->doc_manage as $dm){ ?>
                 
                     <li>
@@ -62,22 +73,45 @@ use yii\helpers\Url;
                             </h3>
 
                             <?php if($dm->st == 2){ ?>
+                               
                                 <div class="timeline-body">
-                                    <p style="white-space: pre-line"><b><?=$dm->ty?></b></p>
-                                    <p style="white-space: pre-line"><?=$dm->detail?></p>
-                                    <p style="white-space: pre-line"><?=$dm->username()?></p>
+                                    <!-- <p style="white-space: pre-line"><b><?=$dm->ty?></b></p>
+                                    <pre style="white-space: pre-line"><?=$dm->detail?></pre>
+                                    <p style="white-space: pre-line"><?=$dm->username()?></p> -->
+                                    <div >
+                                        <?php $form = ActiveForm::begin([
+                                        'id' =>  'mg_edit-form',
+                                        // 'enableAjaxValidation' => true,
+                                        // 'options' => [
+                                        //     'enctype' => 'multipart/form-data',
+                                        //     'class'=>'form-horizontal']
+                                        ]); ?>
+                                        <?= $form->field($modelDM, 'ty')
+                                            ->dropDownList(
+                                            $listTY,
+                                            ['prompt'=>'เลือกตรายาง'])
+                                            ->label(false) 
+                                        ?>
+                                    <?= $form->field($modelDM, 'detail')
+                                    ->textarea(['rows' => '6','placeholder' => $modelDM->getAttributeLabel('detail'),'maxlength' => true])
+                                    ->label(false) ?>
+                                    
                                     </div>
+                                </div>
+
+                                    
                                 <div class="timeline-footer">
-                                    <div class="pull-right">
-                                        <a href="<?=Url::to(['send','id'=>$dm->id])?>" class="btn btn-primary " onclick="return confirm('ต้องการส่งต่อใช่หรือไม่ ?');">ส่งต่อ</a>
-                                    </div>                                
-                                    <a data-id="<?=$dm->id?>" class="activity-mg-edit btn btn-warning ">ลงชื่อ</a>
+                                        <button type="submit" class="btn btn-info" onclick="return confirm('บันทึกและส่งต่อ ใช่ไหม ?');" >บันทึก / ส่งต่อ</button>                           
+                                    
+                                     <!-- <a data-id="<?=$dm->id?>" class="activity-mg-edit btn btn-warning ">ลงชื่อ</a> -->
+                                    
                                     <a href="<?=Url::to(['/doczm/mg_return','id'=>$dm->id])?>" onclick="return confirm('เอกสารนี้ต้องการตีกลับใช่ไหม ?');" class="btn btn-danger btn-xs">ตีกลับเอกสาร</a>
                                 </div>
+                                <?php ActiveForm::end(); ?>
                             <?php }else if($dm->st == 3){ ?>
                                 <div class="timeline-body">
                                     <p style="white-space: pre-line"><b><?=$dm->ty?></b></p>
-                                    <p style="white-space: pre-line"><?=$dm->detail?></p>
+                                    <pre style="white-space: pre-line"><?=$dm->detail?></pre>
                                     <p class="text-right" style="white-space: pre-line"><?=$dm->username()?></p>
                                 </div>
                                 <div class="timeline-footer">
@@ -88,7 +122,7 @@ use yii\helpers\Url;
                     </li>
                     <!-- END timeline item --> 
                     <?php } ?>
-
+                    
                     <li>
                     <i class="fa fa-clock-o bg-gray"></i>
                     

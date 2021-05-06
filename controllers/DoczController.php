@@ -170,7 +170,7 @@ class DoczController extends Controller
             }
             $model->doc_form = $this->code; //ชื่อโปรแกรม
             // $model->r_number = $model->r_number.'/'.date("Y",strtotime(date("Y")+543));
-            if($model->r_date){
+            if($model->r_date == ''){
                 $model->r_date = date("Y-m-d h:i:s"); //
             } 
             $model->r_date = date("Y-m-d h:i:s", strtotime($model->r_date));
@@ -406,22 +406,29 @@ class DoczController extends Controller
                     $model->save();
                 }
             }
-            if($Docz->st <> 4){
-                $this->stamp_end($Docz->id);
-            }
+            // if($Docz->st <> 4){
+            //     $this->stamp_end($Docz->id);
+            // }
             $Docz->st = 4;
             $Docz->save();
+            
+            $token = '72bPVwppZfiMjDoiH6V5i6lygBiD1zPtPDOezUrk7L5';
+            $sms = 'มีหนังสือ เรื่อง '.$Docz->name.' อ่านรายละเอียดได้ที่ http://10.37.64.01/docz/';
+            Docz::Line_send($token,$sms);
+
             return $this->redirect(['index_3']);
         }
         if(Yii::$app->request->isAjax){
             return $this->renderAjax('_send_to_user',[
                 'MUser' => $MUser,
                 'model' => $model,
+                'Docz' => $Docz,
             ]);
         }
         return $this->render('_send_to_user',[
             'MUser' => $MUser,
-            'model' => $model
+            'model' => $model,
+            'Docz' => $Docz
         ]);
     } 
 
@@ -563,7 +570,7 @@ class DoczController extends Controller
                 // $mpdf->SetXY($x, $y);
                 $mpdf->WriteHTML($stylesheet,1);
                 $mpdf->WriteHTML('<p id="hh">'.$md->ty.'</p>',2);
-                $mpdf->WriteHTML('<p id="detail">'.$md->detail.'</p>',2);
+                $mpdf->WriteHTML('<pre id="detail">'.$md->detail.'</pre>',2);
                 $role_name = Role::find()->where(['user_id'=>$md->user_id,'role_name_id'=>$md->role_name_id])->one();
                 // $mpdf->WriteHTML('<br>');
                 if($role_name){

@@ -37,7 +37,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         <?php foreach($models as $model){ ?>
                         <tr>
                             <td><?= $model->r_number?></td>
-                            <td><?= date("Y-m-d", strtotime("$model->doc_date"));?></td>
+                            <td><?= date("Y-m-d", strtotime("$model->r_date"));?></td>
                             <td class="mailbox-subject">
                                 <p> 
                                     <?= $model->name_doc() ?>

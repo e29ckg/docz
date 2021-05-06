@@ -160,5 +160,70 @@ class Docz extends \yii\db\ActiveRecord
         return false;
     }  
 
+
+    public function stamp_end($id){
+        $model = Docz::findOne($id);
+        $mpdf = new \Mpdf\Mpdf([
+            'mode' => 'utf-8',
+        // 'format' => [190, 236],
+        // 'orientation' => 'L'
+        ]);
+
+        $stylesheet = file_get_contents(Url::to('@webroot/css/pdf.css')); // external css
+        $mpdf->WriteHTML($stylesheet,1);
+
+        $completePath = Url::to('@webroot/'.$model->file);
+        $pagecount = $mpdf->SetSourceFile($completePath);
+        $mpdf->SetDocTemplate($completePath);
+        // $mpdf->AddFont('THSarabun', '', 'THSarabun.php'); //ธรรมดา       
+        
+        for ($x = 1; $x <= $pagecount; $x++) {            
+            $mpdf->AddPage();
+        }
+        $mpdf->SetFont('garuda', '', 8);
+        $mpdf->AddPage();
+            $mpdf->SetXY(140, 5);
+            $mpdf->SetDrawColor(0, 0, 255);
+            $mpdf->setTextColor('0', '0', '255');
+            $mpdf->Cell(60, 6, 'ศาลเยาวชนและครอบครัวจังหวัดประจวบคีรีขันธ์', 'LTR', 1, '');
+            $mpdf->SetXY(140, 10);
+            $mpdf->SetFont('garuda', '', 10);
+            $mpdf->Cell(60, 6, 'รับที่  '.$model->r_number, 'LR', 1, '');
+            $mpdf->SetXY(140, 15);
+            $mpdf->Cell(60, 6, 'วันที่ '.$model->dateThaiTime($model->r_date), 'BLR', 1, '');
+            //หัวหน้าส่วน
+            $x = 20;
+            $y = 25;
+            foreach($model->doc_manage_asc as $md){
+
+                // $mpdf->SetXY($x, $y);
+                $mpdf->SetFont('garuda', '', 8);
+                $mpdf->WriteHTML($stylesheet,1);
+                $mpdf->WriteHTML('<p id="hh">'.$md->ty.'</p>',2);
+                $mpdf->WriteHTML('<pre id="detail">'.$md->detail.'</pre>',2);
+                $role_name = Role::find()->where(['user_id'=>$md->user_id,'role_name_id'=>$md->role_name_id])->one();
+                // $mpdf->WriteHTML('<br>');
+                if($role_name){
+                    $dep_name = '<br>'.$role_name->name_dep1; 
+                    $dep_name .= $role_name->name_dep2 ? '<br>'.$role_name->name_dep2 : '';
+                    $dep_name .= $role_name->name_dep3 ? '<br>'.$role_name->name_dep3 : '';
+                }else{
+                    $dep_name = '';
+                }                
+                if($md->profile->sign_photo){
+                    $sign_photo = '<img id="img" src="'.Url::to('@webroot/'.$md->profile->sign_photo).'" alt="sign_photo"><br>';
+                }else{
+                    $sign_photo ='<br>';
+                }
+                // $mpdf->WriteHTML($sign_photo,2);
+                $mpdf->WriteHTML('<p>'.$sign_photo.'('.$md->username().')'.$dep_name.'<br>'.$model->dateThaiTime($md->updated).'</p>');
+                $mpdf->WriteHTML('<p>--------------------------------------------------------------------------------</p>',2);
+                // $y = $y+60;
+                
+            }           
+        
+        $mpdf->Output(Url::to('@webroot/'.$model->file), \Mpdf\Output\Destination::FILE);
+        return true;
+    } 
     
 }

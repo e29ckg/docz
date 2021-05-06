@@ -1,20 +1,28 @@
 body {
     font-family: "garuda";
+    /* font-family: "THsarabun", Times, serif; */
 }
 p {
     /* font-family: "THsarabun", Times, serif; */
-    /* font-family: "garuda", Times, serif; */
+    font-family: "garuda", Times, serif;
     font-size: 14px;
     color: blue;
     text-align: center;
   }
-
+pre {
+    /* font-family: "THsarabun", Times, serif; */
+    font-family: "garuda", Times, serif;
+    font-size: 14px;
+    color: blue;
+    text-align: left;
+  }
 #hh {
     font-size: 14px;
     color:darkorange;
     text-align: left;
   }
 #detail {
+    /* font-family: "garuda"; */
     font-size: 14px;
     color:rgb(85, 74, 241);
     text-align: left;
