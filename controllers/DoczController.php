@@ -451,6 +451,7 @@ class DoczController extends Controller
 
     public function actionAll(){
         $models = Docz::find()
+                    ->where(['st'=>4])
                     ->orderBy(['id'=>SORT_DESC])
                     ->limit(1000)
                     ->all();             
