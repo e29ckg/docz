@@ -6,8 +6,11 @@ use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
+$this->title = $models->role_name()[$role_name_id];
 
-$this->title = '.';
+if(isset($models[0])){
+    $this->title = $models[0]->role_name();
+} 
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
