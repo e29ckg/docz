@@ -240,6 +240,7 @@ class DoczmController extends Controller
             //หัวหน้าส่วน
             $x = 20;
             $y = 25;
+            $mpdf->SetXY(20,5);
             foreach($model->doc_manage_asc as $md){
 
                 // $mpdf->SetXY(20,5);

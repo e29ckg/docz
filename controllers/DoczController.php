@@ -6,7 +6,9 @@ use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use app\models\User;
+use app\models\UserProfile;
 use app\models\Docz;
+use app\models\Doccat;
 use app\models\DocFile;
 use app\models\DocManage;
 use app\models\DocProfile;
@@ -403,32 +405,53 @@ class DoczController extends Controller
                     $model->doc_id = $Docz->id;
                     $model->check = 0;
                     $model->created = date("Y-m-d H:i:s");
-                    $model->save();
+                    // $model->save();
+                    $MUP = UserProfile::find()->select('line_id')->where(['user_id' => $model->user_id])->one();
+                    $token = $MUP->line_id;
+                    $sms = 'มีหนังสือ เรื่อง '.$Docz->name.' อ่านรายละเอียดได้ที่ http://10.37.64.01/docz/';
+                    if( $token <> ''){
+                        Docz::Line_send($token,$sms);
+                    }
                 }
             }
-            // if($Docz->st <> 4){
-            //     $this->stamp_end($Docz->id);
-            // }
-            $Docz->st = 4;
-            $Docz->save();
+            // $Docz->st = 4;
+            // $Docz->save();            
             
-            $token = '72bPVwppZfiMjDoiH6V5i6lygBiD1zPtPDOezUrk7L5';
-            $sms = 'มีหนังสือ เรื่อง '.$Docz->name.' อ่านรายละเอียดได้ที่ http://10.37.64.01/docz/';
-            Docz::Line_send($token,$sms);
-
-            return $this->redirect(['index_3']);
+            if(isset($_POST['chkAll'])){
+                // $sms = 'มีหนังสือ เรื่อง '.$Docz->name.' อ่านรายละเอียดได้ที่ http://10.37.64.01/docz/';
+                // $token = '72bPVwppZfiMjDoiH6V5i6lygBiD1zPtPDOezUrk7L5';
+                // Docz::Line_send($token,$sms);
+            }
+            
+            // return $this->redirect(['index_3']);
         }
-        if(Yii::$app->request->isAjax){
-            return $this->renderAjax('_send_to_user',[
-                'MUser' => $MUser,
-                'model' => $model,
-                'Docz' => $Docz,
-            ]);
+        if(isset($_POST['select'])){
+            $s = $_POST['select'];
+            if(isset($_POST['select'])){
+                // $DC = DocCat::find()->where(['name'=>$sl])->count();
+                // if($DC > 0){
+                //     $DC_name = DocCat::find()->where(['name'=>$sl])->all();
+                //     foreach($DC_name as $DC_N){
+                //         $DC_N->delete();
+                //     }
+                // }
+                
+                // foreach( $_POST['select'] as $sl){
+                    
+                //         $model = new DocCat();
+                //         $model->doc_id = $Docz->id;
+                //         $model->name = $sl;
+                //         $model->save();                    
+                //     // }
+                // }
+            }
+            
         }
         return $this->render('_send_to_user',[
             'MUser' => $MUser,
             'model' => $model,
-            'Docz' => $Docz
+            'Docz' => $Docz,
+            'select'=>  $s
         ]);
     } 
 

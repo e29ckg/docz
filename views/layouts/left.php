@@ -55,6 +55,7 @@ if(!(Yii::$app->user->isGuest)){
                     ['label' => 'User', 'icon' => 'file-code-o', 'url' => ['/admin/user'],],                            
                     ['label' => 'กำหนดสิทธ์', 'icon' => 'file-code-o', 'url' => ['/role/index'],],
                     ['label' => 'กำหนดขั้นตอน', 'icon' => 'file-code-o', 'url' => ['/docprofile/index'],],
+                    ['label' => 'ประเภทเอกสาร/ที่จัดเก็บ', 'icon' => 'file-code-o', 'url' => ['/doccatname/index'],],
                 ]
             ]); 
         }          

@@ -5,25 +5,29 @@ use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Url;
 use app\models\User;
+use app\models\Doccatname;
 use yii\helpers\ArrayHelper;
 /* @var $this yii\web\View */
 /* @var $model app\models\UserProfile */
 /* @var $form yii\widgets\ActiveForm */
-// var_dump($model->docps);
+var_dump($select);
 
 $User = User::find()->where(['status'=>10])->all();  
+$DocCat = Doccatname::find()->all();  
  
 // $listUserProfile= ArrayHelper::map($User,'id','name');
-$listUserProfile= ArrayHelper::map($User,'id',function ($User) {
-        return $User->name;
-    });
+$listUserProfile = ArrayHelper::map($User,'id',function ($User) {
+    return $User->name;
+});
+
+$listDocCat = ArrayHelper::map($DocCat,'id','name');
         
 $fieldOption = [
     'options' => ['class' => 'checkbox has-feedback col-md-12'],
     'inputTemplate' => "{input}<span class='form-control-feedback'></span>"
 ];
 
-// var_dump($listUserProfile);
+var_dump($listDocCat);
 
 ?>
 <div class="row">
@@ -71,13 +75,24 @@ $fieldOption = [
                         <td class="text-left"> <?= $MU->name?></td>
                       </tr>
                     <?php } ?>
-                </table> 
-                
+                </table>                 
             </div>
-	     
+            <div class="col-md-8">
+            <label>ที่เก็บ</label>
+              <select class="form-control" name="select[]"  multiple="multiple">
+              <?php foreach($listDocCat as $DocCat){?>
+                <!-- <option selected="selected">orange</option>
+                <option>white</option> -->
+                <option ><?=$DocCat?></option>
+                <?php } ?>
+              </select>
+                <!-- /.form-group -->
+            
+            </div>
+              
             <div class="box-footer">              
             
-                <button type="submit" class="btn btn-info pull-right">ส่ง</button>
+                <button type="submit" class="btn btn-info pull-right">บันทึก / ส่ง</button>
             </div>   
             <?php ActiveForm::end(); ?>     
         </div>
@@ -90,7 +105,7 @@ $fieldOption = [
 <?php $this->registerJs('
 
 function init_click_handlers(){
-    
+        
         $("#checkall").change(function(){
             var checked = $(this).is(":checked");
             if(checked){
@@ -116,6 +131,10 @@ function init_click_handlers(){
          });
 }
 init_click_handlers(); //first run
+
+$("select").select2({
+  // data :[{"id":1,"text":"ssss"}]
+});
 // $("#customer_pjax_id").on("pjax:success", function() {
 //     init_click_handlers(); //reactivate links in grid after pjax update
 // });

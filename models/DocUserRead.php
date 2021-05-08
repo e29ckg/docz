@@ -72,4 +72,9 @@ class DocUserRead extends \yii\db\ActiveRecord
     {
         return $this->profile->pfname.$this->profile->name.' '.$this->profile->sname;
     }
+
+    public function LineToken($user_id){
+        $token = UserProfile::find()->where(['user_id' => $user_id])->one();
+        return $token;
+    }
 }
