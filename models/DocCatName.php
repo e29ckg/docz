@@ -39,7 +39,7 @@ class DocCatName extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'name' => 'Name',
+            'name' => 'ชื่อแฟ้ม',
             'note' => 'Note',
         ];
     }
