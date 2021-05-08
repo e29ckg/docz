@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use Yii;
 use app\models\DocCatName;
+use app\models\DocCat;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -132,6 +133,14 @@ class DoccatnameController extends Controller
      */
     public function actionDel($id)
     {
+        $DC_count = DocCat::find()->where(['doc_cat_name_id'=>$id])->count();
+        if($DC_count > 0){
+            $models =  DocCat::find()->where(['doc_cat_name_id'=>$id])->all();
+            foreach($models as $model){
+                $model->delete();
+            }
+        }
+
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);

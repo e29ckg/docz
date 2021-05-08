@@ -10,24 +10,23 @@ use yii\helpers\ArrayHelper;
 /* @var $this yii\web\View */
 /* @var $model app\models\UserProfile */
 /* @var $form yii\widgets\ActiveForm */
-var_dump($select);
 
 $User = User::find()->where(['status'=>10])->all();  
-$DocCat = Doccatname::find()->all();  
+$DocCats = Doccatname::find()->all();  
  
 // $listUserProfile= ArrayHelper::map($User,'id','name');
 $listUserProfile = ArrayHelper::map($User,'id',function ($User) {
     return $User->name;
 });
 
-$listDocCat = ArrayHelper::map($DocCat,'id','name');
+// $listDocCat = ArrayHelper::map($DocCat,'id','name');
         
 $fieldOption = [
     'options' => ['class' => 'checkbox has-feedback col-md-12'],
     'inputTemplate' => "{input}<span class='form-control-feedback'></span>"
 ];
 
-var_dump($listDocCat);
+// var_dump($DocCats);
 
 ?>
 <div class="row">
@@ -80,10 +79,10 @@ var_dump($listDocCat);
             <div class="col-md-8">
             <label>ที่เก็บ</label>
               <select class="form-control" name="select[]"  multiple="multiple">
-              <?php foreach($listDocCat as $DocCat){?>
+              <?php foreach($DocCats  as $DocCat){?>
                 <!-- <option selected="selected">orange</option>
                 <option>white</option> -->
-                <option ><?=$DocCat?></option>
+                <option value="<?=$DocCat->id?>"><?=$DocCat->name?></option>
                 <?php } ?>
               </select>
                 <!-- /.form-group -->

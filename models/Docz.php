@@ -124,10 +124,9 @@ class Docz extends \yii\db\ActiveRecord
 
     public function Line_send($token,$sms)
     {
+        $token = 'zKsJKHnezJuHHCkClHcj8MfzZa8kWgL4Ss6HuIXgNXm';
         $sms =  trim($sms);
         date_default_timezone_set("Asia/Bangkok");
-        // zKsJKHnezJuHHCkClHcj8MfzZa8kWgL4Ss6HuIXgNXm 
-        // $model = new LineFormSend();
         $json = null;
         // if($model->load(Yii::$app->request->post())){
             $api_url = 'https://notify-api.line.me/api/notify';

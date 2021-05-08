@@ -25,6 +25,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     <tr>
                     <th style="width: 20px">#</th>
                     <th></th>
+                    <th></th>
                     <th style="width: 40px"></th>
                     <th style="width: 40px"></th>
                     </tr>
@@ -33,32 +34,33 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?php
                     foreach($models as $model){?>
                         <tr>
+                        <td><?=$model->sort?></td>
                             <td>
-                                <a href="<?=Url::to(['/profile/view','id'=>$model->id])?>" >
+                                <a href="<?=Url::to(['/profile/view','id'=>$model->user_id])?>" >
                                     <img class="profile-user-img img-responsive img-circle" 
-                                        src="<?= $model->profile->image($model->profile->photo)?>" alt="User profile picture">
+                                        src="<?= $model->image($model->photo)?>" alt="User profile picture">
                                 </a>
-                                <?= $model->id ?>
+                                <?= $model->sort.','.$model->user_id ?>
                             </td>
                             <td>
-                                <a href="<?=Url::to(['/profile/view','id'=>$model->id])?>" ><?=$model->username?></a>
-                                <!-- <a href="#" data-id="<?=$model->id?>" class="activity-view-link" data-target = "activity-modal"><?=$model->username?></a> -->
-                                <span><?= $model->profile->name ? '('.$model->profile->pfname.$model->profile->name.' '.$model->profile->sname .')': ''?></span>
-                                <span class="badge bg-red"><?=!($model->status == 10) ? 'ระงับการใช้งาน': ''?></span>
-                                <p><?=$model->profile->dep_name?><br><?=$model->profile->group_work?></p>
+                                <a href="<?=Url::to(['/profile/view','id'=>$model->user_id])?>" ><?=$model->getname()?></a>
+                                <!-- <a href="#" data-id="<?=$model->user_id?>" class="activity-view-link" data-target = "activity-modal"><?=$model->getname()?></a> -->
+                                <span><?= $model->name ? '('.$model->pfname.$model->name.' '.$model->sname .')': ''?></span>
+                                <span class="badge bg-red"><?=!($model->user->status == 10) ? 'ระงับการใช้งาน': ''?></span>
+                                <p><?=$model->dep_name?><br><?=$model->group_work?></p>
                             </td>
                             <td>
                                 
-                                <?php if($model->status == 10){
-                                    echo '<a href="#" data-id="'.$model->id.'" class="activity-set-deactive btn btn-warning btn-block" >ระงับการใช้งาน</a>';
+                                <?php if($model->user->status == 10){
+                                    echo '<a href="#" data-id="'.$model->user_id.'" class="activity-set-deactive btn btn-warning btn-block" >ระงับการใช้งาน</a>';
                                    
                                 }else{
-                                    echo '<a href="#" data-id="'.$model->id.'" class="activity-set-active btn btn-success btn-block" >เปิดใช้งาน</a>';
+                                    echo '<a href="#" data-id="'.$model->user_id.'" class="activity-set-active btn btn-success btn-block" >เปิดใช้งาน</a>';
                                 }?>
                             </td>
                             <td>                               
-                                <a href="<?=Url::to(['/admin/reset_password','id'=>$model->id])?>" onclick="return confirm('Are you sure you want to Reset password?');" class="btn btn-danger btn-block">Reset password</a>
-                                <!-- <a href="#" data-id="<?=$model->id?>" id="activity-reset-password" class=" btn btn-danger btn-xs" onclick="return confirm('Are you sure you want to Reset password?');">Reset Password</a> -->
+                                <a href="<?=Url::to(['/admin/reset_password','id'=>$model->user_id])?>" onclick="return confirm('Are you sure you want to Reset password?');" class="btn btn-danger btn-block">Reset password</a>
+                                <!-- <a href="#" data-id="<?=$model->user_id?>" id="activity-reset-password" class=" btn btn-danger btn-xs" onclick="return confirm('Are you sure you want to Reset password?');">Reset Password</a> -->
                             
                             </td>
                             </tr>
@@ -147,7 +149,9 @@ function init_click_handlers(){
     
 }
 init_click_handlers(); //first run
-$("#user_profile").DataTable();
+$("#user_profile").DataTable({
+    "order": [[ 0, "asc" ]]
+});
 // $("#customer_pjax_id").on("pjax:success", function() {
 //     init_click_handlers(); //reactivate links in grid after pjax update
 // });

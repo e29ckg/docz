@@ -11,18 +11,19 @@ if(!(Yii::$app->user->isGuest)){
         if($model->role_name_id == 1){
             $docz_index = Docz::find()->where(['st'=>1])->count();
             if($docz_index == 0){$docz_index = '';}
-            $docz_index_2 = Docz::find()->where(['st'=>2])->count();
+            $docz_index_2 = Docz::find()->where(['st'=>[2,3]])->count();
             if($docz_index_2 == 0){$docz_index_2 = '';}
-            $docz_index_3 = Docz::find()->where(['st'=>3])->count();
-            if($docz_index_3 == 0){$docz_index_3 = '';}
+            // $docz_index_3 = Docz::find()->where(['st'=>3])->count();
+            // if($docz_index_3 == 0){$docz_index_3 = '';}
             // $docz_index_4 = Docz::find()->where(['st'=>4])->count();
             // if($docz_index_4 == 0){$docz_index_4 = '';}
-            $docz_index_4 = '';
+            // $docz_index_4 = '';
             array_push($menu,['label' => $model->role_name(), 'options' => ['class' => 'header text-center']]); 
             array_push($menu,['label' => 'ระบบเอกสาร<span id="docz_index" class="label label-danger pull-right">'.$docz_index.'</span>', 'icon' => 'file-code-o', 'url' => ['/docz/index']]);  
             array_push($menu,['label' => 'อยู่ระหว่างดำเนินการ<span id="docz_index" class="label label-warning pull-right">'.$docz_index_2.'</span>', 'icon' => 'file-code-o', 'url' => ['/docz/index_2']]); 
-            array_push($menu,['label' => 'ดำเนินการเสร็จ<span id="docz_index" class="label label-primary pull-right">'.$docz_index_3.'</span>', 'icon' => 'file-code-o', 'url' => ['/docz/index_3']]);             
-            array_push($menu,['label' => 'จ่ายแล้ว<span id="docz_index" class="label label-primary pull-right">'.$docz_index_4.'</span>', 'icon' => 'file-code-o', 'url' => ['/docz/index_4']]);             
+            // array_push($menu,['label' => 'ดำเนินการเสร็จ<span id="docz_index" class="label label-primary pull-right">'.$docz_index_3.'</span>', 'icon' => 'file-code-o', 'url' => ['/docz/index_3']]);             
+            array_push($menu,['label' => 'หนังสือนอกแฟ้ม<span id="docz_index" class="label label-primary pull-right"></span>', 'icon' => 'file-code-o', 'url' => ['/doccat/index_out']]);             
+            array_push($menu,['label' => 'แฟ้มเอกสาร<span id="docz_index" class="label label-primary pull-right"></span>', 'icon' => 'file-code-o', 'url' => ['/doccat/index']]);             
         }
         if($model->role_name_id == 2){
             $doczm_index = DocManage::find()->where(['st'=>2,'role_name_id'=>$model->role_name_id])->count();
@@ -55,7 +56,7 @@ if(!(Yii::$app->user->isGuest)){
                     ['label' => 'User', 'icon' => 'file-code-o', 'url' => ['/admin/user'],],                            
                     ['label' => 'กำหนดสิทธ์', 'icon' => 'file-code-o', 'url' => ['/role/index'],],
                     ['label' => 'กำหนดขั้นตอน', 'icon' => 'file-code-o', 'url' => ['/docprofile/index'],],
-                    ['label' => 'ประเภทเอกสาร/ที่จัดเก็บ', 'icon' => 'file-code-o', 'url' => ['/doccatname/index'],],
+                    ['label' => 'กำหนดแฟ้มเอกสาร', 'icon' => 'file-code-o', 'url' => ['/doccatname/index'],],
                 ]
             ]); 
         }          

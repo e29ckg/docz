@@ -15,7 +15,7 @@ class m210329_231833_doc_cat extends Migration
         $this->createTable('doc_cat', [
             'id' => $this->primaryKey(),
             'doc_id' => $this->integer(),
-            'name' => $this->string(255)->notNull(),
+            'doc_cat_name_id' => $this->integer(),
             'note' => $this->string(255),
         ]);
         $this->createTable('doc_cat_name', [

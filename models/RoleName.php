@@ -52,4 +52,8 @@ class RoleName extends \yii\db\ActiveRecord
             'created_at' => 'Created At',
         ];
     }
+    public function getName($id){
+        $model = RoleName::findOne($id);
+        return isset($model->name) ? $model->name : '';
+    }
 }

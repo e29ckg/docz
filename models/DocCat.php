@@ -8,7 +8,8 @@ use Yii;
  * This is the model class for table "doc_cat".
  *
  * @property int $id
- * @property string $name
+ * @property int|null $doc_id
+ * @property int|null $doc_cat_name_id
  * @property string|null $note
  */
 class DocCat extends \yii\db\ActiveRecord
@@ -27,8 +28,8 @@ class DocCat extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name'], 'required'],
-            [['name', 'note'], 'string', 'max' => 255],
+            [['doc_id', 'doc_cat_name_id'], 'integer'],
+            [['note'], 'string', 'max' => 255],
         ];
     }
 
@@ -39,8 +40,15 @@ class DocCat extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'name' => 'Name',
+            'doc_id' => 'Doc ID',
+            'doc_cat_name_id' => 'Doc Cat Name ID',
             'note' => 'Note',
         ];
     }
+
+    public function getDocz()
+    {
+        return $this->hasOne(DocZ::className(), ['id'=>'doc_id']);
+    }
+
 }

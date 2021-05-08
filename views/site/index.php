@@ -13,7 +13,7 @@ use app\models\DocUserRead;
 use app\models\UserProfile;
 $docz_index_to_read = DocUserRead::find()->where(['check'=>0,'user_id'=>Yii::$app->user->id])->count();
 $mo = UserProfile::find()->select('line_id')->where(['user_id' => 1])->one();
-echo $mo->line_id;
+// echo $mo->line_id;
 // var_dump($mo);
 ?>
 

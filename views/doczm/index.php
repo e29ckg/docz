@@ -3,14 +3,14 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\helpers\Url;
+use app\models\RoleName;
+
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
-$this->title = $models->role_name()[$role_name_id];
 
-if(isset($models[0])){
-    $this->title = $models[0]->role_name();
-} 
+$this->title = RoleName::getName($role_name_id);
+
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 

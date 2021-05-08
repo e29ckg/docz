@@ -104,33 +104,33 @@ class DoczmController extends Controller
             ]);
     }
 
-    public function actionMg_edit($id) //หน้า _mg กด 
-    {
-        $model = DocManage::findOne($id);
+    // public function actionMg_edit($id) //หน้า _mg กด 
+    // {
+    //     $model = DocManage::findOne($id);
 
-        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
-            Yii::$app->response->format = Response::FORMAT_JSON;
-            return ActiveForm::validate($model);
-        }
+    //     if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+    //         Yii::$app->response->format = Response::FORMAT_JSON;
+    //         return ActiveForm::validate($model);
+    //     }
         
-        if ($model->load(Yii::$app->request->post())) {      
-            $model->user_id = Yii::$app->user->id;
-            if($model->save()){
-                Yii::$app->session->setFlash('success', 'บันทักข้อมูลเรียบร้อย');
-                return $this->redirect(['mg','id'=>$model->doc_id]);
-            }
+    //     if ($model->load(Yii::$app->request->post())) {      
+    //         $model->user_id = Yii::$app->user->id;
+    //         if($model->save()){
+    //             Yii::$app->session->setFlash('success', 'บันทักข้อมูลเรียบร้อย');
+    //             return $this->redirect(['mg','id'=>$model->doc_id]);
+    //         }
 
-        }
+    //     }
 
-        if(Yii::$app->request->isAjax){
-            return $this->renderAjax('_mg_edit',[
-                'model' => $model,
-            ]);
-        } 
-        return $this->render('_mg_edit',[
-            'model' => $model
-        ]);
-    }
+    //     if(Yii::$app->request->isAjax){
+    //         return $this->renderAjax('_mg_edit',[
+    //             'model' => $model,
+    //         ]);
+    //     } 
+    //     return $this->render('_mg_edit',[
+    //         'model' => $model
+    //     ]);
+    // }
 
     public function actionMg_return($id) //หน้า _mg กดตึกลับ
     {
@@ -142,7 +142,7 @@ class DoczmController extends Controller
             $DZ->st = 1;
             $DZ->save();            
                 if($DZ->user_profile->line_id){
-                    $sms = 'มีหนังสือตีกลับ..'.$model->docz->name_doc();
+                    $sms = 'มีหนังสือตีกลับ : '.$model->docz->name_doc();
                     Docz::Line_send($DZ->user_profile->line_id,$sms);
                 }
             
@@ -152,7 +152,7 @@ class DoczmController extends Controller
             $DM->save();
             foreach($DM->role_power as $RP){
                 if($RP->user_profile->line_id){
-                    $sms = '('.$RP->role_name().')'.'มีหนังสือตีกลับ..'. $model->docz->name ;
+                    $sms = '('.$RP->role_name().')'.'มีหนังสือตีกลับ :'. $model->docz->name ;
                     Docz::Line_send($RP->user_profile->line_id,$sms);
                 }
             }
@@ -181,7 +181,7 @@ class DoczmController extends Controller
             $DO->st = 2;
             foreach($DM_next->role_power as $RP){
                 if($RP->user_profile->line_id){
-                    $sms = '('.$RP->role_name().')'.'มีหนังสือต้องลงชื่อ..'. $DO->name ;
+                    $sms = '('.$RP->role_name().')'.'มีหนังสือต้องลงชื่อ : '. $DO->name ;
                     Docz::Line_send($RP->user_profile->line_id,$sms);
                 }
             }

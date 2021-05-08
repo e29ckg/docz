@@ -13,16 +13,14 @@ use yii\helpers\Url;
         <div class="box box-primary">
             <div class="box-header with-border">
                 <h3 class="box-title">
-                    <?= $model->doc_speed ?'<small class="label  bg-red">'.$model->doc_speed.'</small>':''?>
-                    <?=$model->doc_form_number ? 'ที่ '.$model->doc_form_number : ''?>
-                    <?=$model->doc_date ? 'ลงวันที่ '.date("Y-m-d",strtotime($model->doc_date)) : ''?>
-                    <?=$model->name ? 'เรื่อง '.$model->name : ''?>
+                    <?= $model->name_doc()?>
                 </h3>
             </div>
             <div class="box-body text-center"> 
                 <?php if($model->file){ ?>
-                    <?= Url::to('@web/'.$model->file) ?>
+                    
                     <embed src="<?= Url::to('@web/'.$model->file) ?>" type="application/pdf" width="100%" height="800px" />
+                    <?= Url::to('@web/'.$model->file) ?>
                 <?php } ?>
             </div>            
         </div>

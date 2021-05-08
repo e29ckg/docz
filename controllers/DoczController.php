@@ -87,7 +87,7 @@ class DoczController extends Controller
 
     public function actionIndex_2() //อยู่ระหว่างดำเนินการ
     {
-        $models = Docz::find()->where(['st'=>2])->orderBy(['id'=>SORT_DESC])->all();
+        $models = Docz::find()->where(['st'=>[2,3]])->orderBy(['id'=>SORT_DESC])->all();
         return $this->render('index_2',[
             'models' => $models
         ]);
@@ -370,7 +370,7 @@ class DoczController extends Controller
                 $dm->st = 2;
                 foreach($dm->role_power as $RP){
                     if($RP->user_profile->line_id){
-                        $sms = '(ห.อำนวยการ)มีหนังสือต้องเซ็น';
+                        $sms = '('.$RP->role_name().')มีหนังสือต้องลงชื่อ :'.$model->name;
                         Docz::Line_send($RP->user_profile->line_id,$sms);
                     }
                 }
@@ -385,6 +385,7 @@ class DoczController extends Controller
         return $this->redirect(['index']);
     }
 
+    // จ่ายหนังสือและจัดเก็บ
     public function actionSend_to_user($id){
         $Docz = Docz::findOne($id);
         $MUser = User::find()->where(['status'=>10])->all(); 
@@ -395,63 +396,60 @@ class DoczController extends Controller
             Yii::$app->response->format = Response::FORMAT_JSON;
             return ActiveForm::validate($model);
         }
-        if ($model->load(Yii::$app->request->post())) {   
-            foreach($model->user_id as $ms){
-                $data[] = $ms;
-                $DUR = DocUserRead::find()->where(['doc_id'=>$Docz->id,'user_id'=>$ms])->count();
-                if($DUR == 0){
-                    $model = new DocUserRead();
-                    $model->user_id = $ms;
-                    $model->doc_id = $Docz->id;
-                    $model->check = 0;
-                    $model->created = date("Y-m-d H:i:s");
-                    // $model->save();
-                    $MUP = UserProfile::find()->select('line_id')->where(['user_id' => $model->user_id])->one();
-                    $token = $MUP->line_id;
-                    $sms = 'มีหนังสือ เรื่อง '.$Docz->name.' อ่านรายละเอียดได้ที่ http://10.37.64.01/docz/';
-                    if( $token <> ''){
-                        Docz::Line_send($token,$sms);
+        if ($model->load(Yii::$app->request->post()) || isset($_POST['select'])) {   
+            if($model->load(Yii::$app->request->post())){
+                foreach($model->user_id as $ms){
+                    $DUR = DocUserRead::find()->where(['doc_id'=>$Docz->id,'user_id'=>$ms])->count();
+                    if($DUR == 0){
+                        $model = new DocUserRead();
+                        $model->user_id = $ms;
+                        $model->doc_id = $Docz->id;
+                        $model->check = 0;
+                        $model->created = date("Y-m-d H:i:s");
+                        $model->save();
+    
+                        $MUP = UserProfile::find()->select('line_id')->where(['user_id' => $model->user_id])->one();
+                        $token = $MUP->line_id;
+                        $sms = 'มีหนังสือ เรื่อง '.$Docz->name.' อ่านรายละเอียดได้ที่ http://10.37.64.01/docz/';
+                        if( $token <> ''){
+                            Docz::Line_send($token,$sms);
+                        }
+                    }else{
+                        $DURS = DocUserRead::find()->where(['doc_id'=>$Docz->id,'user_id'=>$ms])->one();
+                        $DURS->check = 0;
+                        $DURS->save();
                     }
-                }
+                } 
             }
-            // $Docz->st = 4;
-            // $Docz->save();            
-            
             if(isset($_POST['chkAll'])){
-                // $sms = 'มีหนังสือ เรื่อง '.$Docz->name.' อ่านรายละเอียดได้ที่ http://10.37.64.01/docz/';
-                // $token = '72bPVwppZfiMjDoiH6V5i6lygBiD1zPtPDOezUrk7L5';
-                // Docz::Line_send($token,$sms);
+                $sms = '<all>มีหนังสือเข้า เรื่อง '.$Docz->name.' อ่านรายละเอียดได้ที่ http://10.37.64.01/docz/';
+                $token = '72bPVwppZfiMjDoiH6V5i6lygBiD1zPtPDOezUrk7L5';//line กลุ่ม
+                Docz::Line_send($token,$sms);
             }
-            
-            // return $this->redirect(['index_3']);
-        }
-        if(isset($_POST['select'])){
-            $s = $_POST['select'];
             if(isset($_POST['select'])){
-                // $DC = DocCat::find()->where(['name'=>$sl])->count();
-                // if($DC > 0){
-                //     $DC_name = DocCat::find()->where(['name'=>$sl])->all();
-                //     foreach($DC_name as $DC_N){
-                //         $DC_N->delete();
-                //     }
-                // }
-                
-                // foreach( $_POST['select'] as $sl){
-                    
-                //         $model = new DocCat();
-                //         $model->doc_id = $Docz->id;
-                //         $model->name = $sl;
-                //         $model->save();                    
-                //     // }
-                // }
-            }
-            
-        }
+                $DC = DocCat::find()->where(['doc_id'=>$Docz->id])->count();
+                if($DC > 0){
+                    $DC_name = DocCat::find()->where(['doc_id'=>$Docz->id])->all();
+                    foreach($DC_name as $DC_N){
+                        $DC_N->delete();
+                    }
+                }  
+                foreach( $_POST['select'] as $slct){                
+                    $model = new DocCat();
+                    $model->doc_id = $Docz->id;
+                    $model->doc_cat_name_id = (int)$slct;
+                    $model->save();    
+                }  
+            } 
+            $Docz->st = 4;
+            $Docz->save();     
+            return $this->redirect(['index_2']);
+        }        
+         
         return $this->render('_send_to_user',[
             'MUser' => $MUser,
             'model' => $model,
             'Docz' => $Docz,
-            'select'=>  $s
         ]);
     } 
 
@@ -473,6 +471,11 @@ class DoczController extends Controller
                 $Ds->updated = date("Y-m-d H:i:s");
                 $Ds->save();
             }
+        } 
+        if(Yii::$app->request->isAjax){
+            return $this->renderAjax('_all_to_read',[
+                'model' => $model,
+            ]);
         } 
         return $this->render('_all_to_read',[
             'model' => $model

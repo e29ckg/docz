@@ -23,6 +23,7 @@ class m210329_230452_create_profile extends Migration
             'phone' => $this->string(255),
             'line_id' => $this->string(255),            
             'photo' => $this->string(255),
+            'sort' => $this->integer(11)->defaultValue(0),
             'sign_photo' => $this->string(255),
             'created_at' => $this->timestamp()
         ]);
