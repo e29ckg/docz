@@ -70,8 +70,8 @@ $fieldOption = [
                  
                     <?php foreach($MUser as $MU){?>
                       <tr>
-                        <td ><input type="checkbox" class="checkboxA" name="DocUserRead[user_id][]" value="<?=$MU->id?>"> </td>
-                        <td class="text-left"> <?= $MU->name?></td>
+                        <td ><input type="checkbox" class="checkboxA" name="DocUserRead[user_id][]" value="<?=$MU['id']?>"> </td>
+                        <td class="text-left"> <?= $MU['name']?></td>
                       </tr>
                     <?php } ?>
                 </table>                 

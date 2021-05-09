@@ -43,4 +43,8 @@ class DocCatName extends \yii\db\ActiveRecord
             'note' => 'Note',
         ];
     }
+    public function doc_cat_count($doc_cat_name_id){       
+        
+        return DocCat::find()->select('id')->where(['doc_cat_name_id'=>$doc_cat_name_id])->count();
+    }
 }

@@ -26,27 +26,27 @@ if(!(Yii::$app->user->isGuest)){
             array_push($menu,['label' => 'หนังสือนอกแฟ้ม<span id="docz_index" class="label label-primary pull-right">'.$doc_out.'</span>', 'icon' => 'file-code-o', 'url' => ['/doccat/index_out']]);             
             array_push($menu,['label' => 'แฟ้มเอกสาร<span id="docz_index" class="label label-primary pull-right"></span>', 'icon' => 'file-code-o', 'url' => ['/doccat/index']]);             
         }
-        if($model->role_name_id == 2){
+        if($model->role_name_id <> 1){
             $doczm_index = DocManage::find()->where(['st'=>2,'role_name_id'=>$model->role_name_id])->count();
             if($doczm_index == 0){$doczm_index = '';}
             array_push($menu,['label' => $model->role_name(), 'options' => ['class' => 'header text-center']]);                   
             array_push($menu,['label' => 'รอดำเนินการ<span id="docz_index" class="label label-danger pull-right">'.$doczm_index.'</span>', 'icon' => 'file-code-o', 'url' => ['/doczm/index','role_name_id'=>$model->role_name_id]]);  
                        
         }
-        if($model->role_name_id == 8){
-            $doczm_index = DocManage::find()->where(['st'=>2,'role_name_id'=>$model->role_name_id])->count();
-            if($doczm_index == 0){$doczm_index = '';}
-            array_push($menu,['label' => $model->role_name(), 'options' => ['class' => 'header text-center']]);                   
-            array_push($menu,['label' => 'รอดำเนินการ<span id="docz_index" class="label label-danger pull-right">'.$doczm_index.'</span>', 'icon' => 'file-code-o', 'url' => ['/doczm/index','role_name_id'=>$model->role_name_id]]);  
+        // if($model->role_name_id == 8){
+        //     $doczm_index = DocManage::find()->where(['st'=>2,'role_name_id'=>$model->role_name_id])->count();
+        //     if($doczm_index == 0){$doczm_index = '';}
+        //     array_push($menu,['label' => $model->role_name(), 'options' => ['class' => 'header text-center']]);                   
+        //     array_push($menu,['label' => 'รอดำเนินการ<span id="docz_index" class="label label-danger pull-right">'.$doczm_index.'</span>', 'icon' => 'file-code-o', 'url' => ['/doczm/index','role_name_id'=>$model->role_name_id]]);  
                          
-        }
-        if($model->role_name_id == 9){
-            $doczm_index = DocManage::find()->where(['st'=>2,'role_name_id'=>$model->role_name_id])->count();
-            if($doczm_index == 0){$doczm_index = '';}
-            array_push($menu,['label' => $model->role_name(), 'options' => ['class' => 'header text-center']]);                   
-            array_push($menu,['label' => 'รอดำเนินการ<span id="docz_index" class="label label-danger pull-right">'.$doczm_index.'</span>', 'icon' => 'file-code-o', 'url' => ['/doczm/index','role_name_id'=>$model->role_name_id]]);  
+        // }
+        // if($model->role_name_id == 9){
+        //     $doczm_index = DocManage::find()->where(['st'=>2,'role_name_id'=>$model->role_name_id])->count();
+        //     if($doczm_index == 0){$doczm_index = '';}
+        //     array_push($menu,['label' => $model->role_name(), 'options' => ['class' => 'header text-center']]);                   
+        //     array_push($menu,['label' => 'รอดำเนินการ<span id="docz_index" class="label label-danger pull-right">'.$doczm_index.'</span>', 'icon' => 'file-code-o', 'url' => ['/doczm/index','role_name_id'=>$model->role_name_id]]);  
                         
-        }
+        // }
         if($model->role_name_id == 1){
             array_push($menu,['label' => 'ผู้ดูแลระบบ', 'options' => ['class' => 'header text-center']]); 
             array_push($menu,[

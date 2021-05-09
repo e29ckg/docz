@@ -38,16 +38,27 @@ class DoccatController extends Controller
      */
     public function actionIndex($doc_cat_name_id = null)
     {
-        $models = DocCatName::find()->all();
+        if($doc_cat_name_id <> null){
+            $models = DocCat::find()->where(['doc_cat_name_id'=>$doc_cat_name_id])->orderBy(['id'=>SORT_DESC])->all();
+            $mDC = DocCatName::findOne($doc_cat_name_id);
+            return $this->render('index_doc_cat_name', [
+                'models' => $models,
+                'tiile' => $mDC->name
+            ]);
+        }
 
+        $models = DocCatName::find()->orderBy(['id'=>SORT_DESC])->all();
         return $this->render('index', [
             'models' => $models
         ]);
+
+        
     }
 
-    public function actionIndex_out($doc_cat_name_id = null)
+    public function actionIndex_out()
     {
-        $models = Docz::find()->where(['st'=>4])->all();
+       
+        $models = Docz::find()->where(['st'=>4])->orderBy(['id'=>SORT_DESC])->all();
         $count = 0;
         $data = [];
         foreach($models as $model){
@@ -60,7 +71,6 @@ class DoccatController extends Controller
                 $count++;
             }
         }
-
         return $this->render('index_out', [
             'data' => $data,
             'count' => $count

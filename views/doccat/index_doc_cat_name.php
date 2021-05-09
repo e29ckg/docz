@@ -7,7 +7,8 @@ use yii\helpers\Url;
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'แฟ้มเอกสาร / '.$tiile;
+$this->title = $tiile;
+$this->params['breadcrumbs'][] =['label' => 'แฟ้มเอกสาร', 'url' => ['index']];;
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
@@ -29,6 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             <th style="width: 10px">#</th>
                             <th >ชื่อหนังสือ</th>
                             <th style="width: 50px"></th>
+                            <th style="width: 50px"></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -37,12 +39,10 @@ $this->params['breadcrumbs'][] = $this->title;
                         <tr>
                             <td><?=$model->id?></td>
                             <td><?=$model->docz->name_doc()?></td>
-                                
+                             <td><a href="#" data-id="<?=$model->doc_id?>" class="activity-ckeck-read btn btn-success btn-block btn-flat ">ตรวจสอบการอ่าน</a>
+                            </td>   
                             <td>
-                                
                                 <button data-id="<?=$model->doc_id?>" class="activity-view btn btn-warning btn-flat btn-md">view</button>
-                                <!-- <button data-id="<?=$model->id?>" class="activity-update-role-power btn btn-warning btn-xs">แก้ไข</button> -->
-                                <!-- <a href="<?= Url::to(['/doccatname/del','id'=>$model->id]) ?>" onclick="return confirm('Are you sure you want to Delete ?');" class="btn btn-danger btn-flat btn-md">ลบ</a> -->
                             </td>
                             
                         </tr>
@@ -60,7 +60,23 @@ $this->params['breadcrumbs'][] = $this->title;
 <?php $this->registerJs('
 
 function init_click_handlers(){
-   
+    $(".activity-ckeck-read").click(function(e) {
+        var fID = $(this).data("id");
+        // alert(fID);
+        $.get(
+            "?r=docz/check_read",
+            {
+                id: fID
+            },
+            function (data)
+            {
+                $("#activity-modal").find(".modal-body").html(data);
+                $(".modal-body").html(data);
+                $(".modal-title").html("");
+                $("#activity-modal").modal("show");
+            }
+        );
+    }); 
      
    $(".activity-view").click(function(e) {
             var fID = $(this).data("id");

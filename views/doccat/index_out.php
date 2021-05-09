@@ -38,9 +38,7 @@ $this->params['breadcrumbs'][] = $this->title;
                              <td><button data-id="<?=$da['doc_id']?>" class="activity-view btn btn-primary btn-flat btn-md">view</button></td>   
                             <td>   
                                 <a href="<?=Url::to(['/docz/send_to_user','id'=>$da['doc_id']])?>" class="activity-send-to-user btn btn-warning btn-block btn-flat ">จ่ายงาน/เก็บ</a>                             
-                                
                             </td>
-                            
                         </tr>
                         <?php } ?>
                     </tbody>

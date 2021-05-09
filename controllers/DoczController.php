@@ -388,8 +388,21 @@ class DoczController extends Controller
     // จ่ายหนังสือและจัดเก็บ
     public function actionSend_to_user($id){
         $Docz = Docz::findOne($id);
-        $MUser = User::find()->where(['status'=>10])->all(); 
-        
+        // $MUser = User::find()->where(['status'=>10])->all(); 
+        $MUser = [];
+        $MUPs_count = UserProfile::find()->count(); 
+        if($MUPs_count > 0){
+            $MUPs = UserProfile::find()->orderBy(['sort'=>SORT_ASC])->all();
+            foreach($MUPs as $MUP){
+                if($MUP->status()== 10){
+                    $MUser[] = [
+                        'id' => $MUP->user_id,
+                        'name' => $MUP->getname()
+                    ];
+                }
+            }   
+        }
+          
         $model = new DocUserRead();
 
         if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
