@@ -75,6 +75,10 @@ class Docz extends \yii\db\ActiveRecord
         return $name;
     }
 
+    public function doc_all_count(){
+        $count = Docz::find()->select('id')->count();
+        return $count;
+    }
     public function name_doc(){
         $name = $this->doc_speed ? '<small class="label  bg-red">'.$this->doc_speed.'</small>':'';
         $name .=$this->doc_form_number ? 'ที่ '.$this->doc_form_number : '';

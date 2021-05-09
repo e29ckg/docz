@@ -29,8 +29,10 @@ if( Yii::$app->user->identity ){
 
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <img src="<?= $model->image($model->photo)?>" class="user-image"
+                                 alt="User Image"/>
                         <!-- <img src="<?= $directoryAsset ?>/img/user2-160x160.jpg" class="user-image" alt="User Image"/> -->
-                        <span class="hidden-xs"><?=  Yii::$app->user->identity ? $model->pfname.$model->name.' '.$model->sname :'Guest'?></span>
+                        <span class="hidden-xs"><?=  Yii::$app->user->identity ? $model->getname() :'Guest'?></span>
                     </a>
                     <ul class="dropdown-menu">
                         <!-- User image -->

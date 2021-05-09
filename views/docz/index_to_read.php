@@ -7,7 +7,7 @@ use yii\helpers\Url;
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = '.';
+$this->title = 'เอกสารใหม่';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 

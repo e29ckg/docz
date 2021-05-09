@@ -23,13 +23,16 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-                <table class="table table-bordered">
-                    <tbody>
+            <table class="table table-bordered" id="example2">
+                    <thead>
                         <tr>
                             <th style="width: 10px">#</th>
                             <th >ชื่อหนังสือ</th>
-                            <th style="width: 200px"></th>
+                            <th style="width: 50px"></th>
                         </tr>
+                    </thead>
+                    <tbody>
+                        
                         <?php foreach($models as $model){ ?>
                         <tr>
                             <td><?=$model->id?></td>
@@ -81,6 +84,7 @@ function init_click_handlers(){
     
 }
 init_click_handlers(); //first run
+$("#example2").DataTable();
 // $("#customer_pjax_id").on("pjax:success", function() {
 //     init_click_handlers(); //reactivate links in grid after pjax update
 // });

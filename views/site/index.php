@@ -1,5 +1,8 @@
 <?php
 use yii\helpers\Url;
+use app\models\Docz;
+use app\models\DocUserRead;
+use app\models\UserProfile;
 use lavrentiev\widgets\toastr\Notification;
 /* @var $this yii\web\View */
 // Yii::$app->session->setFlash('success', ['Error 1', 'Error 2', 'Error 3']);
@@ -9,10 +12,9 @@ $this->title = 'ระบบจัดการเอกสาร';
 //     'title' => 'Toast Notifications',
 //     'message' => 'Simple javascript toast notifications'
 // ]);
-use app\models\DocUserRead;
-use app\models\UserProfile;
-$docz_index_to_read = DocUserRead::find()->where(['check'=>0,'user_id'=>Yii::$app->user->id])->count();
-$mo = UserProfile::find()->select('line_id')->where(['user_id' => 1])->one();
+
+$docz_index_to_read = DocUserRead::find()->select('id')->where(['check'=>0,'user_id'=>Yii::$app->user->id])->count();
+// $mo = UserProfile::find()->select('line_id')->where(['user_id' => 1])->one();
 // echo $mo->line_id;
 // var_dump($mo);
 ?>
@@ -42,7 +44,7 @@ $mo = UserProfile::find()->select('line_id')->where(['user_id' => 1])->one();
             <!-- small box -->
                 <div class="small-box bg-green">
                     <div class="inner">
-                        <h3>-</h3>
+                        <h3><?=Docz::doc_all_count()?></h3>
                         <p>เอกสารทั้งหมด</p>
                     </div>
                     <div class="icon">
