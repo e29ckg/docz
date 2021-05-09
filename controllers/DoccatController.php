@@ -51,7 +51,7 @@ class DoccatController extends Controller
         $count = 0;
         $data = [];
         foreach($models as $model){
-            $doc_count = DocCat::find()->where(['doc_id'=>$model->id])->count();
+            $doc_count = DocCat::find()->select('id')->where(['doc_id'=>$model->id])->count();
             if($doc_count == 0){
                 $data[] = [
                     'doc_id' => $model->id,

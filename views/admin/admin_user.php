@@ -8,14 +8,14 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="user-role-index box box-primary">
     <div class="box-header with-border">                
-    <?= Html::button('เพิ่มข้อมูลสมาชิก', 
-                ['value' => Url::to(['/signup']),
-                'title' => 'เพิ่มข้อมูลสมาชิก', 
-                'class' => 'btn btn-success',
-                'id'=>'activity-create-link',
-                'data-target' => 'activity-modal'
-                ]
-                ); ?>
+    <?= Html::button('เพิ่มข้อมูลสมาชิก',[
+            'value' => Url::to(['/signup']),
+            'title' => 'เพิ่มข้อมูลสมาชิก', 
+            'class' => 'btn btn-success',
+            'id'=>'activity-create-link',
+            'data-target' => 'activity-modal'
+            ]
+        ); ?>
     </div>
     
     <div class="box-body table-responsive">
@@ -24,7 +24,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <thead>
                     <tr>
                     <th style="width: 20px">#</th>
-                    <th></th>
+                    <th style="width: 50px"></th>
                     <th></th>
                     <th style="width: 40px"></th>
                     <th style="width: 40px"></th>
@@ -40,7 +40,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                     <img class="profile-user-img img-responsive img-circle" 
                                         src="<?= $model->image($model->photo)?>" alt="User profile picture">
                                 </a>
-                                <?= $model->sort.','.$model->user_id ?>
+                                <?= $model->user_id ?>
                             </td>
                             <td>
                                 <a href="<?=Url::to(['/profile/view','id'=>$model->user_id])?>" ><?=$model->getname()?></a>

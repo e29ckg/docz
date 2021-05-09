@@ -3,15 +3,16 @@ use app\models\RolePower;
 use app\models\Docz;
 use app\models\DocManage;
 use app\models\DocUserRead;
-
+use app\models\DocCat;
+$doc_out = DocCat::doc_out_count();
 $menu = [];
 if(!(Yii::$app->user->isGuest)){
-    $models = RolePower::find()->where(['user_id'=>Yii::$app->user->id])->all();
+    $models = RolePower::find()->select('role_name_id')->where(['user_id'=>Yii::$app->user->id])->orderBy(['role_name_id' => SORT_ASC])->all();
     foreach($models as $model){
         if($model->role_name_id == 1){
-            $docz_index = Docz::find()->where(['st'=>1])->count();
+            $docz_index = Docz::find()->select('id')->where(['st'=>1])->count();
             if($docz_index == 0){$docz_index = '';}
-            $docz_index_2 = Docz::find()->where(['st'=>[2,3]])->count();
+            $docz_index_2 = Docz::find()->select('id')->where(['st'=>[2,3]])->count();
             if($docz_index_2 == 0){$docz_index_2 = '';}
             // $docz_index_3 = Docz::find()->where(['st'=>3])->count();
             // if($docz_index_3 == 0){$docz_index_3 = '';}
@@ -22,7 +23,7 @@ if(!(Yii::$app->user->isGuest)){
             array_push($menu,['label' => 'ระบบเอกสาร<span id="docz_index" class="label label-danger pull-right">'.$docz_index.'</span>', 'icon' => 'file-code-o', 'url' => ['/docz/index']]);  
             array_push($menu,['label' => 'อยู่ระหว่างดำเนินการ<span id="docz_index" class="label label-warning pull-right">'.$docz_index_2.'</span>', 'icon' => 'file-code-o', 'url' => ['/docz/index_2']]); 
             // array_push($menu,['label' => 'ดำเนินการเสร็จ<span id="docz_index" class="label label-primary pull-right">'.$docz_index_3.'</span>', 'icon' => 'file-code-o', 'url' => ['/docz/index_3']]);             
-            array_push($menu,['label' => 'หนังสือนอกแฟ้ม<span id="docz_index" class="label label-primary pull-right"></span>', 'icon' => 'file-code-o', 'url' => ['/doccat/index_out']]);             
+            array_push($menu,['label' => 'หนังสือนอกแฟ้ม<span id="docz_index" class="label label-primary pull-right">'.$doc_out.'</span>', 'icon' => 'file-code-o', 'url' => ['/doccat/index_out']]);             
             array_push($menu,['label' => 'แฟ้มเอกสาร<span id="docz_index" class="label label-primary pull-right"></span>', 'icon' => 'file-code-o', 'url' => ['/doccat/index']]);             
         }
         if($model->role_name_id == 2){
