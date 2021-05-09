@@ -9,25 +9,29 @@ use yii\helpers\Url;
 
 $this->title = 'แฟ้มเอกสาร';
 $this->params['breadcrumbs'][] = $this->title;
+$BG =['bg-aqua','bg-green','bg-yellow','bg-red']
 ?>
 
 <div class="row">
 <?php foreach($models as $model){ ?>
     <div class="col-lg-3 col-xs-6">
           <!-- small box -->
-        <div class="small-box bg-aqua">
+        <?php $y = $model->id % 4?>
+        <div class="small-box <?=$BG[$y]?>">
         <div class="inner">
             <h3><?=$model->doc_cat_count($model->id)?></h3>
             <p><?=$model->name?></p>
         </div>
         <div class="icon">
-            <i class="fa fa-shopping-cart"></i>
+            <i class="fa fa-files-o"></i>
         </div>
         <a href="<?= Url::to(['/doccat/index','doc_cat_name_id'=>$model->id])?>" class="small-box-footer">
             เข้าดู <i class="fa fa-arrow-circle-right"></i>
         </a>
         </div>
     </div>
+<?php } ?>
+
     <div class="col-md-12">
         <div class="box">
             <div class="box-header with-border">
@@ -46,7 +50,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             <th >ชื่อแฟ้มเอกสาร</th>
                             <th style="width: 200px"></th>
                         </tr>
-                        
+                        <?php foreach($models as $model){ ?> 
                         <tr>
                             <td><?=$model->id?></td>
                             <td><?=$model->name?></td>
