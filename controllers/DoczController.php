@@ -33,7 +33,7 @@ class DoczController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['create','index','index_2','index_3','index_4','view'],
+                'only' => ['create','index','index_2','index_3','index_4','view','check'],
                 'rules' => [
                     [
                         'actions' => ['signup'],
@@ -41,7 +41,7 @@ class DoczController extends Controller
                         'roles' => ['?'],
                     ],
                     [
-                        'actions' => ['index','create','index_2','index_3','index_4','view'],
+                        'actions' => ['index','create','index_2','index_3','index_4','view','check'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -92,6 +92,25 @@ class DoczController extends Controller
             'models' => $models
         ]);
     }
+
+    
+
+
+
+    public function actionCheck($id) //ดำเนินการเรื่องเดียว
+    {
+        $model = Docz::findOne($id);
+
+        if(Yii::$app->request->isAjax){
+            return $this->renderAjax('index_2_check',[
+                'model' => $model,
+            ]);
+        } 
+        return $this->render('index_2_check',[
+                'model' => $model,
+            ]);
+    }
+
 
     public function actionIndex_3() //เสร็จสิ้นแล้ว
     {

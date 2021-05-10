@@ -31,42 +31,7 @@ $BG =['bg-aqua','bg-green','bg-yellow','bg-red']
         </div>
     </div>
 <?php } ?>
-
-    <div class="col-md-12">
-        <div class="box">
-            <div class="box-header with-border">
-                <h3 class="box-title">Docz</h3>
-                <div class="box-tools">
-                    <!-- <?= Html::a('Create', ['create'], ['class' => 'btn btn-success btn-flat']) ?> -->
-                    <!-- <button id="activity-create" class="btn btn-success btn-flat">เพิ่มแฟ้มเอกสาร</button> -->
-                </div>
-            </div>
-            <!-- /.box-header -->
-            <div class="box-body">
-                <table class="table table-bordered">
-                    <tbody>
-                        <tr>
-                            <th style="width: 10px">#</th>
-                            <th >ชื่อแฟ้มเอกสาร</th>
-                            <th style="width: 200px"></th>
-                        </tr>
-                        <?php foreach($models as $model){ ?> 
-                        <tr>
-                            <td><?=$model->id?></td>
-                            <td><?=$model->name?></td>
-                                
-                            <td>                                
-                                <a href="<?= Url::to(['/doccat/index','doc_cat_name_id'=>$model->id]) ?>"  class="btn btn-danger btn-flat btn-md">ดู</a>
-                            </td>
-                            
-                        </tr>
-                        <?php } ?>
-                    </tbody>
-                </table>
-            </div>
-            <!-- /.box-body -->
-        </div>
-    </div>
+    
 
 
 </div>

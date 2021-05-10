@@ -17,7 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="box-header with-border">
                 <h3 class="box-title">Docz</h3>
                 <div class="box-tools">
-                    
+                
                 </div>
             </div>
             <!-- /.box-header -->
@@ -69,8 +69,8 @@ $this->params['breadcrumbs'][] = $this->title;
                                         <a href="<?=Url::to(['/docz/send_to_user','id'=>$model->id])?>" class="activity-send-to-user btn btn-warning btn-block btn-flat ">จ่ายงาน/เก็บ</a>
                                     <?php }else{ ?>
                                         <small class="label pull-right bg-blue"><?= isset($role_name) ? $role_name : '-'?></small>
-                                    <?php } ?>
-                                    
+                                        <button data-id="<?=$model->id?>" class="activity-check btn btn-info btn-block btn-flat ">ตรวจสอบ</button>
+                                        <?php } ?>
                                 </span> 
                             </td>
                         </tr>
@@ -86,23 +86,12 @@ $this->params['breadcrumbs'][] = $this->title;
 <?php $this->registerJs('
 
 function init_click_handlers(){
-    $("#activity-create").click(function(e) {
-            $.get(
-                "/docz/create",
-                function (data)
-                {
-                    $("#activity-modal").find(".modal-body").html(data);
-                    $(".modal-body").html(data);
-                    $(".modal-title").html("");
-                    $("#activity-modal").modal("show");
-                }
-            );
-        });
-    $(".activity-view").click(function(e) {
+    
+       $(".activity-check").click(function(e) {
             var fID = $(this).data("id");
             // alert(fID);
             $.get(
-                "/docz/view",
+                "?r=docz/check",
                 {
                     id: fID
                 },
@@ -115,77 +104,6 @@ function init_click_handlers(){
                 }
             );
         }); 
-        $(".activity-view_att").click(function(e) {
-            var fID = $(this).data("id");
-            // alert(fID);
-            $.get(
-                "/docz/view_att",
-                {
-                    id: fID
-                },
-                function (data)
-                {
-                    $("#activity-modal").find(".modal-body").html(data);
-                    $(".modal-body").html(data);
-                    $(".modal-title").html("");
-                    $("#activity-modal").modal("show");
-                }
-            );
-        });
-        $(".activity-att").click(function(e) {
-            var fID = $(this).data("id");
-            // alert(fID);
-            $.get(
-                "/docz/att",
-                {
-                    id: fID
-                },
-                function (data)
-                {
-                    $("#activity-modal").find(".modal-body").html(data);
-                    $(".modal-body").html(data);
-                    $(".modal-title").html("");
-                    $("#activity-modal").modal("show");
-                }
-            );
-        });  
-
-            
-        $(".activity-update").click(function(e) {
-            var fID = $(this).data("id");
-            // alert(fID);
-            $.get(
-                "/docz/update",
-                {
-                    id: fID
-                },
-                function (data)
-                {
-                    $("#activity-modal").find(".modal-body").html(data);
-                    $(".modal-body").html(data);
-                    $(".modal-title").html("");
-                    $("#activity-modal").modal("show");
-                }
-            );
-        }); 
-
-        $(".activity-send").click(function(e) {
-            var fID = $(this).data("id");
-            // alert(fID);
-            $.get(
-                "/docz/send",
-                {
-                    id: fID
-                },
-                function (data)
-                {
-                    $("#activity-modal").find(".modal-body").html(data);
-                    $(".modal-body").html(data);
-                    $(".modal-title").html("");
-                    $("#activity-modal").modal("show");
-                }
-            );
-        });   
     
 }
 init_click_handlers(); //first run

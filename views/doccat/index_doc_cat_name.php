@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="col-md-12">
         <div class="box">
             <div class="box-header with-border">
-                <h3 class="box-title">Docz</h3>
+                <h3 class="box-title"><a href="<?=Url::to(Yii::$app->request->referrer)?>" class="btn btn-warning">กลับ</a></h3>
                 <div class="box-tools">
                     <!-- <?= Html::a('Create', ['create'], ['class' => 'btn btn-success btn-flat']) ?> -->
                     <!-- <button id="activity-create" class="btn btn-success btn-flat">เพิ่ม</button> -->
@@ -82,7 +82,7 @@ function init_click_handlers(){
             var fID = $(this).data("id");
             // alert(fID);
             $.get(
-                "?r=docz/to_read",
+                "?r=doccat/view",
                 {
                     id: fID
                 },

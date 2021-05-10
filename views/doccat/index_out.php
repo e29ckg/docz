@@ -18,7 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <h3 class="box-title">Docz</h3>
                 <div class="box-tools">
                     <!-- <?= Html::a('Create', ['create'], ['class' => 'btn btn-success btn-flat']) ?> -->
-                    <!-- <button id="activity-create" class="btn btn-success btn-flat">เพิ่ม</button> -->
+                    <button id="activity-create" class="btn btn-info btn-flat">เพิ่มเอกสารที่พร้อมแจ้งเวียน/เก็บ</button>
                 </div>
             </div>
             <!-- /.box-header -->
@@ -34,10 +34,14 @@ $this->params['breadcrumbs'][] = $this->title;
                         <?php foreach($data as $da){ ?>
                         <tr>
                             <td><?=$da['doc_id']?></td>
-                            <td><?=$da['name']?></td>
-                             <td><button data-id="<?=$da['doc_id']?>" class="activity-view btn btn-primary btn-flat btn-md">view</button></td>   
-                            <td>   
-                                <a href="<?=Url::to(['/docz/send_to_user','id'=>$da['doc_id']])?>" class="activity-send-to-user btn btn-warning btn-block btn-flat ">จ่ายงาน/เก็บ</a>                             
+                            <td><a data-id="<?=$da['doc_id']?>" class="activity-view"><?=$da['name']?></a></td>
+                             <td>
+                             <button data-id="<?=$da['doc_id']?>" class="activity-update btn btn-warning btn-flat btn-md">แก้ไข</button>
+                                </td>   
+                            <td>  
+                                <?php if($da['file']){ ?>
+                                    <a href="<?=Url::to(['/doccat/send_to_user','id'=>$da['doc_id']])?>" class="activity-send-to-user btn btn-danger btn-block btn-flat ">จ่ายงาน/เก็บ</a>                             
+                                <?php } ?>
                             </td>
                         </tr>
                         <?php } ?>
@@ -54,6 +58,18 @@ $this->params['breadcrumbs'][] = $this->title;
 <?php $this->registerJs('
 
 function init_click_handlers(){
+    $("#activity-create").click(function(e) {
+        $.get(
+            "?r=doccat/doc_create",
+            function (data)
+            {
+                $("#activity-modal").find(".modal-body").html(data);
+                $(".modal-body").html(data);
+                $(".modal-title").html("");
+                $("#activity-modal").modal("show");
+            }
+        );
+    });
     $(".activity-view").click(function(e) {
         var fID = $(this).data("id");
         // alert(fID);
@@ -70,7 +86,24 @@ function init_click_handlers(){
                 $("#activity-modal").modal("show");
             }
         );
-    }); 
+    });
+    $(".activity-update").click(function(e) {
+        var fID = $(this).data("id");
+        // alert(fID);
+        $.get(
+            "?r=doccat/doc_update",
+            {
+                id: fID
+            },
+            function (data)
+            {
+                $("#activity-modal").find(".modal-body").html(data);
+                $(".modal-body").html(data);
+                $(".modal-title").html("");
+                $("#activity-modal").modal("show");
+            }
+        );
+    });  
   
     
 }

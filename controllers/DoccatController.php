@@ -4,14 +4,18 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Docz;
+use app\models\UserProfile;
 use app\models\DocCat;
 use app\models\DocCatName;
+use app\models\DocUserRead;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\Response;
-use yii\bootstrap\ActiveForm;
+use yii\widgets\ActiveForm;
+use yii\web\UploadedFile;
+use yii\helpers\Url;
 /**
  * DoccatController implements the CRUD actions for UserDepName model.
  */
@@ -66,7 +70,8 @@ class DoccatController extends Controller
             if($doc_count == 0){
                 $data[] = [
                     'doc_id' => $model->id,
-                    'name' => $model->name_doc()
+                    'name' => $model->name_doc(),
+                    'file' => $model->file
                 ];
                 $count++;
             }
@@ -95,9 +100,69 @@ class DoccatController extends Controller
      */
     public function actionView($id)
     {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
+        $model = Docz::findOne($id);
+        // if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+        //     Yii::$app->response->format = Response::FORMAT_JSON;
+        //     return ActiveForm::validate($model);
+        // }
+           
+            
+            if(isset($_POST['select'])){
+                $DC = DocCat::find()->where(['doc_id'=>$model->id])->count();
+                if($DC > 0){
+                    $DC_name = DocCat::find()->where(['doc_id'=>$model->id])->all();
+                    foreach($DC_name as $DC_N){
+                        $DC_N->delete();
+                    }
+                }  
+                foreach( $_POST['select'] as $slct){                
+                    $model = new DocCat();
+                    $model->doc_id = $id;
+                    $model->doc_cat_name_id = (int)$slct;
+                    $model->save();    
+                }  
+            }      
+        
+
+        $MUser = [];
+        $MUPs_count = UserProfile::find()->count(); 
+        if($MUPs_count > 0){
+            $MUPs = UserProfile::find()->orderBy(['sort'=>SORT_ASC])->all();
+            foreach($MUPs as $MUP){
+                if($MUP->status()== 10){
+                    $doc_user_read_count = DocUserRead::find()->where(['user_id'=>$MUP->user_id,'doc_id'=>$model->id])->count();
+                    $doc_user_read_count > 0 ? $checked = 'checked' : $checked = '';
+                    $MUser[] = [
+                        'id' => $MUP->user_id,
+                        'name' => $MUP->getname(),
+                        'checked' => $checked
+                    ];
+                }
+            }   
+        }
+        $DocCats = DocCatName::find()->all();  
+        $DCats = [];
+        foreach($DocCats as $docCat){
+            $DocCat_count = DocCat::find()->where(['doc_id'=>$model->id,'doc_cat_name_id'=>$docCat->id])->count();
+            $DocCat_count > 0 ? $selected = 'selected="selected"' : $selected = '';
+            $DCats[] = [
+                'id' => $docCat->id,
+                'name' => $docCat->name,
+                'selected' => $selected           
+            ];                
+        }
+        if(Yii::$app->request->isAjax){
+            return $this->renderAjax('_view',[
+                'model' => $model,
+                'MUser' => $MUser,
+                'DocCats'=>$DCats
+            ]);
+        } 
+        return $this->render('_view',[
+                'model' => $model,
+                'MUser' => $MUser,
+                'DocCats'=>$DCats
+            ]);
     }
 
     /**
@@ -196,4 +261,174 @@ class DoccatController extends Controller
 
         throw new NotFoundHttpException('The requested page does not exist.');
     }
+
+    public function actionDoc_create() //อยู่ระหว่างดำเนินการ
+    {
+        $model = new Docz();
+        
+        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return ActiveForm::validate($model);
+        }
+        
+        if ($model->load(Yii::$app->request->post())) {      
+            if($name = UploadedFile::getInstance($model, 'file')){            
+                $path = 'uploads/docz/'.md5($name->basename.rand(1,400)).'.'.$name->extension;
+                if ($name->saveAs($path)) { 
+                    $model->file = $path;
+                }
+            }
+            $model->doc_form = 'cletter'; //ชื่อโปรแกรม
+            // $model->r_number = $model->r_number.'/'.date("Y",strtotime(date("Y")+543));
+            if($model->r_date == ''){
+                $model->r_date = date("Y-m-d h:i:s"); //
+            } 
+            $model->r_date = date("Y-m-d h:i:s", strtotime($model->r_date));
+            $model->doc_date = date("Y-m-d", strtotime($model->doc_date)); //ชื่อโปรแกรม
+            $model->st = 4;
+            if($model->save()){
+                Yii::$app->session->setFlash('success', 'บันทักข้อมูลเรียบร้อย'.$model->doc_date);
+                return $this->redirect(['index_out']);
+            }
+
+        } 
+        
+        if(Yii::$app->request->isAjax){
+            return $this->renderAjax('_create',[
+                'model' => $model,
+            ]);
+        }    
+        return $this->render('_create', [
+            'model' => $model,
+        ]); 
+    }
+
+    public function actionDoc_update($id)
+    {
+        $model = Docz::findOne($id);
+        $file = $model->file;
+
+        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return ActiveForm::validate($model);
+        }
+        
+        if ($model->load(Yii::$app->request->post())) {    
+            if($name = UploadedFile::getInstance($model, 'file')){            
+                $path = 'uploads/docz/'.md5($name->basename.rand(1,400)).'.'.$name->extension;
+                if ($name->saveAs($path)) {                    // file is uploaded successfully
+                    if(!$file == '' && file_exists(Url::to('@webroot/'.$file ))){
+                        unlink(Url::to('@webroot/'.$file ));
+                    }
+                    $model->file = $path;
+                }
+            }else{
+                $model->file = $file;
+            }
+            
+            if($model->save()){
+                Yii::$app->session->setFlash('success', 'บันทักข้อมูลเรียบร้อย'.$model->doc_date);
+                return $this->redirect(['index_out']);
+            }
+
+        } 
+        
+        if(Yii::$app->request->isAjax){
+            return $this->renderAjax('_create',[
+                'model' => $model,
+            ]);
+        }    
+        return $this->render('_create', [
+            'model' => $model,
+        ]); 
+    }
+
+    // จ่ายหนังสือและจัดเก็บ
+    public function actionSend_to_user($id){
+        $Docz = Docz::findOne($id);
+        // $MUser = User::find()->where(['status'=>10])->all(); 
+        $MUser = [];
+        $MUPs_count = UserProfile::find()->count(); 
+        if($MUPs_count > 0){
+            $MUPs = UserProfile::find()->orderBy(['sort'=>SORT_ASC])->all();
+            foreach($MUPs as $MUP){
+                if($MUP->status()== 10){
+                    $MUser[] = [
+                        'id' => $MUP->user_id,
+                        'name' => $MUP->getname()
+                    ];
+                }
+            }   
+        }
+          
+        $model = new DocUserRead();
+
+        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return ActiveForm::validate($model);
+        }
+        if ($model->load(Yii::$app->request->post()) || isset($_POST['select'])) {   
+            if($model->load(Yii::$app->request->post())){
+                foreach($model->user_id as $ms){
+                    $DUR = DocUserRead::find()->where(['doc_id'=>$Docz->id,'user_id'=>$ms])->count();
+                    if($DUR == 0){
+                        $model = new DocUserRead();
+                        $model->user_id = $ms;
+                        $model->doc_id = $Docz->id;
+                        $model->check = 0;
+                        $model->created = date("Y-m-d H:i:s");
+                        $model->save();
+    
+                        $MUP = UserProfile::find()->select('line_id')->where(['user_id' => $model->user_id])->one();
+                        $token = $MUP->line_id;
+                        $sms = 'มีหนังสือ เรื่อง '.$Docz->name.' อ่านรายละเอียดได้ที่ http://10.37.64.01/docz/';
+                        if( $token <> ''){
+                            Docz::Line_send($token,$sms);
+                        }
+                    }else{
+                        $DURS = DocUserRead::find()->where(['doc_id'=>$Docz->id,'user_id'=>$ms])->one();
+                        $DURS->check = 0;
+                        $DURS->save();
+                    }
+                } 
+            }
+            if(isset($_POST['chkAll'])){
+                $sms = '<all>มีหนังสือเข้า เรื่อง '.$Docz->name.' อ่านรายละเอียดได้ที่ http://10.37.64.01/docz/';
+                $token = '72bPVwppZfiMjDoiH6V5i6lygBiD1zPtPDOezUrk7L5';//line กลุ่ม
+                Docz::Line_send($token,$sms);
+            }
+            if(isset($_POST['select'])){
+                $DC = DocCat::find()->where(['doc_id'=>$Docz->id])->count();
+                if($DC > 0){
+                    $DC_name = DocCat::find()->where(['doc_id'=>$Docz->id])->all();
+                    foreach($DC_name as $DC_N){
+                        $DC_N->delete();
+                    }
+                }  
+                foreach( $_POST['select'] as $slct){                
+                    $model = new DocCat();
+                    $model->doc_id = $Docz->id;
+                    $model->doc_cat_name_id = (int)$slct;
+                    $model->save();    
+                }  
+            } 
+            $Docz->st = 4;
+            $Docz->save();     
+            return $this->redirect(['index_out']);
+        }        
+         
+        return $this->render('_send_to_user',[
+            'MUser' => $MUser,
+            'model' => $model,
+            'Docz' => $Docz,
+        ]);
+    } 
+
+    public function actionIndex_to_read(){
+        $models = DocUserRead::find()->where(['check'=>0,'user_id'=>Yii::$app->user->id])->all();             
+        
+        return $this->render('index_to_read',[
+            'models' => $models
+        ]);
+    } 
 }

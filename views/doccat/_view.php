@@ -10,14 +10,8 @@ use yii\helpers\ArrayHelper;
 /* @var $this yii\web\View */
 /* @var $model app\models\UserProfile */
 /* @var $form yii\widgets\ActiveForm */
-
-$User = User::find()->where(['status'=>10])->all();  
-$DocCats = Doccatname::find()->all();  
  
-// $listUserProfile= ArrayHelper::map($User,'id','name');
-$listUserProfile = ArrayHelper::map($User,'id',function ($User) {
-    return $User->name;
-});
+ 
 
 // $listDocCat = ArrayHelper::map($DocCat,'id','name');
         
@@ -33,13 +27,13 @@ $fieldOption = [
   <div class="col-md-8">
     <div class="box box-primary">
       <div class="box-header with-border">
-        <h3 class="box-title"><a href="<?=Url::to(Yii::$app->request->referrer)?>" class="btn btn-warning">กลับ</a> <?=$Docz->name_doc()?></h3>
+        <h3 class="box-title"><?=$model->name_doc()?></h3>
       </div>
       <div class="box-body text-center"> 
-        <embed src="<?= Url::to('@web/'.$Docz->file) ?>" type="application/pdf" width="100%" height="800px" />
+        <embed src="<?= Url::to('@web/'.$model->file) ?>" type="application/pdf" width="100%" height="800px" />
       </div>
     </div>
-    <?php foreach($Docz->doc_file as $df){ ?>
+    <?php foreach($model->doc_file as $df){ ?>
         <div class="box box-primary">
             <div class="box-header with-border">
               <h3 class="box-title">ไฟล์แนบ<?=$df->name?></h3>
@@ -50,52 +44,34 @@ $fieldOption = [
         </div>  
         <?php } ?>
   </div>
-    <div class="col-md-4">
+    <div class="col-md-4">        
         <div class="box box-primary">
             <div class="box-header with-border">
-              <h3 class="box-title"><?=$Docz->id?></h3>
+              <h3 class="box-title">การอ่าน</h3>
             </div>
             <div class="box-body text-center"> 
-                <?php $form = ActiveForm::begin([
-                        'id' => 'bsdr-form',
-                        'enableAjaxValidation' => true,
-                        // 'options' => ['enctype' => 'multipart/form-data','class'=>'form-horizontal']
-                    ]
-                    ); ?>         
-                    <table class="table table-hover table-striped">
-                      <tr>
-                        <td><input id='checkall' type="checkbox" name="chkAll" id="chkAll"></td>
-                        <td class="text-left">ทั้งหมด</td>
-                      </tr>
-                 
-                    <?php foreach($MUser as $MU){?>
-                      <tr>
-                        <td ><input type="checkbox" class="checkboxA" name="DocUserRead[user_id][]" value="<?=$MU['id']?>"> </td>
-                        <td class="text-left"> <?= $MU['name']?></td>
-                      </tr>
-                    <?php } ?>
-                </table>                 
+                <ul class="timeline">
+                  <?php foreach($model->doc_user_read as $DUR){?>
+                  <!-- timeline item -->
+                  <li>
+                      <!-- timeline icon -->
+                      <?=$DUR->check == 1 ? '<i class="fa fa-check bg-blue"></i>' :'<i class="fa fa-close bg-red"></i>'?>
+                      
+                      <div class="timeline-item">
+                          <span class="time"><i class="fa fa-clock-o"></i><?=$DUR->updated?></span>
+                          <h3 class="timeline-header text-left"><a href="#"><?=$DUR->username()?></a> </h3>
+                      </div>
+                  </li>
+                  <?php } ?>
+                </ul>     
+
             </div>
-            <div class="col-md-8">
-            <label>ที่เก็บ</label>
-              <select class="form-control" name="select[]"  multiple="multiple">
-              <?php foreach($DocCats  as $DocCat){?>
-                <!-- <option selected="selected">orange</option>
-                <option>white</option> -->
-                <option value="<?=$DocCat->id?>"><?=$DocCat->name?></option>
-                <?php } ?>
-              </select>
-                <!-- /.form-group -->
-            
-            </div>
-              
+	     
             <div class="box-footer">              
             
-                <button type="submit" class="btn btn-info pull-right">บันทึก / ส่ง</button>
             </div>   
-            <?php ActiveForm::end(); ?>     
+             
         </div>
-        <a href="<?=Url::to(Yii::$app->request->referrer)?>" class="btn btn-warning">กลับ</a>
     </div>
     
 </div> 
@@ -130,7 +106,7 @@ function init_click_handlers(){
          });
 }
 init_click_handlers(); //first run
-$("#body").addClass("sidebar-collapse");
+
 $("select").select2({
   // data :[{"id":1,"text":"ssss"}]
 });
