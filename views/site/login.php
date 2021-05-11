@@ -22,11 +22,13 @@ $fieldOptions2 = [
 
 <div class="login-box">
     <div class="login-logo">
-        <a href="#"><b>Doc</b>Z</a>
+    <p>ระบบจัดการเอกสาร</p>
+        <!-- <a href="#">- <b>Doc</b>Z -</a> -->
+        
     </div>
     <!-- /.login-logo -->
     <div class="login-box-body">
-        <p class="login-box-msg">เข้าสู่ระบบ</p>
+        <p class="login-box-msg">เข้าสู่ระบบ - <b>Doc</b>Z</p>
 
         <?php $form = ActiveForm::begin(['id' => 'login-form', 'enableClientValidation' => false]); ?>
 
@@ -64,7 +66,7 @@ $fieldOptions2 = [
         <!-- /.social-auth-links -->
 
         <!-- <a href="#">I forgot my password</a><br> -->
-        <a href="<?=Url::to(['/profile/create_profile']) ?>" class="text-center">สมัครสมาชิก</a>
+        <!-- <a href="<?=Url::to(['/profile/create_profile']) ?>" class="text-center">สมัครสมาชิก</a> -->
 
     </div>
     <!-- /.login-box-body -->

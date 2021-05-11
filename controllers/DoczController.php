@@ -333,9 +333,9 @@ class DoczController extends Controller
         $model = Docz::findOne($id);
         $modelD = DocProfile::find()->where(['code' => $this->code])->one();   
         // $count = DocManage::find()->where(['doc_id'=>$id])->count();  
-        if(empty($model->start)) {
+        // if(empty($model->start)) {
             $this->stamp_rub($model->id);   //stamp เลขรับ ลงphp
-        }  
+        // }  
         foreach($modelD->docps as $ds){   
             $count = DocManage::find()->where(['doc_id'=>$id,'role_name_id'=>$ds->role_name_id])->count();         
             if($count == 0){
@@ -573,15 +573,12 @@ class DoczController extends Controller
             $mpdf->AddPage();
 
         }
-        
-          
-        // The height of the template as it was printed is returned as $actualsize['h']
-        // The width of the template as it was printed is returned as $actualsize['w']
-        // $mpdf->WriteHTML('Hello World'.$pagecount);
-        // $mpdf->WriteHTML('Hello World');
-        // $mpdf->WriteHTML( '1qqaaaaaa', 2 );
-        // $mpdf->WriteHTML(' '.Url::to('@webroot/'.$model->file).'a');
-        // $mpdf->Output();
+                 
+        $court_name = 'The Prachuapkhirikhan Juvenile and Family Court';
+        // $mpdf->SetWatermarkText($court_name, 0.1);
+        // $mpdf->showWatermarkText = true;
+        $mpdf->SetTitle($model->name);
+        $mpdf->SetAuthor($court_name);   
         $mpdf->Output(Url::to('@webroot/'.$model->file), \Mpdf\Output\Destination::FILE);
         return true;
     } 
@@ -658,6 +655,7 @@ class DoczController extends Controller
         // $mpdf->WriteHTML( '1qqaaaaaa', 2 );
         // $mpdf->WriteHTML(' '.Url::to('@webroot/'.$model->file).'a');
         // $mpdf->Output();
+        
         $mpdf->Output(Url::to('@webroot/'.$model->file), \Mpdf\Output\Destination::FILE);
         return true;
     } 

@@ -66,7 +66,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             <td>
                                 <span class="pull-right-container">
                                     <?php if($x == 100 ){?>
-                                        <a href="<?=Url::to(['/docz/send_to_user','id'=>$model->id])?>" class="activity-send-to-user btn btn-warning btn-block btn-flat ">จ่ายงาน/เก็บ</a>
+                                        <a href="<?=Url::to(['/docz/send_to_user','id'=>$model->id])?>" class="activity-send-to-user btn btn-danger btn-block btn-flat ">จ่ายงาน/เก็บ</a>
                                     <?php }else{ ?>
                                         <small class="label pull-right bg-blue"><?= isset($role_name) ? $role_name : '-'?></small>
                                         <button data-id="<?=$model->id?>" class="activity-check btn btn-info btn-block btn-flat ">ตรวจสอบ</button>

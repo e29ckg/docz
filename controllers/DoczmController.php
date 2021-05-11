@@ -214,7 +214,6 @@ class DoczmController extends Controller
             'default_font' => 'garuda'
         ]);
 
-        $html = '<p>hi world สวัสดี</p>';
         $stylesheet = file_get_contents(Url::to('@webroot/css/pdf.css')); // external css
         $mpdf->WriteHTML($stylesheet,1);
 
@@ -241,6 +240,7 @@ class DoczmController extends Controller
             $x = 20;
             $y = 25;
             $mpdf->SetXY(20,5);
+            $keyword = '';
             foreach($model->doc_manage_asc as $md){
 
                 // $mpdf->SetXY(20,5);
@@ -267,9 +267,11 @@ class DoczmController extends Controller
                 $mpdf->WriteHTML('<p>'.$sign_photo.'('.$md->username().')'.$dep_name.'<br>'.$model->dateThaiTime($md->updated).'</p>');
                 $mpdf->WriteHTML('<p>--------------------------------------------------------------------------------</p>',2);
                 // $y = $y+60;
-                
-            }           
-        
+                $keyword .= '['.$md->username().':'.$md->dep_name().'] ';
+            }       
+        $mpdf->SetTitle($model->name);
+        $mpdf->SetAuthor('ศาลเยาวชนและครอบครัวจังหวัดประจวบคีรีขันธ์');        
+        $mpdf->SetKeywords($keyword );
         $mpdf->Output(Url::to('@webroot/'.$model->file), \Mpdf\Output\Destination::FILE);
         // $mpdf->Output();
         return true;

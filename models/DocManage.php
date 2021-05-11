@@ -115,6 +115,10 @@ class DocManage extends \yii\db\ActiveRecord
     {
         return $this->profile->pfname.$this->profile->name.' '.$this->profile->sname;
     }
+    public function dep_name()
+    {
+        return $this->profile->dep_name;
+    }
     
     public function url_file()
     {
