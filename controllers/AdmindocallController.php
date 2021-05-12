@@ -84,18 +84,21 @@ class AdmindocallController extends Controller
 
     public function actionSend_to_user_by_admin($id){
         $Docz = Docz::findOne($id);        
-        if(isset($_POST['select'])){
-            DocCat::deleteAll(['doc_id' => $id]);
-            foreach( $_POST['select'] as $slct){  
-                $model = new DocCat();
-                $model->doc_id = $id;
-                $model->doc_cat_name_id = (int)$slct;
-                $model->save();  
-            }
-            $a = $_POST['select'];
-        }else{
-            DocCat::deleteAll(['doc_id' => $id]);
-        } 
+        
+        if (Yii::$app->request->post()) {
+            if(isset($_POST['select'])){
+                DocCat::deleteAll(['doc_id' => $id]);
+                foreach( $_POST['select'] as $slct){  
+                    $model = new DocCat();
+                    $model->doc_id = $id;
+                    $model->doc_cat_name_id = (int)$slct;
+                    $model->save();  
+                }
+                $a = $_POST['select'];
+            }else{
+                DocCat::deleteAll(['doc_id' => $id]);
+            } 
+        }
         $MUser = [];
         $MUPs_count = UserProfile::find()->count(); 
         if($MUPs_count > 0){
@@ -112,6 +115,7 @@ class AdmindocallController extends Controller
                 }
             }   
         }  
+
         $select_list = [];
         $doc_cat_names = DocCatName::find()->all();
             foreach($doc_cat_names as $doc_cat_name){
@@ -138,10 +142,12 @@ class AdmindocallController extends Controller
             if($doc_user_read_count > 0){
                 $dur = DocUserRead::find()->where(['doc_id'=>$doc_id,'user_id'=>$modelU->id])->one();
                 $dur->check = 0; 
+                $dur->save();
             }else{
                 $dur = new DocUserRead();
                 $dur->doc_id = $doc_id;
                 $dur->user_id = $modelU->id;
+                $dur->check = 0; 
                 $dur->created = date("Y-m-d h:i:s");
                 $dur->save();
             }
@@ -159,10 +165,12 @@ class AdmindocallController extends Controller
         if($doc_user_read_count > 0){
             $dur = DocUserRead::find()->where(['doc_id'=>$doc_id,'user_id'=>$user_id])->one();
             $dur->check = 0; 
+            $dur->save();
         }else{
             $dur = new DocUserRead();
             $dur->doc_id = $doc_id;
             $dur->user_id = $user_id;
+            $dur->check = 0; 
             $dur->created = date("Y-m-d h:i:s");
             $dur->save();
         }

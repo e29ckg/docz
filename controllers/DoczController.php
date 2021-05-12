@@ -335,7 +335,7 @@ class DoczController extends Controller
         $modelD = DocProfile::find()->where(['code' => $this->code])->one();   
         // $count = DocManage::find()->where(['doc_id'=>$id])->count();  
         if(empty($model->start)) {
-            $this->stamp_rub($model->id);   //stamp เลขรับ ลงphp
+            $model->stamp_rub($model->id);   //stamp เลขรับ ลงphp
         }  
         foreach($modelD->docps as $ds){   
             $count = DocManage::find()->where(['doc_id'=>$id,'role_name_id'=>$ds->role_name_id])->count();         
@@ -358,6 +358,7 @@ class DoczController extends Controller
             'model' => $model,
         ]); 
     }
+
     public function actionSend_del($id)
     {
         $model = DocManage::find()->where(['id'=>$id])->One();    
@@ -548,119 +549,6 @@ class DoczController extends Controller
         return $this->render('_check_read',[
             'model' => $model
         ]);
-    } 
-
-    public function stamp_rub($id){
-        $model = Docz::findOne($id);
-        $mpdf = new \Mpdf\Mpdf();
-        // $mpdf->SetImportUse(); // only with mPDF <8.0
-
-        $completePath = Url::to('@webroot/'.$model->file);
-        $pagecount = $mpdf->SetSourceFile($completePath);
-        $mpdf->SetDocTemplate($completePath);
-        // $mpdf->AddFont('THSarabun', '', 'THSarabun.php'); //ธรรมดา
-        $mpdf->SetFont('garuda', '', 8);
-        $mpdf->AddPage();
-            $mpdf->SetXY(140, 5);
-            $mpdf->SetDrawColor(0, 0, 255);
-            $mpdf->setTextColor('0', '0', '255');
-            $mpdf->Cell(60, 6, 'ศาลเยาวชนและครอบครัวจังหวัดประจวบคีรีขันธ์', 'LTR', 1, '');
-            $mpdf->SetXY(140, 10);
-            $mpdf->SetFont('garuda', '', 10);
-            $mpdf->Cell(60, 6, 'รับที่  '.$model->r_number, 'LR', 1, '');
-            $mpdf->SetXY(140, 15);
-            $mpdf->Cell(60, 6, 'วันที่ '.$model->dateThaiTime($model->r_date), 'BLR', 1, '');
-            // $mpdf->SetXY(140, 20);
-            // $mpdf->Cell(60, 6, '', 'BLR', 1, '');
-        
-        for ($x = 2; $x <= $pagecount; $x++) {            
-            $mpdf->AddPage();
-
-        }
-        
-        $court_name = 'The Prachuapkhirikhan Juvenile and Family Court';
-        // $mpdf->SetWatermarkText($court_name, 0.1);
-        // $mpdf->showWatermarkText = true;
-        $mpdf->SetTitle($model->name);
-        $mpdf->SetAuthor($court_name);
-        $mpdf->Output(Url::to('@webroot/'.$model->file), \Mpdf\Output\Destination::FILE);
-        return true;
-    } 
-
-    public function stamp_end($id){
-        $model = Docz::findOne($id);
-        $mpdf = new \Mpdf\Mpdf([
-            'mode' => 'utf-8',
-        // 'format' => [190, 236],
-        // 'orientation' => 'L'
-        ]);
-
-        $html = '<p>hi world สวัสดี</p>';
-        $stylesheet = file_get_contents(Url::to('@webroot/css/pdf.css')); // external css
-        $mpdf->WriteHTML($stylesheet,1);
-        // $mpdf->WriteHTML($html,2);
-        // $mpdf->SetImportUse(); // only with mPDF <8.0
-        // $mpdf->text_input_as_HTML = true;
-
-        $completePath = Url::to('@webroot/'.$model->file);
-        $pagecount = $mpdf->SetSourceFile($completePath);
-        $mpdf->SetDocTemplate($completePath);
-        // $mpdf->AddFont('THSarabun', '', 'THSarabun.php'); //ธรรมดา       
-        
-        for ($x = 1; $x <= $pagecount; $x++) {            
-            $mpdf->AddPage();
-        }
-        $mpdf->SetFont('garuda', '', 8);
-        $mpdf->AddPage();
-            $mpdf->SetXY(140, 5);
-            $mpdf->SetDrawColor(0, 0, 255);
-            $mpdf->setTextColor('0', '0', '255');
-            $mpdf->Cell(60, 6, 'ศาลเยาวชนและครอบครัวจังหวัดประจวบคีรีขันธ์', 'LTR', 1, '');
-            $mpdf->SetXY(140, 10);
-            $mpdf->SetFont('garuda', '', 10);
-            $mpdf->Cell(60, 6, 'รับที่  '.$model->r_number, 'LR', 1, '');
-            $mpdf->SetXY(140, 15);
-            $mpdf->Cell(60, 6, 'วันที่ '.$model->dateThaiTime($model->r_date), 'BLR', 1, '');
-            //หัวหน้าส่วน
-            $x = 20;
-            $y = 25;
-            foreach($model->doc_manage_asc as $md){
-
-                // $mpdf->SetXY($x, $y);
-                $mpdf->WriteHTML($stylesheet,1);
-                $mpdf->WriteHTML('<p id="hh">'.$md->ty.'</p>',2);
-                $mpdf->WriteHTML('<pre id="detail">'.$md->detail.'</pre>',2);
-                $role_name = Role::find()->where(['user_id'=>$md->user_id,'role_name_id'=>$md->role_name_id])->one();
-                // $mpdf->WriteHTML('<br>');
-                if($role_name){
-                    $dep_name = '<br>'.$role_name->name_dep1; 
-                    $dep_name .= $role_name->name_dep2 ? '<br>'.$role_name->name_dep2 : '';
-                    $dep_name .= $role_name->name_dep3 ? '<br>'.$role_name->name_dep3 : '';
-                }else{
-                    $dep_name = '';
-                }                
-                if($md->profile->sign_photo){
-                    $sign_photo = '<img id="img" src="'.Url::to('@webroot/'.$md->profile->sign_photo).'" alt="sign_photo"><br>';
-                }else{
-                    $sign_photo ='<br>';
-                }
-                // $mpdf->WriteHTML($sign_photo,2);
-                $mpdf->WriteHTML('<p>'.$sign_photo.'('.$md->username().')'.$dep_name.'<br>'.$model->dateThaiTime($md->updated).'</p>');
-                $mpdf->WriteHTML('<p>--------------------------------------------------------------------------------</p>',2);
-                // $y = $y+60;
-                
-            }           
-        
-          
-        // The height of the template as it was printed is returned as $actualsize['h']
-        // The width of the template as it was printed is returned as $actualsize['w']
-        // $mpdf->WriteHTML('Hello World'.$pagecount);
-        // $mpdf->WriteHTML('Hello World');
-        // $mpdf->WriteHTML( '1qqaaaaaa', 2 );
-        // $mpdf->WriteHTML(' '.Url::to('@webroot/'.$model->file).'a');
-        // $mpdf->Output();
-        $mpdf->Output(Url::to('@webroot/'.$model->file), \Mpdf\Output\Destination::FILE);
-        return true;
     } 
 
 }

@@ -41,7 +41,6 @@ $this->params['breadcrumbs'][] = $this->title;
                             </td>
                             <td>
                                 <a href="<?=Url::to(['send_to_user_by_admin','id'=>$model->id])?>" class="activity-send-to-user btn btn-danger btn-block btn-flat ">จ่ายงาน/เก็บ</a>
-                                
                             </td>
                            
                             

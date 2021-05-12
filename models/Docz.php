@@ -3,7 +3,7 @@
 namespace app\models;
 
 use Yii;
-
+use yii\helpers\Url;
 /**
  * This is the model class for table "docz".
  *
@@ -174,15 +174,51 @@ class Docz extends \yii\db\ActiveRecord
         return false;
     }  
 
+    public function stamp_rub($id){
+        $model = Docz::findOne($id);
+        $mpdf = new \Mpdf\Mpdf();
+        // $mpdf->SetImportUse(); // only with mPDF <8.0
+
+        $completePath = Url::to('@webroot/'.$model->file);
+        $pagecount = $mpdf->SetSourceFile($completePath);
+        $mpdf->SetDocTemplate($completePath);
+        // $mpdf->AddFont('THSarabun', '', 'THSarabun.php'); //ธรรมดา
+        $mpdf->SetFont('garuda', '', 8);
+        $mpdf->AddPage();
+            $mpdf->SetXY(140, 5);
+            $mpdf->SetDrawColor(0, 0, 255);
+            $mpdf->setTextColor('0', '0', '255');
+            $mpdf->Cell(60, 6, 'ศาลเยาวชนและครอบครัวจังหวัดประจวบคีรีขันธ์', 'LTR', 1, '');
+            $mpdf->SetXY(140, 10);
+            $mpdf->SetFont('garuda', '', 10);
+            $mpdf->Cell(60, 6, 'รับที่  '.$model->r_number, 'LR', 1, '');
+            $mpdf->SetXY(140, 15);
+            $mpdf->Cell(60, 6, 'วันที่ '.$model->dateThaiTime($model->r_date), 'BLR', 1, '');
+            // $mpdf->SetXY(140, 20);
+            // $mpdf->Cell(60, 6, '', 'BLR', 1, '');
+        
+        for ($x = 2; $x <= $pagecount; $x++) {            
+            $mpdf->AddPage();
+
+        }
+        
+        $court_name = 'The Prachuapkhirikhan Juvenile and Family Court';
+        // $mpdf->SetWatermarkText($court_name, 0.1);
+        // $mpdf->showWatermarkText = true;
+        $mpdf->SetTitle($model->name);
+        $mpdf->SetAuthor($court_name);
+        $mpdf->Output(Url::to('@webroot/'.$model->file), \Mpdf\Output\Destination::FILE);
+        return true;
+    } 
 
     public function stamp_end($id){
         $model = Docz::findOne($id);
         $mpdf = new \Mpdf\Mpdf([
             'mode' => 'utf-8',
-        // 'format' => [190, 236],
-        // 'orientation' => 'L'
+            'default_font' => 'garuda'
         ]);
 
+        $html = '<p>hi world สวัสดี</p>';
         $stylesheet = file_get_contents(Url::to('@webroot/css/pdf.css')); // external css
         $mpdf->WriteHTML($stylesheet,1);
 
@@ -208,13 +244,16 @@ class Docz extends \yii\db\ActiveRecord
             //หัวหน้าส่วน
             $x = 20;
             $y = 25;
+            $mpdf->SetXY(20,5);
+            $keyword = '';
             foreach($model->doc_manage_asc as $md){
 
-                // $mpdf->SetXY($x, $y);
-                $mpdf->SetFont('garuda', '', 8);
+                // $mpdf->SetXY(20,5);
+                // $mpdf->SetFont('garuda', '', 8);
                 $mpdf->WriteHTML($stylesheet,1);
                 $mpdf->WriteHTML('<p id="hh">'.$md->ty.'</p>',2);
-                $mpdf->WriteHTML('<pre id="detail">'.$md->detail.'</pre>',2);
+                // $mpdf->SetFont('garuda', '', 8);
+                $mpdf->WriteHTML('<pre>'.$md->detail.'</pre>');
                 $role_name = Role::find()->where(['user_id'=>$md->user_id,'role_name_id'=>$md->role_name_id])->one();
                 // $mpdf->WriteHTML('<br>');
                 if($role_name){
@@ -233,11 +272,14 @@ class Docz extends \yii\db\ActiveRecord
                 $mpdf->WriteHTML('<p>'.$sign_photo.'('.$md->username().')'.$dep_name.'<br>'.$model->dateThaiTime($md->updated).'</p>');
                 $mpdf->WriteHTML('<p>--------------------------------------------------------------------------------</p>',2);
                 // $y = $y+60;
-                
+                $keyword .= '['.$md->username().':'.$md->dep_name().'] ';
             }           
-        
+        // $mpdf->SetTitle($model->name);
+        // $mpdf->SetAuthor('ศาลเยาวชนและครอบครัวจังหวัดประจวบคีรีขันธ์');        
+        // $mpdf->SetKeywords($keyword );
         $mpdf->Output(Url::to('@webroot/'.$model->file), \Mpdf\Output\Destination::FILE);
+        // $mpdf->Output();
         return true;
-    } 
+    }
     
 }
