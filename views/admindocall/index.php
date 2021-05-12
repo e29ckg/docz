@@ -7,7 +7,7 @@ use yii\helpers\Url;
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'เอกสารอยู่ระหว่างดำเนินการ';
+$this->title = 'เอกสารทั้งหมด';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
@@ -25,36 +25,26 @@ $this->params['breadcrumbs'][] = $this->title;
                 <table class="table table-bordered">
                     <tbody>
                         <tr>
-                            <th style="width: 100px">เลขที่รับ</th>
-                            <th style="width: 100px">วันที่</th>
                             <th >ชื่อ</th>
-                            <th style="width: 100px"></th>
-                            <th style="width: 100px"></th>
+                            <th style="width: 150px">แฟ้ม</th>
                             <th style="width: 150px">เอกสารอยู่ที่</th>
                         </tr>
                         <?php foreach($models as $model){ ?>
-                        <tr>
-                            <td><?= $model->r_number?></td>
-                            <td>
-                                <?= date("Y-m-d", strtotime("$model->doc_date"));?>
-                            </td>                            
+                        <tr>                                                      
                             <td>
                                 <p> 
                                     <?=$model->name_doc()?>
                                 </p> 
                             </td>
-                            <td>
-                                
-                                
+                            <td>                                
+                                <?=$model->doc_cat_name($model->id)?>
                             </td>
                             <td>
+                                <a href="<?=Url::to(['send_to_user_by_admin','id'=>$model->id])?>" class="activity-send-to-user btn btn-danger btn-block btn-flat ">จ่ายงาน/เก็บ</a>
+                                
+                            </td>
+                           
                             
-                            </td>
-                            <td>
-                                <span class="pull-right-container">                                    
-                                        <a href="<?=Url::to(['/docz/send_to_user','id'=>$model->id])?>" class="activity-send-to-user btn btn-danger btn-block btn-flat ">จ่ายงาน/เก็บ</a>
-                                    
-                            </td>
                         </tr>
                         <?php } ?>
                     </tbody>

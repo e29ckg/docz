@@ -51,6 +51,16 @@ class DocCat extends \yii\db\ActiveRecord
         return $this->hasOne(DocZ::className(), ['id'=>'doc_id']);
     }
 
+    public function getDocCatName()
+    {
+        return $this->hasOne(DocCatName::className(), ['id'=>'doc_cat_name_id']);
+    }
+
+    public function doc_cat_name()
+    {
+        return $this->docCatName->name;
+    }
+    
     public function doc_out_count()
     {
         $models = Docz::find()->select('id')->where(['st'=>4])->all();

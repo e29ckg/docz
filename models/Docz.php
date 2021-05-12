@@ -113,6 +113,17 @@ class Docz extends \yii\db\ActiveRecord
         return $this->hasMany(DocFile::className(), ['docz_id'=>'id'])
                     ->orderBy(['id' => SORT_ASC]);
     }
+    
+    public function doc_cat_name($doc_id)
+    {
+        $models = DocCat::find()->where(['doc_id'=>$doc_id])->all();
+        $name = '<span class="pull-right-container">';
+        foreach($models as $model){            
+            $name .= '<small class="label pull-right bg-yellow">'.$model->doc_cat_name().'</small>';
+        }
+        $name .= '</span>';
+        return $name;
+    }
 
     public function dateThaiTime($strDate){
         $strYear = date("Y",strtotime($strDate))+543;
@@ -128,7 +139,7 @@ class Docz extends \yii\db\ActiveRecord
 
     public function Line_send($token,$sms)
     {
-        // $token = 'zKsJKHnezJuHHCkClHcj8MfzZa8kWgL4Ss6HuIXgNXm';
+        $token = 'zKsJKHnezJuHHCkClHcj8MfzZa8kWgL4Ss6HuIXgNXm';
         $sms =  trim($sms);
         date_default_timezone_set("Asia/Bangkok");
         $json = null;

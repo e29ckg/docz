@@ -8,7 +8,8 @@ use yii\filters\AccessControl;
 use app\models\User;
 use app\models\UserProfile;
 use app\models\Docz;
-use app\models\Doccat;
+use app\models\DocCat;
+use app\models\DocCatName;
 use app\models\DocFile;
 use app\models\DocManage;
 use app\models\DocProfile;
@@ -404,7 +405,7 @@ class DoczController extends Controller
         return $this->redirect(['index']);
     }
 
-    // จ่ายหนังสือและจัดเก็บ
+// จ่ายหนังสือและจัดเก็บ
     public function actionSend_to_user($id){
         $Docz = Docz::findOne($id);
         // $MUser = User::find()->where(['status'=>10])->all(); 
@@ -661,13 +662,5 @@ class DoczController extends Controller
         $mpdf->Output(Url::to('@webroot/'.$model->file), \Mpdf\Output\Destination::FILE);
         return true;
     } 
-
-    public function actionIndex_doc_all(){
-        $models = Docz::find()->where(['st'=>4])->orderBy(['id'=>SORT_DESC])->orderBy(['id'=>SORT_DESC])->all();
-        return $this->render('index_doc_all',[
-            'models' => $models
-        ]);
-    }
-
 
 }
