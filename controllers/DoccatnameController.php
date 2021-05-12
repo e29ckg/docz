@@ -37,7 +37,7 @@ class DoccatnameController extends Controller
      */
     public function actionIndex()
     {
-        $models = DocCatName::find()->orderBy(['id'=>SORT_DESC])->all();
+        $models = DocCatName::find()->orderBy(['name'=>SORT_ASC])->all();
 
         return $this->render('index', [
             'models' => $models

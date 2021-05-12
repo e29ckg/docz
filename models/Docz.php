@@ -128,7 +128,7 @@ class Docz extends \yii\db\ActiveRecord
 
     public function Line_send($token,$sms)
     {
-        $token = 'zKsJKHnezJuHHCkClHcj8MfzZa8kWgL4Ss6HuIXgNXm';
+        // $token = 'zKsJKHnezJuHHCkClHcj8MfzZa8kWgL4Ss6HuIXgNXm';
         $sms =  trim($sms);
         date_default_timezone_set("Asia/Bangkok");
         $json = null;

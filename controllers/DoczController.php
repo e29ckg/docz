@@ -333,9 +333,9 @@ class DoczController extends Controller
         $model = Docz::findOne($id);
         $modelD = DocProfile::find()->where(['code' => $this->code])->one();   
         // $count = DocManage::find()->where(['doc_id'=>$id])->count();  
-        // if(empty($model->start)) {
+        if(empty($model->start)) {
             $this->stamp_rub($model->id);   //stamp เลขรับ ลงphp
-        // }  
+        }  
         foreach($modelD->docps as $ds){   
             $count = DocManage::find()->where(['doc_id'=>$id,'role_name_id'=>$ds->role_name_id])->count();         
             if($count == 0){
@@ -408,6 +408,9 @@ class DoczController extends Controller
     public function actionSend_to_user($id){
         $Docz = Docz::findOne($id);
         // $MUser = User::find()->where(['status'=>10])->all(); 
+        // if($Docz->st = 3){
+        //     $this->stamp_end($id);
+        // }
         $MUser = [];
         $MUPs_count = UserProfile::find()->count(); 
         if($MUPs_count > 0){
@@ -486,7 +489,7 @@ class DoczController extends Controller
     } 
 
     public function actionIndex_to_read(){
-        $models = DocUserRead::find()->where(['check'=>0,'user_id'=>Yii::$app->user->id])->all();             
+        $models = DocUserRead::find()->where(['check'=>0,'user_id'=>Yii::$app->user->id])->orderBy(['id'=>SORT_DESC])->all();             
         
         return $this->render('index_to_read',[
             'models' => $models
@@ -515,12 +518,12 @@ class DoczController extends Controller
     } 
 
     public function actionAll(){
-        $models = Docz::find()
-                    ->where(['st'=>4])
-                    ->orderBy(['id'=>SORT_DESC])
-                    ->limit(1000)
-                    ->all();             
-        
+        // $models = Docz::find()
+        //             ->where(['st'=>4])
+        //             ->orderBy(['id'=>SORT_DESC])
+        //             ->limit(1000)
+        //             ->all();             
+        $models = DocUserRead::find()->where(['user_id'=>Yii::$app->user->id])->orderBy(['doc_id'=>SORT_DESC])->all();    
         return $this->render('index_all',[
             'models' => $models
         ]);
@@ -573,12 +576,12 @@ class DoczController extends Controller
             $mpdf->AddPage();
 
         }
-                 
+        
         $court_name = 'The Prachuapkhirikhan Juvenile and Family Court';
         // $mpdf->SetWatermarkText($court_name, 0.1);
         // $mpdf->showWatermarkText = true;
         $mpdf->SetTitle($model->name);
-        $mpdf->SetAuthor($court_name);   
+        $mpdf->SetAuthor($court_name);
         $mpdf->Output(Url::to('@webroot/'.$model->file), \Mpdf\Output\Destination::FILE);
         return true;
     } 
@@ -655,11 +658,16 @@ class DoczController extends Controller
         // $mpdf->WriteHTML( '1qqaaaaaa', 2 );
         // $mpdf->WriteHTML(' '.Url::to('@webroot/'.$model->file).'a');
         // $mpdf->Output();
-        
         $mpdf->Output(Url::to('@webroot/'.$model->file), \Mpdf\Output\Destination::FILE);
         return true;
     } 
 
+    public function actionIndex_doc_all(){
+        $models = Docz::find()->where(['st'=>4])->orderBy(['id'=>SORT_DESC])->orderBy(['id'=>SORT_DESC])->all();
+        return $this->render('index_doc_all',[
+            'models' => $models
+        ]);
+    }
 
 
 }

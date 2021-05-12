@@ -7,7 +7,7 @@ use yii\helpers\Url;
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'เอกสารทั้งหมด';
+$this->title = 'เอกสารอยู่ระหว่างดำเนินการ';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
@@ -16,30 +16,44 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="box">
             <div class="box-header with-border">
                 <h3 class="box-title">Docz</h3>
-                <div class="box-tools"> </div>
+                <div class="box-tools">
+                
+                </div>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-                <table class="table table-bordered" id="example2">
-                    <thead>
+                <table class="table table-bordered">
+                    <tbody>
                         <tr>
-                            <th style="width: 10px">#</th>
+                            <th style="width: 100px">เลขที่รับ</th>
+                            <th style="width: 100px">วันที่</th>
                             <th >ชื่อ</th>
                             <th style="width: 100px"></th>
+                            <th style="width: 100px"></th>
+                            <th style="width: 150px">เอกสารอยู่ที่</th>
                         </tr>
-                    </thead>
-                    <tbody>
                         <?php foreach($models as $model){ ?>
                         <tr>
-                            <td><?= $model->id?></td>
-                            <td class="mailbox-subject">
-                                <p>
-                                    <?=$model->docz->name_doc()?>
-                                </p>
-                            </td>
-                            
+                            <td><?= $model->r_number?></td>
                             <td>
-                            <a href="<?=Url::to(['/docz/to_read','id'=>$model->doc_id])?>" class="btn btn-primary btn-block btn-flat" >อ่าน</a>
+                                <?= date("Y-m-d", strtotime("$model->doc_date"));?>
+                            </td>                            
+                            <td>
+                                <p> 
+                                    <?=$model->name_doc()?>
+                                </p> 
+                            </td>
+                            <td>
+                                
+                                
+                            </td>
+                            <td>
+                            
+                            </td>
+                            <td>
+                                <span class="pull-right-container">                                    
+                                        <a href="<?=Url::to(['/docz/send_to_user','id'=>$model->id])?>" class="activity-send-to-user btn btn-danger btn-block btn-flat ">จ่ายงาน/เก็บ</a>
+                                    
                             </td>
                         </tr>
                         <?php } ?>
@@ -49,30 +63,17 @@ $this->params['breadcrumbs'][] = $this->title;
             <!-- /.box-body -->
         </div>
     </div>
-
-
 </div>
 
 <?php $this->registerJs('
 
 function init_click_handlers(){
-    $("#activity-create").click(function(e) {
-            $.get(
-                "/docz/create",
-                function (data)
-                {
-                    $("#activity-modal").find(".modal-body").html(data);
-                    $(".modal-body").html(data);
-                    $(".modal-title").html("");
-                    $("#activity-modal").modal("show");
-                }
-            );
-        });
-    $(".activity-view").click(function(e) {
+    
+       $(".activity-check").click(function(e) {
             var fID = $(this).data("id");
             // alert(fID);
             $.get(
-                "/docz/view",
+                "?r=docz/check",
                 {
                     id: fID
                 },
@@ -89,7 +90,7 @@ function init_click_handlers(){
             var fID = $(this).data("id");
             // alert(fID);
             $.get(
-                "/docz/view_att",
+                "?r=docz/view_att",
                 {
                     id: fID
                 },
@@ -106,7 +107,7 @@ function init_click_handlers(){
             var fID = $(this).data("id");
             // alert(fID);
             $.get(
-                "/docz/att",
+                "?r=docz/att",
                 {
                     id: fID
                 },
@@ -119,47 +120,9 @@ function init_click_handlers(){
                 }
             );
         });  
-
-            
-        $(".activity-update").click(function(e) {
-            var fID = $(this).data("id");
-            // alert(fID);
-            $.get(
-                "/docz/update",
-                {
-                    id: fID
-                },
-                function (data)
-                {
-                    $("#activity-modal").find(".modal-body").html(data);
-                    $(".modal-body").html(data);
-                    $(".modal-title").html("");
-                    $("#activity-modal").modal("show");
-                }
-            );
-        }); 
-
-        $(".activity-send").click(function(e) {
-            var fID = $(this).data("id");
-            // alert(fID);
-            $.get(
-                "/docz/send",
-                {
-                    id: fID
-                },
-                function (data)
-                {
-                    $("#activity-modal").find(".modal-body").html(data);
-                    $(".modal-body").html(data);
-                    $(".modal-title").html("");
-                    $("#activity-modal").modal("show");
-                }
-            );
-        });   
     
 }
 init_click_handlers(); //first run
-$("#example2").DataTable();
 // $("#customer_pjax_id").on("pjax:success", function() {
 //     init_click_handlers(); //reactivate links in grid after pjax update
 // });

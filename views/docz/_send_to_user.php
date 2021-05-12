@@ -38,6 +38,7 @@ $fieldOption = [
       <div class="box-body text-center"> 
         <embed src="<?= Url::to('@web/'.$Docz->file) ?>" type="application/pdf" width="100%" height="800px" />
       </div>
+      <?=$Docz->file?>   
     </div>
     <?php foreach($Docz->doc_file as $df){ ?>
         <div class="box box-primary">
@@ -45,8 +46,9 @@ $fieldOption = [
               <h3 class="box-title">ไฟล์แนบ<?=$df->name?></h3>
             </div>
             <div class="box-body text-center"> 
-              <embed src="<?= Url::to(['@web/'.$df->file]) ?>" type="application/pdf" width="100%" height="600px" />
-            </div>            
+              <embed src="<?= Url::to('@web/'.$df->file) ?>" type="application/pdf" width="100%" height="600px" />
+            </div>  
+            <?=$df->file?>         
         </div>  
         <?php } ?>
   </div>

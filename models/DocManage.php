@@ -111,6 +111,7 @@ class DocManage extends \yii\db\ActiveRecord
     {
         return $this->hasOne(UserProfile::className(), ['user_id' => 'user_id']);
     }
+    
     public function username()
     {
         return $this->profile->pfname.$this->profile->name.' '.$this->profile->sname;
@@ -119,7 +120,6 @@ class DocManage extends \yii\db\ActiveRecord
     {
         return $this->profile->dep_name;
     }
-    
     public function url_file()
     {
         return $this->docz->file;

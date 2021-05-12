@@ -28,7 +28,8 @@ $this->params['breadcrumbs'][] = $this->title;
                             <th style="width: 100px">เลขที่รับ</th>
                             <th style="width: 100px">วันที่</th>
                             <th >ชื่อ</th>
-                            <th style="width: 200px"></th>
+                            <th style="width: 100px"></th>
+                            <th style="width: 100px"></th>
                             <th style="width: 150px">เอกสารอยู่ที่</th>
                         </tr>
                         <?php foreach($models as $model){ ?>
@@ -62,6 +63,14 @@ $this->params['breadcrumbs'][] = $this->title;
                                         <span class="sr-only"><?=$x?>% Complete (success) </span>
                                     </div>
                                 </div> 
+                            </td>
+                            <td>
+                                <?php foreach($model->doc_file as $f){ ?>
+                                    <?php if($f->file){?>
+                                        <a href="#" data-id="<?=$f->id?>" class="activity-view_att"><i class="fa fa-file-pdf-o " aria-hidden="true"></i></a>
+                                    <?php } ?>
+                                <?php } ?>
+                                <button data-id="<?=$model->id?>" class="activity-att btn btn-warning btn-flat btn-xs">ไฟล์แนบ</button>
                             </td>
                             <td>
                                 <span class="pull-right-container">
@@ -104,6 +113,40 @@ function init_click_handlers(){
                 }
             );
         }); 
+        $(".activity-view_att").click(function(e) {
+            var fID = $(this).data("id");
+            // alert(fID);
+            $.get(
+                "?r=docz/view_att",
+                {
+                    id: fID
+                },
+                function (data)
+                {
+                    $("#activity-modal").find(".modal-body").html(data);
+                    $(".modal-body").html(data);
+                    $(".modal-title").html("");
+                    $("#activity-modal").modal("show");
+                }
+            );
+        });
+        $(".activity-att").click(function(e) {
+            var fID = $(this).data("id");
+            // alert(fID);
+            $.get(
+                "?r=docz/att",
+                {
+                    id: fID
+                },
+                function (data)
+                {
+                    $("#activity-modal").find(".modal-body").html(data);
+                    $(".modal-body").html(data);
+                    $(".modal-title").html("");
+                    $("#activity-modal").modal("show");
+                }
+            );
+        });  
     
 }
 init_click_handlers(); //first run

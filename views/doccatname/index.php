@@ -26,13 +26,13 @@ $this->params['breadcrumbs'][] = $this->title;
                 <table class="table table-bordered">
                     <tbody>
                         <tr>
-                            <th style="width: 10px">#</th>
+                            <!-- <th style="width: 10px">#</th> -->
                             <th >ชื่อ</th>
                             <th style="width: 200px"></th>
                         </tr>
                         <?php foreach($models as $model){ ?>
                         <tr>
-                            <td><?=$model->id?></td>
+                            <!-- <td><?=$model->id?></td> -->
                             <td><?=$model->name?></td>
                                 
                             <td>

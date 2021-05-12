@@ -25,6 +25,8 @@ if(!(Yii::$app->user->isGuest)){
             // array_push($menu,['label' => 'ดำเนินการเสร็จ<span id="docz_index" class="label label-primary pull-right">'.$docz_index_3.'</span>', 'icon' => 'file-code-o', 'url' => ['/docz/index_3']]);             
             array_push($menu,['label' => 'หนังสือนอกแฟ้ม<span id="docz_index" class="label label-primary pull-right">'.$doc_out.'</span>', 'icon' => 'file-code-o', 'url' => ['/doccat/index_out']]);             
             array_push($menu,['label' => 'แฟ้มเอกสาร<span id="docz_index" class="label label-primary pull-right"></span>', 'icon' => 'file-code-o', 'url' => ['/doccat/index']]);             
+            array_push($menu,['label' => 'เอกสารทั้งหมด<span id="docz_index" class="label label-warning pull-right">'.'</span>', 'icon' => 'file-code-o', 'url' => ['/docz/index_doc_all']]); 
+            
         }
         if($model->role_name_id <> 1){
             $doczm_index = DocManage::find()->where(['st'=>2,'role_name_id'=>$model->role_name_id])->count();
