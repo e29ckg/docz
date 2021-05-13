@@ -139,7 +139,7 @@ class Docz extends \yii\db\ActiveRecord
 
     public function Line_send($token,$sms)
     {
-        $token = 'zKsJKHnezJuHHCkClHcj8MfzZa8kWgL4Ss6HuIXgNXm';
+        // $token = 'zKsJKHnezJuHHCkClHcj8MfzZa8kWgL4Ss6HuIXgNXm';
         $sms =  trim($sms);
         date_default_timezone_set("Asia/Bangkok");
         $json = null;
@@ -274,9 +274,9 @@ class Docz extends \yii\db\ActiveRecord
                 // $y = $y+60;
                 $keyword .= '['.$md->username().':'.$md->dep_name().'] ';
             }           
-        // $mpdf->SetTitle($model->name);
-        // $mpdf->SetAuthor('ศาลเยาวชนและครอบครัวจังหวัดประจวบคีรีขันธ์');        
-        // $mpdf->SetKeywords($keyword );
+        $mpdf->SetTitle($model->name);
+        $mpdf->SetAuthor('ศาลเยาวชนและครอบครัวจังหวัดประจวบคีรีขันธ์');        
+        $mpdf->SetKeywords($keyword );
         $mpdf->Output(Url::to('@webroot/'.$model->file), \Mpdf\Output\Destination::FILE);
         // $mpdf->Output();
         return true;
