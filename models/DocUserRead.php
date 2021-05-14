@@ -76,6 +76,11 @@ class DocUserRead extends \yii\db\ActiveRecord
     public function doc_un_read_count(){
         return DocUserRead::find()->select('id')->where(['check'=>0,'user_id'=>Yii::$app->user->id])->count();
     }
+    
+    public function doc_un_read_count_by_user($user_id){
+        return DocUserRead::find()->select('id')->where(['check'=>0,'user_id'=>$user_id])->count();
+    }
+
 
     public function LineToken($user_id){
         $token = UserProfile::find()->where(['user_id' => $user_id])->one();
