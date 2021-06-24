@@ -32,7 +32,7 @@ $dataRole = ['ddd','aaaa','dddd'];
             <b>Phone</b> <a class="pull-right"><?=$model->profile->phone?></a>
           </li>
           <li class="list-group-item">
-            <b>Line ID</b> <a class="pull-right"><?=$model->profile->line_id?></a>
+            <b>Line Token</b> <?=$model->profile->line_id ? '<a class="pull-right">view</a>' : Html::a('ลงทะเบียน', $result, ['class' => 'btn btn-success'])?> 
           </li>                
         </ul>
 
@@ -148,51 +148,11 @@ $dataRole = ['ddd','aaaa','dddd'];
 <?php } ?>
       
 
-      <div class="col-md-4">
-        <!-- Widget: user widget style 1 -->
-        <div class="box box-widget widget-user-2">
-          <!-- Add the bg color to the header using any of the bg-* classes -->
-          <div class="widget-user-header bg-red">
-            <div class="widget-user-image">
-              <img class="img-circle" src="<?=Url::to('@web/img/crown.png')?>" alt="User Avatar">
-            </div>
-            <!-- /.widget-user-image -->
-            <h3 class="widget-user-username">เพิ่ม</h3>
-            <!-- <h5 class="widget-user-desc">Lead Developer</h5> -->
-          </div>
-          <div class="box-footer no-padding">
-            <ul class="nav nav-stacked">
-              <li>
-                <button type="button"  id="activity-role-create" data-id="<?=$model->id?>" data-target = "activity-modal" class="btn btn-primary btn-block" >เพิ่ม</button>
-                <!-- <a href="<?=Url::to(['/profile/role_create','id'=>$model->id])?>" class="text-center">เพิ่ม</a>  -->
-              </li>
-              <!-- <li><a href="#">Tasks <span class="pull-right badge bg-aqua">5</span></a></li>
-              <li><a href="#">Completed Projects <span class="pull-right badge bg-green">12</span></a></li>
-              <li><a href="#">Followers <span class="pull-right badge bg-red">842</span></a></li> -->
-            </ul>
-          </div>
-        </div>
-        <!-- /.widget-user -->
-      </div>
-
     </div>
   </div>
   <!-- /.col -->
 </div>
       
-<?php 
-// Modal::begin([
-//   'id' => 'activity-modal',
-//   'header' => '<h4 class="modal-title">.</h4>',
-//   'size'=>'modal-md',
-//   // 'footer' => '<a href="#" class="btn btn-primary" data-dismiss="modal">ปิด</a>',
-//   'clientOptions' => [
-//       'backdrop' => false, 
-//       'keyboard' => true
-//       ]
-//   ]);
-//   Modal::end();
-  ?>
 
 <?php $this->registerJs('
 

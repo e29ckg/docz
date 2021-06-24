@@ -5,6 +5,7 @@ use Yii;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
+use app\models\Role;
 use app\models\RoleName;
 use app\models\RolePower;
 use app\models\User;
@@ -153,7 +154,14 @@ class RoleController extends Controller
         }
 
         if ($model->load(Yii::$app->request->post())) { 
-
+            $m_role_count = Role::find()->where(['user_id'=>$model->user_id,'role_name_id'=>$model->role_name_id])->count();
+            if($m_role_count == 0){
+                $m_role = new Role();
+                $m_role->user_id = $model->user_id;
+                $m_role->role_name_id = $model->role_name_id;
+                $m_role->name_dep1 = $model->role_name();
+                $m_role->save();
+            }
             if($model->save()){
                 Yii::$app->session->setFlash('success', 'เพิ่มข้อมูลเรียบร้อย');
                 return $this->redirect(['/role/index']);
@@ -181,6 +189,14 @@ class RoleController extends Controller
         }
         
         if ($model->load(Yii::$app->request->post())) {     
+            $m_role_count = Role::find()->where(['user_id'=>$model->user_id,'role_name_id'=>$model->role_name_id])->count();
+            if($m_role_count == 0){
+                $m_role = new Role();
+                $m_role->user_id = $model->user_id;
+                $m_role->role_name_id = $model->role_name_id;
+                $m_role->name_dep1 = $model->role_name();
+                $m_role->save();
+            }
             if ($model->save()) {           
                 Yii::$app->session->setFlash('success', 'ปรับปรุงข้อมูลเรียบร้อย');           
                 return $this->redirect(['/role/index']);

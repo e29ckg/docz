@@ -27,8 +27,8 @@ $this->params['breadcrumbs'][] = $this->title;
                         <tr>
                             <th style="width: 50px">#</th>
                             <th >ชื่อ</th>
-                            <th style="width: 200px"></th>
-                            <th style="width: 150px"></th>
+                            <th style="width: 50px"></th>
+                            <th style="width: 50px"></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -37,16 +37,10 @@ $this->params['breadcrumbs'][] = $this->title;
                         <tr>
                             <td><?= $model->r_number?></td>
                             <td>
-                                <?= $model->doc_speed ?'
-                                        <small class="label  bg-red">'.$model->doc_speed.'</small>
-                                    ':''?>
-                                <?=$model->doc_form_number ? 'ที่ '.$model->doc_form_number : ''?>
-                                <?=$model->doc_date ? 'ลงวันที่ '.date("Y-m-d",strtotime($model->doc_date)) : ''?>
-                                <?=$model->name ? 'เรื่อง '.$model->name : ''?>
+                                <?=$model->name_doc()?>
                             </td>       
                             <td>
-                                
-                                
+                                <a href="#" data-id="<?=$model->id?>" class="activity-ckeck-read btn btn-success btn-block btn-flat ">ตรวจสอบการอ่าน</a>
                             </td>
                             <td>
                             <a href="<?=Url::to(['/docz/to_read','id'=>$model->id])?>" class="btn btn-primary btn-block btn-flat ">อ่าน</a>
@@ -65,24 +59,12 @@ $this->params['breadcrumbs'][] = $this->title;
 <?php $this->registerJs('
 
 function init_click_handlers(){
-    
-    $("#activity-create").click(function(e) {
-            $.get(
-                "/docz/create",
-                function (data)
-                {
-                    $("#activity-modal").find(".modal-body").html(data);
-                    $(".modal-body").html(data);
-                    $(".modal-title").html("");
-                    $("#activity-modal").modal("show");
-                }
-            );
-        });
-    $(".activity-view").click(function(e) {
+        
+    $(".activity-ckeck-read").click(function(e) {
             var fID = $(this).data("id");
             // alert(fID);
             $.get(
-                "/docz/view",
+                "?r=docz/check_read",
                 {
                     id: fID
                 },
@@ -95,77 +77,6 @@ function init_click_handlers(){
                 }
             );
         }); 
-        $(".activity-view_att").click(function(e) {
-            var fID = $(this).data("id");
-            // alert(fID);
-            $.get(
-                "/docz/view_att",
-                {
-                    id: fID
-                },
-                function (data)
-                {
-                    $("#activity-modal").find(".modal-body").html(data);
-                    $(".modal-body").html(data);
-                    $(".modal-title").html("");
-                    $("#activity-modal").modal("show");
-                }
-            );
-        });
-        $(".activity-att").click(function(e) {
-            var fID = $(this).data("id");
-            // alert(fID);
-            $.get(
-                "/docz/att",
-                {
-                    id: fID
-                },
-                function (data)
-                {
-                    $("#activity-modal").find(".modal-body").html(data);
-                    $(".modal-body").html(data);
-                    $(".modal-title").html("");
-                    $("#activity-modal").modal("show");
-                }
-            );
-        });  
-
-            
-        $(".activity-update").click(function(e) {
-            var fID = $(this).data("id");
-            // alert(fID);
-            $.get(
-                "/docz/update",
-                {
-                    id: fID
-                },
-                function (data)
-                {
-                    $("#activity-modal").find(".modal-body").html(data);
-                    $(".modal-body").html(data);
-                    $(".modal-title").html("");
-                    $("#activity-modal").modal("show");
-                }
-            );
-        }); 
-
-        $(".activity-send").click(function(e) {
-            var fID = $(this).data("id");
-            // alert(fID);
-            $.get(
-                "/docz/send",
-                {
-                    id: fID
-                },
-                function (data)
-                {
-                    $("#activity-modal").find(".modal-body").html(data);
-                    $(".modal-body").html(data);
-                    $(".modal-title").html("");
-                    $("#activity-modal").modal("show");
-                }
-            );
-        });   
     
 }
 init_click_handlers(); //first run

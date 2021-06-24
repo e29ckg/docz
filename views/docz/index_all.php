@@ -7,7 +7,7 @@ use yii\helpers\Url;
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = '.';
+$this->title = 'เอกสารทั้งหมด';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
@@ -29,23 +29,17 @@ $this->params['breadcrumbs'][] = $this->title;
                         </tr>
                     </thead>
                     <tbody>
-                        
                         <?php foreach($models as $model){ ?>
                         <tr>
                             <td><?= $model->id?></td>
                             <td class="mailbox-subject">
                                 <p>
-                                <?= $model->doc_speed ?'
-                                            <small class="label  bg-red">'.$model->doc_speed.'</small>
-                                        ':''?>
-                                    <?=$model->doc_form_number ? 'ที่ '.$model->doc_form_number : ''?>
-                                    <?=$model->doc_date ? 'ลงวันที่ '.date("Y-m-d",strtotime($model->doc_date)) : ''?>
-                                    <?=$model->name ? 'เรื่อง '.$model->name : ''?>
+                                    <?=$model->docz->name_doc()?>
                                 </p>
                             </td>
                             
                             <td>
-                            <a href="<?=Url::to(['/docz/all_to_read','id'=>$model->id])?>" class="btn btn-primary btn-block btn-flat ">อ่าน</a>
+                            <a href="<?=Url::to(['/docz/to_read','id'=>$model->doc_id])?>" class="btn btn-primary btn-block btn-flat" >อ่าน</a>
                             </td>
                         </tr>
                         <?php } ?>
@@ -165,7 +159,9 @@ function init_click_handlers(){
     
 }
 init_click_handlers(); //first run
-$("#example2").DataTable();
+$("#example2").DataTable({
+    "order": [[ 0, "desc" ]]
+} );
 // $("#customer_pjax_id").on("pjax:success", function() {
 //     init_click_handlers(); //reactivate links in grid after pjax update
 // });

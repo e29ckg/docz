@@ -34,11 +34,15 @@ $fieldOptionSname = [
     'inputTemplate' => "{input}<span class='form-control-feedback'></span>"
 ];
 $fieldOptionDepName = [
-    'options' => ['class' => 'form-group has-feedback col-md-6'],
+    'options' => ['class' => 'form-group has-feedback col-md-5'],
     'inputTemplate' => "{input}<span class='form-control-feedback'></span>"
 ];
 $fieldOptionUserGroupWork = [
-    'options' => ['class' => 'form-group has-feedback col-md-6'],
+    'options' => ['class' => 'form-group has-feedback col-md-5'],
+    'inputTemplate' => "{input}<span class='form-control-feedback' ></span>"
+];
+$fieldOptionSort = [
+    'options' => ['class' => 'form-group has-feedback col-md-2'],
     'inputTemplate' => "{input}<span class='form-control-feedback' ></span>"
 ];
 $fieldOptionPhone = [
@@ -51,7 +55,6 @@ $fieldOptionLine_id= [
 ];
 ?>
 <div class="row">    
-    <!-- /.login-logo -->
     
     <?php $form = ActiveForm::begin([
         'id' => 'reg-form',
@@ -86,6 +89,8 @@ $fieldOptionLine_id= [
                 ['prompt'=>'เลื่อกกลุ่มงาน...']
                 );
             ?>
+            <?= $form->field($model, 'sort',$fieldOptionSort)->textInput(['placeholder' => $model->getAttributeLabel('sort'),'maxlength' => true]) ?>
+            
         </div>
         <div class="row">
             <?= $form->field($model, 'phone',$fieldOptionPhone)->textInput(['placeholder' => $model->getAttributeLabel('phone'),'maxlength' => true]) ?>

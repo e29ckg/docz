@@ -5,67 +5,100 @@ use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Url;
 use app\models\User;
+use app\models\Doccatname;
 use yii\helpers\ArrayHelper;
 /* @var $this yii\web\View */
 /* @var $model app\models\UserProfile */
 /* @var $form yii\widgets\ActiveForm */
-// var_dump($model->docps);
 
 $User = User::find()->where(['status'=>10])->all();  
+$DocCats = Doccatname::find()->all();  
  
 // $listUserProfile= ArrayHelper::map($User,'id','name');
-$listUserProfile= ArrayHelper::map($User,'id',function ($User) {
-        return $User->name;
-    });
+$listUserProfile = ArrayHelper::map($User,'id',function ($User) {
+    return $User->name;
+});
+
+// $listDocCat = ArrayHelper::map($DocCat,'id','name');
         
 $fieldOption = [
     'options' => ['class' => 'checkbox has-feedback col-md-12'],
     'inputTemplate' => "{input}<span class='form-control-feedback'></span>"
 ];
 
-var_dump($listUserProfile);
+// var_dump($DocCats);
 
 ?>
 <div class="row">
-    <div class="col-md-8">
+  <div class="col-md-8">
+    <div class="box box-primary">
+      <div class="box-header with-border">
+        <h3 class="box-title"><a href="<?=Url::to(Yii::$app->request->referrer)?>" class="btn btn-warning">กลับ</a> <?=$Docz->name_doc()?></h3>
+      </div>
+      <div class="box-body text-center"> 
+        <embed src="<?= Url::to('@web/'.$Docz->file) ?>" type="application/pdf" width="100%" height="800px" />
+        <a href="<?= Url::to('@web/'.$Docz->file) ?>" target="_blank" rel="noopener noreferrer">ไฟล์</a>
+      </div>  
+    </div>
+    <?php foreach($Docz->doc_file as $df){ ?>
         <div class="box box-primary">
             <div class="box-header with-border">
-              <h3 class="box-title"><?=$model->id?></h3>
+              <h3 class="box-title">ไฟล์แนบ<?=$df->name?></h3>
+            </div>
+            <div class="box-body text-center"> 
+              <embed src="<?= Url::to('@web/'.$df->file) ?>" type="application/pdf" width="100%" height="600px" />
+              <a href="<?= Url::to('@web/'.$df->file) ?>" target="_blank" rel="noopener noreferrer">ไฟล์</a>
+            </div>  
+            <?=$df->file?>         
+        </div>  
+        <?php } ?>
+  </div>
+    <div class="col-md-4">
+        <div class="box box-primary">
+            <div class="box-header with-border">
+              <h3 class="box-title"><?=$Docz->id?></h3>
             </div>
             <div class="box-body text-center"> 
                 <?php $form = ActiveForm::begin([
                         'id' => 'bsdr-form',
                         'enableAjaxValidation' => true,
-                        'options' => ['enctype' => 'multipart/form-data','class'=>'form-horizontal']
+                        // 'options' => ['enctype' => 'multipart/form-data','class'=>'form-horizontal']
                     ]
                     ); ?>         
                     <table class="table table-hover table-striped">
                       <tr>
                         <td><input id='checkall' type="checkbox" name="chkAll" id="chkAll"></td>
-                        <td class="text-left">CheckAll</td>
+                        <td class="text-left">ทั้งหมด</td>
                       </tr>
                  
-                  <?php foreach($MUser as $MU){?>
-                    
+                    <?php foreach($MUser as $MU){?>
                       <tr>
-                        <td ><input type="checkbox" class="checkboxA" name="DocUserRead[user_id][]" value="<?=$MU->id?>"> </td>
-                        <td class="text-left"> <?= $MU->name?></td>
+                        <td ><input type="checkbox" class="checkboxA" name="DocUserRead[user_id][]" value="<?=$MU['id']?>"> </td>
+                        <td class="text-left"> <?= $MU['name']?></td>
                       </tr>
-                    
                     <?php } ?>
-                
-                </table> 
-                
-              <!-- /.mail-box-messages -->
+                </table>                 
             </div>
-	     
+            <div class="col-md-8">
+            <label>ที่เก็บ</label>
+              <select class="form-control" name="select[]"  multiple="multiple">
+              <?php foreach($DocCats  as $DocCat){?>
+                <!-- <option selected="selected">orange</option>
+                <option>white</option> -->
+                <option value="<?=$DocCat->id?>"><?=$DocCat->name?></option>
+                <?php } ?>
+              </select>
+                <!-- /.form-group -->
+            
+            </div>
+              
             <div class="box-footer">              
             
-                <button type="submit" class="btn btn-info pull-right">Submit</button>
+                <button type="submit" class="btn btn-info pull-right">บันทึก / ส่ง</button>
             </div>   
             <?php ActiveForm::end(); ?>     
         </div>
-        
+        <a href="<?=Url::to(Yii::$app->request->referrer)?>" class="btn btn-warning">กลับ</a>
     </div>
     
 </div> 
@@ -74,25 +107,7 @@ var_dump($listUserProfile);
 <?php $this->registerJs('
 
 function init_click_handlers(){
-    
-    $(".activity-send-del").click(function(e) {
-            var fID = $(this).data("id");
-            // alert(fID);
-            $.get(
-                "/docz/send_del",
-                {
-                    id: fID
-                },
-                function (data)
-                {
-                    $("#activity-modal").find(".modal-body").html(data);
-                    $(".modal-body").html(data);
-                    $(".modal-title").html("");
-                    $("#activity-modal").modal("show");
-                }
-            );
-        }); 
-    
+        
         $("#checkall").change(function(){
             var checked = $(this).is(":checked");
             if(checked){
@@ -118,6 +133,10 @@ function init_click_handlers(){
          });
 }
 init_click_handlers(); //first run
+$("#body").addClass("sidebar-collapse");
+$("select").select2({
+  // data :[{"id":1,"text":"ssss"}]
+});
 // $("#customer_pjax_id").on("pjax:success", function() {
 //     init_click_handlers(); //reactivate links in grid after pjax update
 // });

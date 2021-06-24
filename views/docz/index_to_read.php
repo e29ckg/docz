@@ -7,7 +7,7 @@ use yii\helpers\Url;
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = '.';
+$this->title = 'เอกสารใหม่';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
@@ -32,12 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             <td><?= $model->id?></td>
                             <td class="mailbox-subject">
                                 <p>
-                                <?= $model->docz->doc_speed ?'
-                                            <small class="label  bg-red">'.$model->docz->doc_speed.'</small>
-                                        ':''?>
-                                    <?=$model->docz->doc_form_number ? 'ที่ ศย '.$model->docz->doc_form_number : ''?>
-                                    <?=$model->docz->doc_date ? 'ลงวันที่ '.date("Y-m-d",strtotime($model->docz->doc_date)) : ''?>
-                                    <?=$model->docz->name ? 'เรื่อง '.$model->docz->name : ''?>
+                                    <?=$model->docz->name_doc()?>
                                 </p>
                             </td>
                             

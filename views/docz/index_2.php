@@ -7,7 +7,7 @@ use yii\helpers\Url;
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = '.';
+$this->title = 'เอกสารอยู่ระหว่างดำเนินการ';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
@@ -17,7 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="box-header with-border">
                 <h3 class="box-title">Docz</h3>
                 <div class="box-tools">
-                    
+                
                 </div>
             </div>
             <!-- /.box-header -->
@@ -28,7 +28,8 @@ $this->params['breadcrumbs'][] = $this->title;
                             <th style="width: 100px">เลขที่รับ</th>
                             <th style="width: 100px">วันที่</th>
                             <th >ชื่อ</th>
-                            <th style="width: 200px"></th>
+                            <th style="width: 100px"></th>
+                            <th style="width: 100px"></th>
                             <th style="width: 150px">เอกสารอยู่ที่</th>
                         </tr>
                         <?php foreach($models as $model){ ?>
@@ -39,12 +40,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             </td>                            
                             <td>
                                 <p> 
-                                    <?= $model->doc_speed ?'
-                                            <small class="label  bg-red">'.$model->doc_speed.'</small>
-                                        ':''?>
-                                    <?=$model->doc_form_number ? 'ที่ '.$model->doc_form_number : ''?>
-                                    <?=$model->doc_date ? 'ลงวันที่ '.date("Y-m-d",strtotime($model->doc_date)) : ''?>
-                                    <?=$model->name ? 'เรื่อง '.$model->name : ''?>
+                                    <?=$model->name_doc()?>
                                 </p> 
                             </td>
                             <td>
@@ -69,8 +65,21 @@ $this->params['breadcrumbs'][] = $this->title;
                                 </div> 
                             </td>
                             <td>
+                                <?php foreach($model->doc_file as $f){ ?>
+                                    <?php if($f->file){?>
+                                        <a href="#" data-id="<?=$f->id?>" class="activity-view_att"><i class="fa fa-file-pdf-o " aria-hidden="true"></i></a>
+                                    <?php } ?>
+                                <?php } ?>
+                                <button data-id="<?=$model->id?>" class="activity-att btn btn-warning btn-flat btn-xs">ไฟล์แนบ</button>
+                            </td>
+                            <td>
                                 <span class="pull-right-container">
-                                    <small class="label pull-right bg-blue"><?= isset($role_name) ? $role_name : '-'?></small>
+                                    <?php if($x == 100 ){?>
+                                        <a href="<?=Url::to(['/docz/send_to_user','id'=>$model->id])?>" class="activity-send-to-user btn btn-danger btn-block btn-flat ">จ่ายงาน/เก็บ</a>
+                                    <?php }else{ ?>
+                                        <small class="label pull-right bg-blue"><?= isset($role_name) ? $role_name : '-'?></small>
+                                        <button data-id="<?=$model->id?>" class="activity-check btn btn-info btn-block btn-flat ">ตรวจสอบ</button>
+                                        <?php } ?>
                                 </span> 
                             </td>
                         </tr>
@@ -86,23 +95,12 @@ $this->params['breadcrumbs'][] = $this->title;
 <?php $this->registerJs('
 
 function init_click_handlers(){
-    $("#activity-create").click(function(e) {
-            $.get(
-                "/docz/create",
-                function (data)
-                {
-                    $("#activity-modal").find(".modal-body").html(data);
-                    $(".modal-body").html(data);
-                    $(".modal-title").html("");
-                    $("#activity-modal").modal("show");
-                }
-            );
-        });
-    $(".activity-view").click(function(e) {
+    
+       $(".activity-check").click(function(e) {
             var fID = $(this).data("id");
             // alert(fID);
             $.get(
-                "/docz/view",
+                "?r=docz/check",
                 {
                     id: fID
                 },
@@ -119,7 +117,7 @@ function init_click_handlers(){
             var fID = $(this).data("id");
             // alert(fID);
             $.get(
-                "/docz/view_att",
+                "?r=docz/view_att",
                 {
                     id: fID
                 },
@@ -136,7 +134,7 @@ function init_click_handlers(){
             var fID = $(this).data("id");
             // alert(fID);
             $.get(
-                "/docz/att",
+                "?r=docz/att",
                 {
                     id: fID
                 },
@@ -149,43 +147,6 @@ function init_click_handlers(){
                 }
             );
         });  
-
-            
-        $(".activity-update").click(function(e) {
-            var fID = $(this).data("id");
-            // alert(fID);
-            $.get(
-                "/docz/update",
-                {
-                    id: fID
-                },
-                function (data)
-                {
-                    $("#activity-modal").find(".modal-body").html(data);
-                    $(".modal-body").html(data);
-                    $(".modal-title").html("");
-                    $("#activity-modal").modal("show");
-                }
-            );
-        }); 
-
-        $(".activity-send").click(function(e) {
-            var fID = $(this).data("id");
-            // alert(fID);
-            $.get(
-                "/docz/send",
-                {
-                    id: fID
-                },
-                function (data)
-                {
-                    $("#activity-modal").find(".modal-body").html(data);
-                    $(".modal-body").html(data);
-                    $(".modal-title").html("");
-                    $("#activity-modal").modal("show");
-                }
-            );
-        });   
     
 }
 init_click_handlers(); //first run

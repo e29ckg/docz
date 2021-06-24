@@ -18,7 +18,7 @@ class m210329_231833_doc_profile extends Migration
             'name' => $this->string(255)->notNull(),
         ]);
         $this->insert('doc_profile', ['id'=>1,'code' => 'DocZ', 'name' => 'หนังสือ']);
-        $this->insert('doc_profile', ['id'=>2,'code' => 'DocX','name' => 'รายงานประจำวัน']);
+        $this->insert('doc_profile', ['id'=>2,'code' => 'doc_work','name' => 'รายงานวันทำการ']);
 
         $this->createTable('doc_profile_sub', [
             'id' => $this->primaryKey(),
@@ -31,6 +31,9 @@ class m210329_231833_doc_profile extends Migration
         $this->insert('doc_profile_sub', ['doc_profile_id' => 1,'role_name_id'=>2,'sort' => 1]);
         $this->insert('doc_profile_sub', ['doc_profile_id' => 1,'role_name_id'=>8,'sort' => 2]);
         $this->insert('doc_profile_sub', ['doc_profile_id' => 1,'role_name_id'=>9,'sort' => 3]);        
+        $this->insert('doc_profile_sub', ['doc_profile_id' => 2,'role_name_id'=>2,'sort' => 1]);
+        $this->insert('doc_profile_sub', ['doc_profile_id' => 2,'role_name_id'=>8,'sort' => 2]);
+        $this->insert('doc_profile_sub', ['doc_profile_id' => 2,'role_name_id'=>9,'sort' => 3]);        
 
     }
 

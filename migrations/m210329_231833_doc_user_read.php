@@ -16,7 +16,7 @@ class m210329_231833_doc_user_read extends Migration
             'id' => $this->primaryKey(),
             'user_id' => $this->integer(),
             'doc_id' => $this->integer(),            
-            'ckeck' => $this->integer(),
+            'check' => $this->integer(),
             'ip' => $this->string(),
             'updated' => $this->dateTime(),
             'created' => $this->dateTime(),

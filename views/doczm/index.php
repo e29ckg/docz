@@ -3,11 +3,14 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\helpers\Url;
+use app\models\RoleName;
+
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = '.';
+$this->title = RoleName::getName($role_name_id);
+
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
@@ -30,18 +33,11 @@ $this->params['breadcrumbs'][] = $this->title;
                         </tr>
                         <?php foreach($models as $model){ ?>
                         <tr>
-                            <td></td>
-                            <td></td>
-                            <td><p> 
-                                    <?= $model->docz->doc_speed ?'
-                                            <small class="label  bg-red">'.$model->docz->doc_speed.'</small>
-                                        ':''?>
-                                    <?=$model->docz->doc_form_number ? 'ที่ '.$model->docz->doc_form_number : ''?>
-                                    <?=$model->docz->doc_date ? 'ลงวันที่ '.date("Y-m-d",strtotime($model->docz->doc_date)) : ''?>
-                                    <?=$model->docz->name ? 'เรื่อง '.$model->docz->name : ''?>
-                                </p> </td>
+                            <td><?= $model->docz->r_number?></td>
+                            <td><?= $model->docz->r_date?></td>
+                            <td><p> <?= $model->docz->name_doc()?></p></td>
                             <td>
-                                <a href="<?=Url::to(['/doczm/mg','id'=>$model->doc_id])?>" class="btn btn-primary btn-block btn-flat ">ตรวจสอบ</a>
+                                <a href="<?=Url::to(['/doczm/mg','doc_id'=>$model->doc_id,'role_name_id'=>$role_name_id])?>" class="btn btn-primary btn-block btn-flat ">ตรวจสอบ</a>
                             </td>
                         </tr>
                         <?php } ?>

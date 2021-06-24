@@ -31,7 +31,7 @@ use yii\helpers\Url;
               <h3 class="box-title">ไฟล์แนบ<?=$df->name?></h3>
             </div>
             <div class="box-body text-center"> 
-              <embed src="<?= Url::to(['@web/'.$df->file]) ?>" type="application/pdf" width="100%" height="600px" />
+              <embed src="<?= Url::to('@web/'.$df->file) ?>" type="application/pdf" width="100%" height="600px" />
             </div>            
         </div>  
         <?php } ?>

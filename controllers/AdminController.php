@@ -92,7 +92,7 @@ class AdminController extends Controller
 
     public function actionUser()
     {
-        $models = User::find()->all();
+        $models = UserProfile::find()->orderBy(['sort'=>SORT_DESC])->all();
         return $this->render('admin_user',[
             'models' =>$models
         ]);
@@ -108,8 +108,9 @@ class AdminController extends Controller
     public function actionSet_active($id)
     {
         $model = User::findOne($id);
+        $model->profile->sort = 0;
         $model->status = 10;
-        if ($model->save()) {           
+        if ($model->save() && $model->profile->save()) {           
             Yii::$app->session->setFlash('success', $model->username.' Active.');           
             return $this->redirect(['/admin/user']);
         } else {
@@ -121,8 +122,9 @@ class AdminController extends Controller
     public function actionSet_deactive($id)
     {
         $model = User::findOne($id);
+        $model->profile->sort = 9999;
         $model->status = 9;
-        if ($model->save()) {           
+        if ($model->save() && $model->profile->save()) {           
             Yii::$app->session->setFlash('danger', $model->username.' ระงับการใช้งาน.');           
             return $this->redirect(['/admin/user']);
         } 

@@ -69,7 +69,7 @@ $this->title = 'กำหนดสิทธ์';
                             <td><?= $role_name->name ?></td>
                             <td>
                                 <button data-id="<?=$role_name->id?>" class="activity-update-role-name btn btn-warning btn-xs">แก้ไข</button>
-                                <a href="<?= Url::to(['/role/role_name_del','id'=>$role_name->id]) ?>" onclick="return confirm('Are you sure you want to Delete ?');" class="btn btn-danger btn-xs">ลบ</a>
+                                <!-- <a href="<?= Url::to(['/role/role_name_del','id'=>$role_name->id]) ?>" onclick="return confirm('Are you sure you want to Delete ?');" class="btn btn-danger btn-xs">ลบ</a> -->
                             </td>
                         </tr>
                         <?php } ?>
