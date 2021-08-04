@@ -23,11 +23,13 @@ class AppAsset extends AssetBundle
         'css/site.css?v=1.44',
         'css/jquery.datetimepicker.css',
         'css/dataTables.bootstrap.css',
+        'css/select2.min.css',
     ];
     public $js = [
         'js/jquery.datetimepicker.js',
         'js/jquery.dataTables.min.js',
-        'js/dataTables.bootstrap.js'
+        'js/dataTables.bootstrap.js',
+        'js/select2.min.js'
     ];
     public $depends = [
         'yii\web\YiiAsset',

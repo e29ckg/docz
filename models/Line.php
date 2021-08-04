@@ -43,10 +43,6 @@ class Line extends \yii\db\ActiveRecord
             }
         return false;
     }  
-    
-   
-
-
 
     public function dateThaiTime($strDate){
         $strYear = date("Y",strtotime($strDate))+543;
