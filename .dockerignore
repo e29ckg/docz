@@ -1,0 +1,14 @@
+.git
+**/node_modules
+server/dist
+web/app
+web/uploads
+backupMysql
+logs
+runtime
+scratch
+tmp
+output
+**/.env
+**/.env.*
+!**/.env.example

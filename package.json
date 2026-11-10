@@ -1,0 +1,29 @@
+{
+  "name": "docz",
+  "version": "2.0.0",
+  "description": "DOCZ - Electronic Document Management System (Pure Node.js & Vue 3 TypeScript)",
+  "private": true,
+  "scripts": {
+    "setup": "node scripts/setup.mjs",
+    "db:init": "npm --prefix server run db:init",
+    "admin:create": "npm --prefix server run admin:create",
+    "dev": "npm --prefix server run dev",
+    "dev:frontend": "npm --prefix frontend run dev",
+    "build:server": "npm --prefix server run build",
+    "build:frontend": "npm --prefix frontend run build",
+    "build": "npm --prefix server run build && npm --prefix frontend run build",
+    "start": "node server/dist/index.js"
+  },
+  "keywords": [
+    "docz",
+    "express",
+    "vue3",
+    "typescript",
+    "saraban"
+  ],
+  "author": "Court Administration IT Team",
+  "license": "UNLICENSED",
+  "engines": {
+    "node": ">=22.12.0"
+  }
+}

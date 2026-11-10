@@ -1,9 +1,40 @@
-version: '2'
 services:
-  php:
-    image: yiisoftware/yii2-php:7.4-apache
-    volumes:
-      - ~/.composer-docker/cache:/root/.composer/cache:delegated
-      - ./:/app:delegated
+  app:
+    build: .
+    restart: unless-stopped
     ports:
-      - '8000:80'
+      - "3000:3000"
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_USER: docz_user
+      DB_NAME: docz
+      DB_PASSWORD: ${DB_PASSWORD:?Set DB_PASSWORD in your local .env}
+      JWT_SECRET: ${JWT_SECRET:?Set JWT_SECRET in your local .env}
+      CORS_ORIGIN: ${CORS_ORIGIN:-http://localhost:3000,http://127.0.0.1:3000}
+    volumes:
+      - docz-uploads:/app/web/uploads
+    depends_on:
+      db:
+        condition: service_healthy
+  db:
+    image: mysql:8.0
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: docz
+      MYSQL_USER: docz_user
+      MYSQL_PASSWORD: ${DB_PASSWORD:?Set DB_PASSWORD in your local .env}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:?Set MYSQL_ROOT_PASSWORD in your local .env}
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    volumes:
+      - docz-db-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost -u docz_user -p\"$$MYSQL_PASSWORD\" --silent"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+volumes:
+  docz-uploads:
+  docz-db-data:

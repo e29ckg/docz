@@ -1,13 +1,12 @@
-RewriteEngine on
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteCond %{REQUEST_FILENAME} !-f
-#RewriteRule . index.php [L]
-#RewriteRule ^docz(/(.*))?$ backend/web/$2 [S=1]
-RewriteRule .* docz/web/$0
-#RewriteRule .* docz/web/index.php [L]
-
-
-# Uncomment the following, if you want speaking URL
-#RewriteCond %{REQUEST_FILENAME} !-f
-#RewriteCond %{REQUEST_FILENAME} !-d
-#RewriteRule ^([^/]+/web)/.*$ $1/index.php
+Options -Indexes
+<FilesMatch "(?i)(?:^index-test\.php$|\.(?:zip|sql|cfg|ini|log|md|ya?ml)$)">
+    Require all denied
+</FilesMatch>
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    # Route even existing files through permission checks, before !-f.
+    RewriteRule ^uploads/docz/(.*)$ file.php?path=uploads/docz/$1 [B,END]
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^ index.php [L]
+</IfModule>

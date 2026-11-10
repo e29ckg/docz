@@ -1,6 +1,49 @@
-assets/*
-!assets/.gitignore
-protected/runtime/*
-!protected/runtime/.gitignore
-protected/data/*.db
-themes/classic/views/
+# Node.js dependencies
+node_modules/
+*/node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Build outputs
+/server/dist/
+/frontend/dist/
+/web/app/
+
+# Environment files and credentials
+.env
+.env.*
+!.env.example
+server/.env
+server/.env.*
+!server/.env.example
+
+# Temporary / Scratch files
+/scratch/
+*.tmp
+*.log
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# User Uploaded storage files (do not commit large uploaded documents in Git repository)
+# Keep directory structure:
+/web/uploads/docz/*
+!/web/uploads/docz/.gitkeep
+/web/uploads/profile/*
+!/web/uploads/profile/.gitkeep
+/backupMysql/legacy_php_src/
+
+# Local runtime, backups, and private uploads are never source artifacts.
+/backupMysql/
+/logs/
+/runtime/
+/tmp/
+/output/
+/web/uploads/**
+!/web/uploads/docz/
+!/web/uploads/profile/
+!/web/uploads/docz/.gitkeep
+!/web/uploads/profile/.gitkeep

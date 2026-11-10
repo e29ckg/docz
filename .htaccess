@@ -1,0 +1,7 @@
+# Project sources must not be served by the default XAMPP document root.
+Options -Indexes
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteRule ^(?:api|assets|backupMysql|commands|config|controllers|frontend|mail|migrations|models|runtime|tests|vagrant|vendor|views|widgets)(?:/|$) - [F,L,NC]
+    RewriteRule (?:^|/)(?:\.[^/]+|composer\.(?:json|lock)|yii(?:\.bat)?|requirements\.php|[^/]+\.(?:md|ya?ml|zip|sql|cfg|ini|log))$ - [F,L,NC]
+</IfModule>
