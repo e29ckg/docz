@@ -12,7 +12,7 @@ const TH_MONTHS_SHORT = [
 ]
 
 export function parseDate(val: string | number | Date | null | undefined): Date | null {
-  if (!val) return null
+  if (val === null || val === undefined || val === '') return null
   if (val instanceof Date) return isNaN(val.getTime()) ? null : val
   if (typeof val === 'number') {
     const d = new Date(val)
@@ -30,28 +30,35 @@ export function parseDate(val: string | number | Date | null | undefined): Date 
     return null
   }
 
-  // รูปแบบ "YYYY-MM-DDTHH:mm:ss" หรือ "YYYY-MM-DD HH:mm:ss" หรือ "YYYY-MM-DD"
-  if (/^\d{4}-\d{2}-\d{2}/.test(str)) {
-    const delimiter = str.includes('T') ? 'T' : ' '
-    const [datePart, timePart] = str.split(delimiter)
-    const [y, m, d] = datePart.split('-').map(Number)
-    if (y && m && d) {
-      if (timePart) {
-        const [hh, mm, ss] = timePart.split(':').map((s) => Number(s.replace(/[^0-9]/g, '')))
-        return new Date(y, m - 1, d, hh || 0, mm || 0, ss || 0)
-      }
-      return new Date(y, m - 1, d)
-    }
+  // Preserve Z/offset from API timestamps before handling SQL wall-clock values.
+  if (/^\d{4}-\d{2}-\d{2}[T ]\d{2}:\d{2}.*(?:Z|[+-]\d{2}:?\d{2})$/i.test(str)) {
+    const d = new Date(str.replace(' ', 'T'))
+    return isNaN(d.getTime()) ? null : d
   }
 
-  // รูปแบบ ISO มี Z หรือ offset
-  if (str.includes('T')) {
-    const d = new Date(str)
-    if (!isNaN(d.getTime())) return d
+  // SQL/datetime-local strings without an offset represent Bangkok time.
+  if (/^\d{4}-\d{2}-\d{2}(?:[T ]\d{2}:\d{2}(?::\d{2}(?:\.\d+)?)?)?$/.test(str)) {
+    const local = str.length === 10 ? `${str}T00:00:00` : str.replace(' ', 'T')
+    const d = new Date(`${local}+07:00`)
+    return isNaN(d.getTime()) ? null : d
   }
 
   const fallback = new Date(str)
   return isNaN(fallback.getTime()) ? null : fallback
+}
+
+const bangkokFormatter = new Intl.DateTimeFormat('en-GB', {
+  timeZone: 'Asia/Bangkok',
+  calendar: 'gregory',
+  numberingSystem: 'latn',
+  year: 'numeric', month: 'numeric', day: 'numeric',
+  hour: '2-digit', minute: '2-digit', hourCycle: 'h23',
+})
+
+function bangkokParts(val: string | number | Date | null | undefined) {
+  const date = parseDate(val)
+  if (!date) return null
+  return Object.fromEntries(bangkokFormatter.formatToParts(date).map(part => [part.type, part.value]))
 }
 
 /**
@@ -61,12 +68,12 @@ export function formatThaiDate(
   val: string | number | Date | null | undefined,
   options?: { shortYear?: boolean }
 ): string {
-  const d = parseDate(val)
-  if (!d) return '—'
+  const parts = bangkokParts(val)
+  if (!parts) return '—'
 
-  const date = d.getDate()
-  const month = TH_MONTHS_SHORT[d.getMonth()]
-  const fullYear = d.getFullYear()
+  const date = Number(parts.day)
+  const month = TH_MONTHS_SHORT[Number(parts.month) - 1]
+  const fullYear = Number(parts.year)
   const beYear = fullYear > 2400 ? fullYear : fullYear + 543
   const yearStr = options?.shortYear ? String(beYear).slice(-2) : String(beYear)
 
@@ -80,28 +87,16 @@ export function formatThaiDateTime(
   val: string | number | Date | null | undefined,
   options?: { shortYear?: boolean }
 ): string {
-  const d = parseDate(val)
-  if (!d) return '—'
-
-  const date = d.getDate()
-  const month = TH_MONTHS_SHORT[d.getMonth()]
-  const fullYear = d.getFullYear()
-  const beYear = fullYear > 2400 ? fullYear : fullYear + 543
-  const yearStr = options?.shortYear ? String(beYear).slice(-2) : String(beYear)
-
-  const hours = String(d.getHours()).padStart(2, '0')
-  const minutes = String(d.getMinutes()).padStart(2, '0')
-
-  return `${date} ${month} ${yearStr} ${hours}:${minutes} น.`
+  const parts = bangkokParts(val)
+  if (!parts) return '—'
+  return `${formatThaiDate(val, options)} ${parts.hour}:${parts.minute} น.`
 }
 
 /**
  * แสดงเวลาแบบย่อภาษาไทย เช่น "16:55 น."
  */
 export function formatThaiTime(val: string | number | Date | null | undefined): string {
-  const d = parseDate(val)
-  if (!d) return '—'
-  const hours = String(d.getHours()).padStart(2, '0')
-  const minutes = String(d.getMinutes()).padStart(2, '0')
-  return `${hours}:${minutes} น.`
+  const parts = bangkokParts(val)
+  if (!parts) return '—'
+  return `${parts.hour}:${parts.minute} น.`
 }
