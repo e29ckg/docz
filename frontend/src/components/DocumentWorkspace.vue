@@ -11,6 +11,7 @@ import SigningWorkspace from './SigningWorkspace.vue'
 import EditDocumentModal from './EditDocumentModal.vue'
 import DistributeModal from './DistributeModal.vue'
 import SendPreviewModal from './SendPreviewModal.vue'
+import DocumentActionFiles from './DocumentActionFiles.vue'
 import { formatThaiDate, formatThaiDateTime } from '../utils/date'
 import { showSuccess, showError, showConfirm } from '../utils/alert'
 
@@ -289,13 +290,19 @@ async function open(id: number, uid?: string) {
   } catch (e) { if (ticket === detailRequest) fail(e) }
   finally { if (ticket === detailRequest) detailBusy.value = false }
 }
+async function openCategoryDocument(document: { id: number; uid?: string }) {
+  await open(document.id, document.uid)
+  if (scope.value === 'admin-doc-cats' && !selected.value && error.value) {
+    await showError('ไม่สามารถเปิดเอกสารได้', error.value)
+  }
+}
 function close() {
   ++detailRequest
   selected.value = null
   selectedDetailAttachmentId.value = null
   detailBusy.value = false
   loadUnreadCount()
-  previousFocus?.focus()
+  nextTick(() => previousFocus?.focus())
 }
 function dialogKey(event: KeyboardEvent) {
   if (event.key === 'Escape') { close(); return }
@@ -399,7 +406,7 @@ onMounted(() => {
         <AdminDocProfiles v-else-if="scope === 'admin-doc-profiles'" />
 
         <!-- กรณีเป็นหน้าจัดการที่เก็บเอกสาร -->
-        <AdminDocCategories v-else-if="scope === 'admin-doc-cats'" />
+        <AdminDocCategories v-else-if="scope === 'admin-doc-cats'" :document-open="!!selected || detailBusy" @view-document="openCategoryDocument" />
 
         <!-- กรณีเป็นหน้าจัดการทำลายเอกสาร / ทะเบียนหนังสือที่ทำลาย -->
         <AdminDocDestruction
@@ -873,6 +880,7 @@ onMounted(() => {
                     </div>
                     <p v-else class="muted">ไม่มีเอกสารแนบ</p>
                   </div>
+                  <DocumentActionFiles v-if="scope === 'mine'" :key="selected.id" :doc-id="selected.id" :doc-uid="selected.uid" :destroyed="selected.legacyStatus === 6" @expired="emit('expired')" />
                 </div>
               </div>
 

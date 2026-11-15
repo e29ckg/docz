@@ -188,3 +188,17 @@ ON DUPLICATE KEY UPDATE
 
 -- ตรวจสอบผลลัพธ์
 SELECT * FROM `docz_receive_sequences`;
+
+-- Per-recipient PDF evidence of document actions.
+CREATE TABLE IF NOT EXISTS doc_user_action_file (
+  uid CHAR(36) NOT NULL PRIMARY KEY,
+  doc_id INT NOT NULL,
+  user_id INT NOT NULL,
+  original_name VARCHAR(255) NOT NULL,
+  size_bytes INT NOT NULL,
+  note TEXT NULL,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  KEY idx_action_file_owner (doc_id, user_id, created_at)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+ALTER TABLE doc_user_action_file ADD COLUMN IF NOT EXISTS deleted_at DATETIME NULL DEFAULT NULL;

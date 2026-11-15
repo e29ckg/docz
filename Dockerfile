@@ -39,7 +39,7 @@ COPY web/robots.txt ./web/robots.txt
 COPY --from=frontend-builder /app/web/app ./web/app
 
 # Create uploads storage directories
-RUN mkdir -p web/uploads/docz web/uploads/profile
+RUN mkdir -p web/uploads/docz web/uploads/profile server/storage/action-files
 
 EXPOSE 3000
 

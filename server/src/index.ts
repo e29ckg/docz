@@ -10,6 +10,7 @@ import { authMiddleware } from './middlewares/auth';
 import { securityHeadersMiddleware, validateCorsOrigin } from './middlewares/security';
 import { authRouter } from './routes/auth.routes';
 import { documentRouter } from './routes/document.routes';
+import { actionFilesRouter } from './routes/actionFiles.routes';
 import { adminRouter } from './routes/admin.routes';
 import { incomingRouter } from './routes/incoming.routes';
 import { signingRouter } from './routes/signing.routes';
@@ -149,6 +150,7 @@ const apiPrefixes = ['/api', '/docz/api'];
 for (const prefix of apiPrefixes) {
   app.use(prefix, authRouter);
   app.use(prefix, documentRouter);
+  app.use(prefix, actionFilesRouter);
   app.use(prefix, adminRouter);
   app.use(prefix, incomingRouter);
   app.use(prefix, signingRouter);

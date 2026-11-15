@@ -258,3 +258,16 @@ CREATE TABLE `user_profile` (
 INSERT INTO role_name (id, name, sort, status) VALUES (1, 'สารบรรณ', 1, 1);
 
 INSERT INTO profile_pfname (name, sort) VALUES ('นาย', 1), ('นาง', 2), ('นางสาว', 3);
+
+-- Per-recipient PDF evidence of document actions.
+CREATE TABLE IF NOT EXISTS doc_user_action_file (
+  uid CHAR(36) NOT NULL PRIMARY KEY,
+  doc_id INT NOT NULL,
+  user_id INT NOT NULL,
+  original_name VARCHAR(255) NOT NULL,
+  size_bytes INT NOT NULL,
+  note TEXT NULL,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  deleted_at DATETIME NULL DEFAULT NULL,
+  KEY idx_action_file_owner (doc_id, user_id, created_at)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

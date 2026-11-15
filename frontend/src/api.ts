@@ -442,7 +442,7 @@ export function apiUrl(route: string, params: Record<string, string | number | u
   return url.href
 }
 
-export async function request<T>(route: string, params: Record<string, string | number | undefined | null> = {}, body?: unknown): Promise<T> {
+export async function request<T>(route: string, params: Record<string, string | number | undefined | null> = {}, body?: unknown, method?: 'GET' | 'POST' | 'DELETE'): Promise<T> {
   const headers: Record<string, string> = {
     Accept: 'application/json',
   }
@@ -459,7 +459,7 @@ export async function request<T>(route: string, params: Record<string, string | 
 
   const response = await fetch(apiUrl(route, params), {
     credentials: 'include', // ส่ง Cookie ข้ามพอร์ตได้
-    method: body === undefined ? 'GET' : 'POST',
+    method: method || (body === undefined ? 'GET' : 'POST'),
     headers,
     body: body === undefined ? undefined : JSON.stringify(body),
   })

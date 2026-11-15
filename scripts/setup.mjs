@@ -30,7 +30,7 @@ if (!fs.existsSync(envPath)) {
   console.log('Kept existing server/.env.');
 }
 
-for (const directory of ['web/uploads/docz', 'web/uploads/profile', 'logs', 'runtime']) {
+for (const directory of ['web/uploads/docz', 'web/uploads/profile', 'server/storage/action-files', 'logs', 'runtime']) {
   fs.mkdirSync(path.join(root, directory), { recursive: true });
 }
 

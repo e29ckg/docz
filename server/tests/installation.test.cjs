@@ -21,7 +21,7 @@ async function main() {
     created = true;
     await initializeDatabase(connection, database);
     const [tables] = await connection.query('SHOW TABLES');
-    assert.equal(tables.length, 20);
+    assert.equal(tables.length, 21);
     await assert.rejects(initializeDatabase(connection, database), /not empty/);
     testPool = mysql.createPool({ ...config, database });
     await assert.rejects(createInitialAdmin(testPool, { username: 'test-admin', name: 'Test Admin', password: 'short' }), /12 characters/);

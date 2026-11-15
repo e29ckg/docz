@@ -9,6 +9,7 @@ runtime
 scratch
 tmp
 output
+server/storage
 **/.env
 **/.env.*
 !**/.env.example

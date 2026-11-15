@@ -1,8 +1,11 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue'
-import { request, type DocCatItem, type DocCatDocumentItem } from '../api'
+import { apiUrl, request, type DocCatItem, type DocCatDocumentItem } from '../api'
 import { showSuccess, showError, showConfirm } from '../utils/alert'
 import { formatThaiDate } from '../utils/date'
+
+const props = defineProps<{ documentOpen?: boolean }>()
+const emit = defineEmits<{ 'view-document': [document: { id: number; uid?: string }] }>()
 
 const categories = ref<DocCatItem[]>([])
 const loading = ref(false)
@@ -32,6 +35,22 @@ const editForm = ref<{ id: number; uid?: string; name: string; note: string }>({
 // Viewing Documents in Category
 const activeCategory = ref<DocCatItem | null>(null)
 const categoryDocs = ref<DocCatDocumentItem[]>([])
+const docsSearch = ref('')
+const docsError = ref('')
+let docsRequest = 0
+const filteredDocs = computed(() => {
+  const query = docsSearch.value.trim().toLowerCase()
+  return query ? categoryDocs.value.filter(doc => [doc.receiveNumber, doc.letterNumber, doc.subject].some(value => value?.toLowerCase().includes(query))) : categoryDocs.value
+})
+
+function closeDocs() {
+  ++docsRequest
+  showDocsModal.value = false
+}
+
+function viewDocument(doc: DocCatDocumentItem) {
+  emit('view-document', { id: doc.id, uid: doc.uid })
+}
 
 const filteredCategories = computed(() => {
   const q = searchKeyword.value.toLowerCase().trim()
@@ -155,17 +174,20 @@ async function confirmDelete(cat: DocCatItem) {
 }
 
 async function openViewDocs(cat: DocCatItem) {
+  const ticket = ++docsRequest
   activeCategory.value = cat
   showDocsModal.value = true
   categoryDocs.value = []
   docsLoading.value = true
+  docsSearch.value = ''
+  docsError.value = ''
   try {
     const res = await request<{ data: DocCatDocumentItem[] }>(`admin/doc-cats/${cat.uid || cat.id}/documents`)
-    categoryDocs.value = res.data
+    if (ticket === docsRequest) categoryDocs.value = res.data
   } catch (e) {
-    showError(e instanceof Error ? e.message : 'ไม่สามารถโหลดเอกสารในหมวดนี้ได้')
+    if (ticket === docsRequest) docsError.value = e instanceof Error ? e.message : 'ไม่สามารถโหลดเอกสารในหมวดนี้ได้'
   } finally {
-    docsLoading.value = false
+    if (ticket === docsRequest) docsLoading.value = false
   }
 }
 
@@ -175,6 +197,7 @@ const statusLabels: Record<number, string> = {
   3: 'เกษียนครบ',
   4: 'แจกจ่ายแล้ว',
   5: 'ถูกตีกลับ',
+  6: 'ทำลายแล้ว',
 }
 function statusText(st: number) {
   return statusLabels[st] || `สถานะ ${st}`
@@ -273,7 +296,7 @@ onMounted(() => {
               </td>
               <td class="name-cell">
                 <span class="cat-icon">📁</span>
-                <span class="cat-name">{{ cat.name }}</span>
+                <button type="button" class="cat-name cat-name-button" :title="`ดูเอกสารใน ${cat.name}`" @click="openViewDocs(cat)">{{ cat.name }}</button>
               </td>
               <td class="note-cell">
                 <span v-if="cat.note" class="cat-note">{{ cat.note }}</span>
@@ -297,7 +320,7 @@ onMounted(() => {
                     title="ดูเอกสารในหมวดนี้"
                     @click="openViewDocs(cat)"
                   >
-                    👁️ เอกสาร
+                    👁️ ดูเอกสาร
                   </button>
                   <button
                     type="button"
@@ -421,26 +444,35 @@ onMounted(() => {
     </div>
 
     <!-- Modal ดูเอกสารในแฟ้มนี้ -->
-    <div v-if="showDocsModal" class="modal-backdrop" @click.self="showDocsModal = false">
-      <div class="modal-dialog modal-dialog-lg">
+    <div v-if="showDocsModal && !props.documentOpen" class="modal-backdrop" @click.self="closeDocs" @keydown.esc.stop="closeDocs">
+      <div class="modal-dialog modal-dialog-lg" role="dialog" aria-modal="true" aria-labelledby="category-documents-title">
         <div class="modal-header">
           <div>
-            <h2>📁 เอกสารในแฟ้ม "{{ activeCategory?.name }}"</h2>
+            <h2 id="category-documents-title">📁 เอกสารในแฟ้ม "{{ activeCategory?.name }}"</h2>
             <p class="muted modal-subtitle">
               พบเอกสารจัดเก็บทั้งหมด {{ categoryDocs.length }} ฉบับ
             </p>
           </div>
-          <button type="button" class="btn-close" @click="showDocsModal = false">✕</button>
+          <button type="button" class="btn-close" aria-label="ปิดรายการเอกสารในกล่อง" @click="closeDocs">✕</button>
         </div>
         <div class="modal-body modal-body-scroll">
-          <div v-if="docsLoading" class="empty-state">
+          <div class="docs-search-wrap">
+            <label for="category-documents-search">ค้นหาเอกสารในกล่องนี้</label>
+            <input id="category-documents-search" v-model="docsSearch" type="search" class="form-control" placeholder="เลขรับ เลขที่หนังสือ หรือชื่อเรื่อง" :disabled="docsLoading" />
+          </div>
+          <div v-if="docsLoading" class="empty-state" role="status">
             <span class="spinner">⏳</span> กำลังโหลดเอกสารในแฟ้มนี้...
+          </div>
+          <div v-else-if="docsError" class="error-state" role="alert">
+            <p>{{ docsError }}</p>
+            <button v-if="activeCategory" type="button" class="btn-secondary" @click="openViewDocs(activeCategory)">ลองโหลดใหม่</button>
           </div>
           <div v-else-if="!categoryDocs.length" class="empty-state">
             <span class="empty-icon">📄</span>
             <h3>ยังไม่มีเอกสารในแฟ้มนี้</h3>
             <p class="muted">เมื่อมีการจ่ายหนังสือและเลือกจัดเก็บเข้าแฟ้มนี้ รายการจะปรากฏที่นี่</p>
           </div>
+          <div v-else-if="!filteredDocs.length" class="empty-state">ไม่พบเอกสารที่ตรงกับคำค้นหา</div>
           <table v-else class="modal-docs-table">
             <thead>
               <tr>
@@ -448,17 +480,18 @@ onMounted(() => {
                 <th style="width: 150px">เลขที่หนังสือ</th>
                 <th>เรื่อง</th>
                 <th style="width: 110px; text-align: center">สถานะ</th>
+                <th style="width: 145px">เปิดเอกสาร</th>
               </tr>
             </thead>
             <tbody>
-              <tr v-for="doc in categoryDocs" :key="doc.id">
+              <tr v-for="doc in filteredDocs" :key="doc.id">
                 <td>
                   <strong>{{ doc.receiveNumber }}</strong>
                   <small class="muted-date">{{ formatThaiDate(doc.receivedAt) }}</small>
                 </td>
                 <td>{{ doc.letterNumber || '—' }}</td>
                 <td>
-                  <span class="doc-subject-text">{{ doc.subject }}</span>
+                  <button type="button" class="doc-subject-text doc-subject-button" @click="viewDocument(doc)">{{ doc.subject }}</button>
                   <span v-if="doc.priority && doc.priority !== 'ปกติ'" class="priority-tag">{{ doc.priority }}</span>
                 </td>
                 <td style="text-align: center">
@@ -466,12 +499,19 @@ onMounted(() => {
                     {{ statusText(doc.legacyStatus) }}
                   </span>
                 </td>
+                <td>
+                  <div class="doc-view-actions">
+                    <button type="button" class="btn-action btn-view" :aria-label="`ดูเอกสาร ${doc.receiveNumber}`" @click="viewDocument(doc)">ดูเอกสาร</button>
+                    <a v-if="doc.mainFile && doc.legacyStatus !== 6" class="doc-pdf-link" :href="apiUrl('documents/view-file', { id: doc.id, uid: doc.uid })" target="_blank" rel="noopener" :aria-label="`เปิด PDF ${doc.receiveNumber}`">เปิด PDF ↗</a>
+                    <small v-else class="muted">{{ doc.legacyStatus === 6 ? 'ไฟล์ถูกทำลายแล้ว' : 'ไม่มีไฟล์หลัก' }}</small>
+                  </div>
+                </td>
               </tr>
             </tbody>
           </table>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn-secondary" @click="showDocsModal = false">
+          <button type="button" class="btn-secondary" @click="closeDocs">
             ปิดหน้าต่าง
           </button>
         </div>
@@ -481,6 +521,12 @@ onMounted(() => {
 </template>
 
 <style scoped>
+.cat-name-button, .doc-subject-button { border: 0; background: transparent; padding: 0; text-align: left; font: inherit; line-height: 1.7; white-space: normal; overflow-wrap: anywhere; }
+.cat-name-button:hover, .doc-subject-button:hover { color: #0369a1; text-decoration: underline; }
+.docs-search-wrap { display: grid; gap: 6px; padding: 16px 20px; border-bottom: 1px solid #e2e8f0; }
+.docs-search-wrap label { color: #475569; font-size: .85rem; }
+.doc-view-actions { display: grid; gap: 8px; justify-items: start; min-width: 110px; }
+.doc-pdf-link { color: #0369a1; font-size: .85rem; text-decoration: underline; }
 .admin-categories-workspace {
   padding: 1.5rem;
   max-width: 1200px;
@@ -989,4 +1035,6 @@ onMounted(() => {
 .st-2 { background: #e0f2fe; color: #0369a1; }
 .st-3 { background: #f3e8ff; color: #6b21a8; }
 .st-4 { background: #ecfdf5; color: #047857; }
+.st-5 { background: #fee2e2; color: #b91c1c; }
+.st-6 { background: #f1f5f9; color: #64748b; }
 </style>

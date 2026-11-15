@@ -6,6 +6,7 @@ import fontkit from '@pdf-lib/fontkit';
 import { pool } from '../db/connection';
 import { RowDataPacket } from 'mysql2';
 import { wrapPdfText } from './pdfTextLayout';
+import { drawOnVisiblePage } from './pdfPageCoordinates';
 
 export interface StampResult {
   success: boolean;
@@ -115,57 +116,58 @@ function drawWatermarkReceiveStamp(
   receiveNumber: string,
   receiveDateStr: string
 ) {
-  const { width, height } = page.getSize();
-  const mm = 72 / 25.4;
-  const boxW = 60 * mm;
-  const boxH = 18 * mm; // ความสูงรวม 18 มม. (3 แถว แถวละ 6 มม.)
+  drawOnVisiblePage(page, ({ width, height }) => {
+    const mm = 72 / 25.4;
+    const boxW = 60 * mm;
+    const boxH = 18 * mm; // ความสูงรวม 18 มม. (3 แถว แถวละ 6 มม.)
 
-  // ตำแหน่งมุมบนขวา (140 mm จากซ้าย หรือชิดขอบขวาห่าง 5 mm)
-  const x = Math.min(140 * mm, width - boxW - 5 * mm);
-  const yTop = height - 5 * mm;
-  const yBottom = yTop - boxH;
-  const blue = rgb(0, 0, 1); // สีน้ำเงินบริสุทธิ์ (Pure Blue #0000FF)
+    // ตำแหน่งมุมบนขวา (140 mm จากซ้าย หรือชิดขอบขวาห่าง 5 mm)
+    const x = Math.min(140 * mm, width - boxW - 5 * mm);
+    const yTop = height - 5 * mm;
+    const yBottom = yTop - boxH;
+    const blue = rgb(0, 0, 1); // สีน้ำเงินบริสุทธิ์ (Pure Blue #0000FF)
 
-  // กรอบสี่เหลี่ยมด้านนอก (ไม่มีเส้นคั่นแถวด้านใน ตามตัวอย่างราชการ)
-  page.drawRectangle({
-    x,
-    y: yBottom,
-    width: boxW,
-    height: boxH,
-    borderColor: blue,
-    borderWidth: 0.8,
-  });
+    // กรอบสี่เหลี่ยมด้านนอก (ไม่มีเส้นคั่นแถวด้านใน ตามตัวอย่างราชการ)
+    page.drawRectangle({
+      x,
+      y: yBottom,
+      width: boxW,
+      height: boxH,
+      borderColor: blue,
+      borderWidth: 0.8,
+    });
 
-  const padLeft = 6;
-  const courtText = courtName || 'ศาลเยาวชนและครอบครัวจังหวัดประประจวบคีรีขันธ์';
+    const padLeft = 6;
+    const courtText = courtName || 'ศาลเยาวชนและครอบครัวจังหวัดประประจวบคีรีขันธ์';
 
-  // แถวที่ 1: ชื่อศาล (ชิดซ้าย)
-  page.drawText(courtText, {
-    x: x + padLeft,
-    y: yBottom + 35,
-    size: 8.8,
-    font: fontRegular,
-    color: blue,
-  });
+    // แถวที่ 1: ชื่อศาล (ชิดซ้าย)
+    page.drawText(courtText, {
+      x: x + padLeft,
+      y: yBottom + 35,
+      size: 8.8,
+      font: fontRegular,
+      color: blue,
+    });
 
-  // แถวที่ 2: เลขรับ (ชิดซ้าย)
-  const rNum = 'รับที่  ' + (receiveNumber || '');
-  page.drawText(rNum, {
-    x: x + padLeft,
-    y: yBottom + 20,
-    size: 10.5,
-    font: fontRegular,
-    color: blue,
-  });
+    // แถวที่ 2: เลขรับ (ชิดซ้าย)
+    const rNum = 'รับที่  ' + (receiveNumber || '');
+    page.drawText(rNum, {
+      x: x + padLeft,
+      y: yBottom + 20,
+      size: 10.5,
+      font: fontRegular,
+      color: blue,
+    });
 
-  // แถวที่ 3: วันที่รับแบบไทยและเวลา (ชิดซ้าย)
-  const dStr = formatThaiTimestamp(receiveDateStr);
-  page.drawText(dStr, {
-    x: x + padLeft,
-    y: yBottom + 5,
-    size: 9.5,
-    font: fontRegular,
-    color: blue,
+    // แถวที่ 3: วันที่รับแบบไทยและเวลา (ชิดซ้าย)
+    const dStr = formatThaiTimestamp(receiveDateStr);
+    page.drawText(dStr, {
+      x: x + padLeft,
+      y: yBottom + 5,
+      size: 9.5,
+      font: fontRegular,
+      color: blue,
+    });
   });
 }
 

@@ -16,6 +16,7 @@ services:
       CORS_ORIGIN: ${CORS_ORIGIN:-http://localhost:3000,http://127.0.0.1:3000}
     volumes:
       - docz-uploads:/app/web/uploads
+      - docz-action-files:/app/server/storage/action-files
     depends_on:
       db:
         condition: service_healthy
@@ -37,4 +38,5 @@ services:
       retries: 5
 volumes:
   docz-uploads:
+  docz-action-files:
   docz-db-data:
